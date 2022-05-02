@@ -1,4 +1,0 @@
-Server=10.176.111.31
-Database=testSOSU
-User=CSe21A_33
-Password=CSe21A_33
