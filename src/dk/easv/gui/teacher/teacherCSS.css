@@ -1,0 +1,26 @@
+#menuVBox{
+    -fx-background-color: red;
+}
+
+.split-menu-button{
+    -fx-font-size: 25;
+}
+.label{
+    -fx-font-size: 25;
+}
+
+.button{
+    -fx-font-size: 20;
+    -fx-background-color: lightgreen;
+    -fx-border-color: lightgreen;
+    -fx-border-width: 2px;
+}
+
+.button:hover{
+    -fx-border-color: limegreen;
+    -fx-border-width: 2px;
+}
+
+.button:pressed{
+    -fx-background-color: limegreen;
+}
