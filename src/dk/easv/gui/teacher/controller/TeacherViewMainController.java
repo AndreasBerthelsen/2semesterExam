@@ -12,7 +12,7 @@ public class TeacherViewMainController {
     public BorderPane borderpane;
 
     public void handleSkabelonerbtn(ActionEvent actionEvent) throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/skabelonerView.fxml")));
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml")));
         borderpane.setCenter(pane);
     }
 

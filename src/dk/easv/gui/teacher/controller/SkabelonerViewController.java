@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class SkabelonerViewController {
     public void handleNySkabelonbtn(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/newTemplateMain.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         stage.setTitle("Ny Skabelon");
