@@ -1,4 +1,4 @@
-package dk.easv;
+package dk.easv.gui;
 
 public class Main {
 
