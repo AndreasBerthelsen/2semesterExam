@@ -1,5 +1,3 @@
-package dk.easv.gui;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
