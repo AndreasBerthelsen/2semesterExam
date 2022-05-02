@@ -1,0 +1,23 @@
+#login-textfield{
+    -fx-background-color: transparent;
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-size: 20;
+}
+
+#login-label{
+     -fx-font-family: "Lucida Sans";
+     -fx-font-size: 25;
+ }
+
+#loginbutton{
+    -fx-font-size: 15;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #0e6a38;
+    -fx-border-width: 2;
+    -fx-background-color: #0e6a38;
+    -fx-text-fill: white;
+
+}

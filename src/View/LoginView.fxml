@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" stylesheets="@../dk/easv/CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="429.0">
+               <children>
+                  <Label id="login-label" text="Label" />
+               </children></HBox>
+            <VBox alignment="CENTER" prefHeight="133.0" prefWidth="429.0" spacing="5.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../dk/easv/Images/icons8_person_128px_1.png" />
+                           </image></ImageView>
+                        <TextField id="login-textfield" prefHeight="40.0" prefWidth="331.0" promptText="Brugernavn" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../dk/easv/Images/icons8_key_64px_1.png" />
+                           </image></ImageView>
+                        <TextField id="login-textfield" prefHeight="40.0" prefWidth="336.0" promptText="Adgangskode" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button id="loginbutton" mnemonicParsing="false" text="Log ind" />
+               </children>
+            </HBox>
+         </children></VBox>
+   </center>
+   <left>
+      <VBox alignment="CENTER" prefHeight="550.0" prefWidth="321.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="250.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../dk/easv/Images/Figur.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </left>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</BorderPane>

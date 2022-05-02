@@ -1,4 +1,4 @@
-package com.company;
+package dk.easv;
 
 public class Main {
 
