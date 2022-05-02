@@ -1,4 +1,4 @@
-package dk.easv.dal;
+package dk.easv.dal.interfaces;
 
 public interface ILoginDAO {
 }

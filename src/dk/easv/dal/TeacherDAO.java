@@ -1,4 +1,6 @@
 package dk.easv.dal;
 
-public class TeacherDAO implements ITeacherDAO{
+import dk.easv.dal.interfaces.ITeacherDAO;
+
+public class TeacherDAO implements ITeacherDAO {
 }

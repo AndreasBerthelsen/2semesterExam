@@ -1,5 +1,9 @@
 package dk.easv.dal;
 
+import dk.easv.dal.interfaces.ICitizienDAO;
+import dk.easv.dal.interfaces.ILoginDAO;
+import dk.easv.dal.interfaces.ITeacherDAO;
+
 public class Facade {
 
     private ILoginDAO iLoginDAO;

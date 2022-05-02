@@ -1,4 +1,6 @@
 package dk.easv.dal;
 
-public class LoginDAO implements ILoginDAO{
+import dk.easv.dal.interfaces.ILoginDAO;
+
+public class LoginDAO implements ILoginDAO {
 }
