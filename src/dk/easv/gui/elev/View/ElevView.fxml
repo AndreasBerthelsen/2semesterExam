@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="496.0" prefWidth="674.0" style="-fx-background-color: ADD8E6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.elev.Controller.ElevController">
+   <children>
+      <HBox prefHeight="93.0" prefWidth="674.0" style="-fx-background-color: #0e6a38;">
+         <children>
+            <Label text="Velkommen, ">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="130.0" top="20.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="[Navn]">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <TableView layoutX="159.0" layoutY="158.0" prefHeight="273.0" prefWidth="356.0" stylesheets="@../elevView.css">
+        <columns>
+          <TableColumn prefWidth="174.0" text="Navn" />
+          <TableColumn prefWidth="150.0" text="Fødselsdag" />
+        </columns>
+      </TableView>
+      <Button layoutX="305.0" layoutY="451.0" mnemonicParsing="false" onAction="#handleInspect" text="Inspicer" />
+      <Label layoutX="273.0" layoutY="99.0" text="Borgere">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -18,4 +18,12 @@ public class CitizenModel {
     public HashMap<Integer,ArrayList<String>> getFunktionsVandskligheder() {
         return cM.getFunktionsVandskligheder();
     }
+
+    public HashMap<Integer, String> getHelbredsTilstande() {
+        return cM.getHelbredsTilstande();
+    }
+
+    public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
+        return cM.getHelbredVanskligheder();
+    }
 }

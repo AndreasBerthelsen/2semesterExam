@@ -18,7 +18,14 @@ public class CitizenManager {
     public HashMap<Integer,String> getFunktionsTilstande(){
         return facade.getFunktionsTilstande();
     }
-    public HashMap<Integer,ArrayList<String>> getFunktionsVandskligheder(){
-        return facade.getFunktionsVandskligheder();
+    public HashMap<Integer,ArrayList<String>> getFunktionsVandskligheder(){return facade.getFunktionsVandskligheder();}
+
+
+    public HashMap<Integer, String> getHelbredsTilstande() {
+        return facade.getHelbredsTilstande();
+    }
+
+    public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
+        return facade.getHelbredVanskligheder();
     }
 }

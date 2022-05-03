@@ -21,7 +21,7 @@ public class FunktionsDAO implements IFunktionsDAO {
     public HashMap<Integer, String> getFunktionsTilstande() {
         HashMap<Integer, String> map = new HashMap<>();
         try (Connection connection = dc.getConnection()) {
-            String sql = "SELECT funkid, titel from FunktionsTilstande";
+            String sql = "SELECT funkid, titel from FunktionsTilstande ORDER by funkid asc";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
