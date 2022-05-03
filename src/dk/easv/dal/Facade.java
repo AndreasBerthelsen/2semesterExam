@@ -1,6 +1,7 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.Category;
 import dk.easv.dal.interfaces.ICitizienDAO;
 import dk.easv.dal.interfaces.IHealthReport;
 import dk.easv.dal.interfaces.ILoginDAO;
@@ -43,10 +44,10 @@ public class Facade {
         return iGenInfoDAO.getGeneralinfoFields();
     }
 
-    private List<String> getAllTitles() throws SQLServerException {
+    private List<Category> getAllTitles() throws SQLServerException {
         return iHealthReport.getAllTitle();
     }
-    private List<String> getAllSubTitles(){
-        return iHealthReport.getSubTitles();
+    private List<String> getAllSubTitles(Category category) throws SQLServerException {
+        return iHealthReport.getSubTitles(category);
     }
 }

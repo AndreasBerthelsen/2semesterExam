@@ -1,7 +1,4 @@
-import dk.easv.dal.CitizienDAO;
-import dk.easv.dal.Facade;
-import dk.easv.dal.LoginDAO;
-import dk.easv.dal.TeacherDAO;
+import dk.easv.dal.*;
 import dk.easv.dal.interfaces.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

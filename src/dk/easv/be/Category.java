@@ -6,7 +6,11 @@ public class Category {
 
     private int id;
     private String name;
-    private List<String> subCategories;
+
+    public Category(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -24,11 +28,4 @@ public class Category {
         this.name = name;
     }
 
-    public List<String> getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(List<String> subCategories) {
-        this.subCategories = subCategories;
-    }
 }
