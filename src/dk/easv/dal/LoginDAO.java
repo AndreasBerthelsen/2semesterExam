@@ -21,27 +21,30 @@ public class LoginDAO implements ILoginDAO {
 
     public User loginUser(String username, String password) throws SQLException {
         try (Connection connection = dc.getConnection()) {
-           String sql = "SELECT userID , fname, lname, username, roleID, password\n" +
-                   "FROM [User]\n" +
-                   "WHERE username = ? ";
-           PreparedStatement preparedStatement = connection.prepareStatement(sql);
-           preparedStatement.setString(1, username);
-           ResultSet resultSet = preparedStatement.executeQuery();
-           while (resultSet.next()){
-               String hashed =resultSet.getString("password");
+            String sql = "SELECT userID , fname, lname, username, type, password\n" +
+                    "FROM [User] INNER JOIN [Role] ON [User].RoleID = [Role].roleID\n" +
+                    "WHERE username = ? ";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                UserType type = UserType.valueOf(resultSet.getString("type"));
+                int id = resultSet.getInt("userID");
+                String hashed = resultSet.getString("password");
+                String firstname = resultSet.getString("fname");
+                String lastname = resultSet.getString("lname");
+                String loginName = resultSet.getString("username");
 
-               if (BCrypt.checkpw(password, hashed)){
-                   System.out.println("hurra");
-               }
-               else{
-                   System.out.println("Big bummer");
-               }
+                if (BCrypt.checkpw(password, hashed)) {
+                    return new User(id, firstname, lastname, loginName, type);
+                } else {
+                    System.out.println("Big bummer");
+                }
 
-           }
+                }
+            }
+            return null;
         }
-        return null;
-    }
-
     /**
      * Ikke færdig, mangler input til navn og rollefordeling OG POTENTIELT ALT MULIGT ANDET SOM SKOLE OG KLASSE
      * @param username
@@ -51,7 +54,7 @@ public class LoginDAO implements ILoginDAO {
     @Override
     public void createUser(String username, String hashedPassword, String salt) {
         try (Connection connection = dc.getConnection()){
-            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt) VALUES ('hEJSA','Hejsa',?,?,1,?)";
+            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt) VALUES ('hEJSA','Hejsa',?,?,3,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, hashedPassword);
