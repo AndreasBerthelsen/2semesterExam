@@ -5,24 +5,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="496.0" prefWidth="674.0" style="-fx-background-color: ADD8E6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.elev.Controller.ElevController">
+<AnchorPane prefHeight="496.0" prefWidth="674.0" style="-fx-background-color: #0e6a38;" stylesheets="@../elevView.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.elev.Controller.ElevController">
    <children>
-      <HBox prefHeight="93.0" prefWidth="674.0" style="-fx-background-color: #0e6a38;">
+      <HBox prefHeight="93.0" prefWidth="674.0" style="-fx-background-color: #074523;">
          <children>
-            <Label text="Velkommen, ">
+            <Label text="Velkommen, " textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
                <HBox.margin>
-                  <Insets left="130.0" top="20.0" />
+                  <Insets left="160.0" top="20.0" />
                </HBox.margin>
             </Label>
-            <Label text="[Navn]">
+            <Label fx:id="nameLabel" text="[Navn]" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
@@ -35,14 +36,27 @@
       <TableView layoutX="159.0" layoutY="158.0" prefHeight="273.0" prefWidth="356.0" stylesheets="@../elevView.css">
         <columns>
           <TableColumn prefWidth="174.0" text="Navn" />
-          <TableColumn prefWidth="150.0" text="Fødselsdag" />
+          <TableColumn prefWidth="164.0" text="Fødselsdag" />
         </columns>
       </TableView>
-      <Button layoutX="305.0" layoutY="451.0" mnemonicParsing="false" onAction="#handleInspect" text="Inspicer" />
-      <Label layoutX="273.0" layoutY="99.0" text="Borgere">
+      <Button layoutX="289.0" layoutY="446.0" mnemonicParsing="false" onAction="#handleInspect" prefHeight="49.0" prefWidth="138.0" style="-fx-background-color: 8eff4d;" text="Inspicer">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/inspection.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="273.0" layoutY="99.0" text="Borgere" textFill="WHITE">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
+      <ImageView fitHeight="45.0" fitWidth="35.0" layoutX="222.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../Images/icons8_people_40px.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
