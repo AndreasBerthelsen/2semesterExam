@@ -12,8 +12,17 @@ public class TeacherViewMainController {
     public BorderPane borderpane;
 
     public void handleSkabelonerbtn(ActionEvent actionEvent) throws IOException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
+        borderpane.setCenter(pane);
+    }
+
+    public void handleBorgererbtn(ActionEvent actionEvent) throws IOException {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml")));
         borderpane.setCenter(pane);
     }
 
+    public void handleEleverbtn(ActionEvent actionEvent) throws IOException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
+        borderpane.setCenter(pane);
+    }
 }

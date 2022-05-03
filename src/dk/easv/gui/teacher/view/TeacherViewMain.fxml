@@ -1,26 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="1440.0" stylesheets="@../teacherCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.TeacherViewMainController">
+<BorderPane fx:id="borderpane" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.TeacherViewMainController">
    <left>
-      <VBox id="menuVBox" alignment="CENTER_LEFT" prefHeight="1024.0" prefWidth="281.0" BorderPane.alignment="CENTER">
+      <VBox id="Vbox" prefHeight="1000.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
-            <SplitMenuButton mnemonicParsing="false" text="Sager">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleSkabelonerbtn" text="skabeloner" />
-                <MenuItem mnemonicParsing="false" text="Borgere" />
-              </items>
-            </SplitMenuButton>
-            <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-            </SplitMenuButton>
+            <Pane id="darkerPane" prefHeight="225.0" prefWidth="250.0">
+               <children>
+                  <Label id="TeacherLbl" layoutX="95.0" layoutY="95.0" text="Lærer" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="45.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/Person.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Button id="TeacherviewBtn" mnemonicParsing="false" onAction="#handleSkabelonerbtn" prefHeight="120.0" prefWidth="250.0" text="Skabeloner">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/Skabelon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="25.0" />
+               </padding>
+            </Button>
+            <Button id="TeacherviewBtn" mnemonicParsing="false" onAction="#handleBorgererbtn" prefHeight="120.0" prefWidth="250.0" text="Borgere">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/elderly.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets right="50.0" />
+               </padding>
+            </Button>
+            <Button id="TeacherviewBtn" mnemonicParsing="false" onAction="#handleEleverbtn" prefHeight="120.0" prefWidth="250.0" text="Elever">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/students.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets right="65.0" />
+               </padding>
+            </Button>
          </children>
       </VBox>
    </left>
