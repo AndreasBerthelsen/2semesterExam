@@ -1,4 +1,4 @@
-package dk.easv.bll;
+package dk.easv.Util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

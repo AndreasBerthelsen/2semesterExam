@@ -1,6 +1,7 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.User;
 import dk.easv.dal.interfaces.*;
 
 import dk.easv.be.Category;
@@ -9,15 +10,13 @@ import dk.easv.dal.interfaces.IHealthReport;
 import dk.easv.dal.interfaces.ILoginDAO;
 import dk.easv.dal.interfaces.ITeacherDAO;
 
+import java.sql.SQLException;
 import java.util.List;
 import dk.easv.dal.interfaces.IGenInfoDAO;
-import dk.easv.dal.interfaces.ILoginDAO;
-import dk.easv.dal.interfaces.ITeacherDAO;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Facade {
 
@@ -67,5 +66,9 @@ public class Facade {
 
     public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {
         return iFunktionsDAO.getFunktionsVandskligheder();
+    }
+
+    public User loginUser(String username, String password) throws SQLException {
+        return iLoginDAO.loginUser(username, password);
     }
 }
