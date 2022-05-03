@@ -14,14 +14,12 @@ public class LoginManager {
     }
 
     public User loginUser(String username, String password) throws SQLException {
-       String hashedPW = BCrypt.hashpw(password, BCrypt.gensalt());
-       return facade.loginUser(username, hashedPW);
+       return facade.loginUser(username, password);
     }
 
     public void createUser(String username, String password) throws SQLException {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
         facade.createUser(username, hashedPassword, salt);
-
     }
 }
