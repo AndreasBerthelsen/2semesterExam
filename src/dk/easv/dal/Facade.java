@@ -29,17 +29,18 @@ public class Facade {
     private IGenInfoDAO iGenInfoDAO;
     private IFunktionsDAO iFunktionsDAO;
 
-    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO) {
+    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthReport iHealthReport) {
         this.iLoginDAO = iLoginDAO;
         this.iTeacherDAO = iTeacherDAO;
         this.iCitizienDAO = iCitizienDAO;
         this.iGenInfoDAO = iGenInfoDAO;
         this.iFunktionsDAO = iFunktionsDAO;
+        this.iHealthReport = iHealthReport;
     }
 
-    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO) {
+    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthReport iHealthReport) {
         if (instance == null) {
-            instance = new Facade(iLoginDAO, iCitizienDAO, iTeacherDAO, iGenInfoDAO, iFunktionsDAO);
+            instance = new Facade(iLoginDAO, iCitizienDAO, iTeacherDAO, iGenInfoDAO, iFunktionsDAO, iHealthReport);
         }
     }
 
@@ -56,11 +57,11 @@ public class Facade {
         return iFunktionsDAO.getFunktionsTilstande();
     }
 
-    private List<Category> getAllTitles() throws SQLServerException {
+    public List<Category> getAllTitles() throws SQLServerException {
         return iHealthReport.getAllTitle();
     }
 
-    private List<String> getAllSubTitles(Category category) throws SQLServerException {
+    public List<String> getAllSubTitles(Category category) throws SQLServerException {
         return iHealthReport.getSubTitles(category);
 
     }

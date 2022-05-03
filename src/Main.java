@@ -17,15 +17,16 @@ public class Main extends Application {
          ICitizienDAO iCitizienDAO = new CitizienDAO();
          IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
          IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
+         IHealthReport iHealthReportDAO = new HealthDAO();
 
-        Facade.createInstance(iLoginDAO,iCitizienDAO,iTeacherDAO,iGenInfoDAO,iFunktionsDAO);
+        Facade.createInstance(iLoginDAO,iCitizienDAO,iTeacherDAO,iGenInfoDAO,iFunktionsDAO, iHealthReportDAO);
 
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TeacherViewMain.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TeacherJens.fxml")));
         Scene scene = new Scene(parent);
         stage.setTitle("SOSU FS3");
         stage.setResizable(true);
