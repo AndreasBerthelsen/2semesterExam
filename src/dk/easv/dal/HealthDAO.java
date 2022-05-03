@@ -2,7 +2,7 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Category;
-import dk.easv.dal.interfaces.IHealthReport;
+import dk.easv.dal.interfaces.IHealthDAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,9 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class HealthDAO implements IHealthReport {
+public class HealthDAO implements IHealthDAO {
 
     DatabaseConnector dc;
     public HealthDAO() throws IOException {
@@ -39,8 +40,6 @@ public class HealthDAO implements IHealthReport {
         return allTitles;
     }
 
-
-
     @Override
     public List<String> getSubTitles(Category category) throws SQLServerException {
         List<String> subTitles = new ArrayList<>();
@@ -60,6 +59,52 @@ public class HealthDAO implements IHealthReport {
             throwables.printStackTrace();
         }
         return subTitles;
+    }
+
+    @Override
+    public HashMap<Integer, String> getHelbredsTilstande() {
+        HashMap<Integer, String> map = new HashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "SELECT tilstandsID, titel from HelbredsTilstande ORDER by tilstandsID asc";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String s = resultSet.getString("titel");
+                Integer i = resultSet.getInt("tilstandsID");
+                map.put(i, s);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return map;
+    }
+
+    @Override
+    public HashMap<Integer, ArrayList<String>> getHelbredsVanskligheder() {
+        HashMap<Integer, ArrayList<String>> map = new HashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "SELECT TilstandsID, guititel from HelbredsVanskligheder ORDER by TilstandsID asc";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            //gen arraylist for hver ny key
+            int currentKey = 0;
+            ArrayList<String> currentArraylist = new ArrayList<>();
+            while (resultSet.next()) {
+                String s = resultSet.getString("guititel");
+                int i = resultSet.getInt("TilstandsID");
+                if (currentKey < i) {
+                    currentArraylist = new ArrayList<>();
+                    currentArraylist.add(s);
+                    currentKey = i;
+                } else {
+                    currentArraylist.add(s);
+                }
+                map.put(i, currentArraylist);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return map;
     }
 
 }

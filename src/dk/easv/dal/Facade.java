@@ -7,7 +7,7 @@ import dk.easv.dal.interfaces.*;
 
 import dk.easv.be.Category;
 import dk.easv.dal.interfaces.ICitizienDAO;
-import dk.easv.dal.interfaces.IHealthReport;
+import dk.easv.dal.interfaces.IHealthDAO;
 import dk.easv.dal.interfaces.ILoginDAO;
 import dk.easv.dal.interfaces.ITeacherDAO;
 
@@ -25,22 +25,22 @@ public class Facade {
     private ILoginDAO iLoginDAO;
     private ITeacherDAO iTeacherDAO;
     private ICitizienDAO iCitizienDAO;
-    private IHealthReport iHealthReport;
+    private IHealthDAO iHealthDAO;
     private IGenInfoDAO iGenInfoDAO;
     private IFunktionsDAO iFunktionsDAO;
 
-    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthReport iHealthReport) {
+    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
         this.iLoginDAO = iLoginDAO;
         this.iTeacherDAO = iTeacherDAO;
         this.iCitizienDAO = iCitizienDAO;
         this.iGenInfoDAO = iGenInfoDAO;
         this.iFunktionsDAO = iFunktionsDAO;
-        this.iHealthReport = iHealthReport;
+        this.iHealthDAO = iHealthDAO;
     }
 
-    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthReport iHealthReport) {
+    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
         if (instance == null) {
-            instance = new Facade(iLoginDAO, iCitizienDAO, iTeacherDAO, iGenInfoDAO, iFunktionsDAO, iHealthReport);
+            instance = new Facade(iLoginDAO, iCitizienDAO, iTeacherDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO);
         }
     }
 
@@ -58,11 +58,11 @@ public class Facade {
     }
 
     public List<Category> getAllTitles() throws SQLServerException {
-        return iHealthReport.getAllTitle();
+        return iHealthDAO.getAllTitle();
     }
 
     public List<String> getAllSubTitles(Category category) throws SQLServerException {
-        return iHealthReport.getSubTitles(category);
+        return iHealthDAO.getSubTitles(category);
 
     }
 
@@ -76,5 +76,13 @@ public class Facade {
 
     public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException {
         iLoginDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
+    }
+
+    public HashMap<Integer, String> getHelbredsTilstande() {
+        return iHealthDAO.getHelbredsTilstande();
+    }
+
+    public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
+        return iHealthDAO.getHelbredsVanskligheder();
     }
 }
