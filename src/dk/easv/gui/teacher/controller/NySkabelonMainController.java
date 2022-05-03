@@ -2,6 +2,7 @@ package dk.easv.gui.teacher.controller;
 
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -21,17 +22,19 @@ public class NySkabelonMainController implements Initializable {
     public BorderPane borderpane;
     public javafx.scene.control.ScrollPane genScrollPane;
     public TabPane funktionInnerTabPane;
+    public TabPane helbredsInnerTabPane;
 
     CitizenModel sM = new CitizenModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setupGeneralInfo(sM.getGeneralinfoFields());
-
+        setupGeneralInfo();
         setupFunkTab();
+        setupHelbredTab();
     }
 
-    private void setupGeneralInfo(ArrayList<String> fieldList) {
+    private void setupGeneralInfo() {
+        ArrayList<String> fieldList = sM.getGeneralinfoFields();
         VBox vBox = new VBox();
         for (String field : fieldList) {
             Label label = new Label(field);
@@ -43,6 +46,15 @@ public class NySkabelonMainController implements Initializable {
         genScrollPane.setContent(vBox);
     }
 
+    private void setupHelbredTab(){
+        //gen tabs -> gridpane -> header + radiobuttons -> textArea (Radio buttons event handler til inactive textArea)
+        HashMap<Integer, String> tilstandsMap = sM.getHelbredsTilstande();
+        HashMap<Integer, ArrayList<String>> vansklighedsMap= sM.getHelbredVanskligheder();
+
+
+
+    }
+
     private void setupFunkTab() {
         HashMap<Integer, String> tilstandsList = sM.getFunktionsTilstande();
         HashMap<Integer, ArrayList<String>> problemMap = sM.getFunktionsVandskligheder();
@@ -52,26 +64,18 @@ public class NySkabelonMainController implements Initializable {
             Image image = new Image("/dk/easv/Images/funktion" + i + ".png");
             imgList.add(image);
         }
+
         int index = 0;
         for (int key : tilstandsList.keySet()) {
+            //tab for hver afdeling
             List<ImageView> imageList = createImageViews(imgList);
-
-
             Tab tab = new Tab(tilstandsList.get(key));
             GridPane gridPane = new GridPane();
-            tab.setContent(gridPane);
 
-            Label headerLabel = new Label(tilstandsList.get(key));
-            gridPane.addRow(index, headerLabel, imageList.get(0), imageList.get(1), imageList.get(2), imageList.get(3), imageList.get(4), imageList.get(5));
-            index++;
-            //under titler
+
             for (String string : problemMap.get(key)) {
-                Label subLabel = new Label(string);
-                List<RadioButton> bL = createRadiobuttons(string, 6);
-                gridPane.addRow(index, subLabel, bL.get(0), bL.get(1), bL.get(2), bL.get(3), bL.get(4), bL.get(5));
-                index++;
+                //underpunkter
             }
-
             funktionInnerTabPane.getTabs().add(tab);
         }
 
@@ -87,18 +91,6 @@ public class NySkabelonMainController implements Initializable {
     }
 
 
-    private List<RadioButton> createRadiobuttons(String groupName, int amount) {
-        ToggleGroup toggleGroup = new ToggleGroup();
-        toggleGroup.setUserData(groupName);
-        List<RadioButton> list = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            RadioButton radioButton = new RadioButton();
-            radioButton.setId(groupName + i);
-            radioButton.setToggleGroup(toggleGroup);
-            list.add(radioButton);
-        }
-        return list;
-    }
 
 
     public void handleGembtn(ActionEvent actionEvent) {
