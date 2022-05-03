@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -18,7 +20,7 @@ import java.util.ResourceBundle;
 public class NySkabelonMainController implements Initializable {
     public BorderPane borderpane;
     public javafx.scene.control.ScrollPane genScrollPane;
-    public ScrollPane funkScrollPane;
+    public TabPane funktionInnerTabPane;
 
     CitizenModel sM = new CitizenModel();
 
@@ -42,62 +44,56 @@ public class NySkabelonMainController implements Initializable {
     }
 
     private void setupFunkTab() {
-
         HashMap<Integer, String> tilstandsList = sM.getFunktionsTilstande();
-        System.out.println("Tilstands ist ----------------------------------");
-        System.out.println(tilstandsList);
         HashMap<Integer, ArrayList<String>> problemMap = sM.getFunktionsVandskligheder();
-        System.out.println("problem list --------------------");
-        for (ArrayList<String> a : problemMap.values()) {
-            System.out.println(a.toString());
+        List<Image> imgList = new ArrayList<>();
+        //5 ikke en god ide, ændre til funktion mængder??
+        for (int i = 0; i <= 5; i++) {
+            Image image = new Image("/dk/easv/Images/funktion" + i + ".png");
+            imgList.add(image);
         }
-
-        //GRIDPANE??
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-
-        Label label = new Label("test");
-        gridPane.addRow(1,label,new RadioButton(),new RadioButton(),new RadioButton(),new RadioButton(),new RadioButton());
-
-        Label label2 = new Label("test2222222222222");
-        gridPane.addRow(2,label2,new RadioButton(),new RadioButton(),new RadioButton(),new RadioButton(),new RadioButton());
-
-/*
-        //skab labels
-        VBox vBox = new VBox();
-        vBox.setSpacing(5);
+        int index = 0;
         for (int key : tilstandsList.keySet()) {
+            List<ImageView> imageList = createImageViews(imgList);
+
+
+            Tab tab = new Tab(tilstandsList.get(key));
+            GridPane gridPane = new GridPane();
+            tab.setContent(gridPane);
+
             Label headerLabel = new Label(tilstandsList.get(key));
-            vBox.getChildren().add(headerLabel);
+            gridPane.addRow(index, headerLabel, imageList.get(0), imageList.get(1), imageList.get(2), imageList.get(3), imageList.get(4), imageList.get(5));
+            index++;
+            //under titler
             for (String string : problemMap.get(key)) {
-                HBox hBox = new HBox();
-                hBox.setAlignment(Pos.CENTER_LEFT);
-                Label label = new Label(string);
-                hBox.getChildren().add(label);
-
-
-                HBox radioBox = new HBox(10);
-
-                radioBox.prefWidth(5000);
-                radioBox.setAlignment(Pos.CENTER_RIGHT);
-                for(RadioButton r : createRadiobuttons(string,5)){
-                    radioBox.getChildren().add(r);
-                }
-                hBox.getChildren().add(radioBox);
-                vBox.getChildren().add(hBox);
-
+                Label subLabel = new Label(string);
+                List<RadioButton> bL = createRadiobuttons(string, 6);
+                gridPane.addRow(index, subLabel, bL.get(0), bL.get(1), bL.get(2), bL.get(3), bL.get(4), bL.get(5));
+                index++;
             }
+
+            funktionInnerTabPane.getTabs().add(tab);
         }
-*/
-        funkScrollPane.setContent(gridPane);
 
     }
 
-    private List<RadioButton> createRadiobuttons(String toggleGroupName, int amount) {
+    private ArrayList<ImageView> createImageViews(List<Image> imageList) {
+        ArrayList<ImageView> list = new ArrayList<>();
+        for (Image i : imageList) {
+            ImageView imageView = new ImageView(i);
+            list.add(imageView);
+        }
+        return list;
+    }
+
+
+    private List<RadioButton> createRadiobuttons(String groupName, int amount) {
         ToggleGroup toggleGroup = new ToggleGroup();
+        toggleGroup.setUserData(groupName);
         List<RadioButton> list = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             RadioButton radioButton = new RadioButton();
+            radioButton.setId(groupName + i);
             radioButton.setToggleGroup(toggleGroup);
             list.add(radioButton);
         }
@@ -106,11 +102,25 @@ public class NySkabelonMainController implements Initializable {
 
 
     public void handleGembtn(ActionEvent actionEvent) {
+        /*   TJEKKER ALLE TEXT AREAS I GEN INFO
         VBox vBox = (VBox) genScrollPane.getContent();
         for (Node n : vBox.getChildren()) {
             if (n instanceof TextArea) {
                 TextArea ta = (TextArea) n;
                 System.out.println(n.getId() + ": " + ta.getText());
+            }
+        }
+         */
+
+
+        for (Tab tab : funktionInnerTabPane.getTabs()) {
+            GridPane gridPane = (GridPane) tab.getContent();
+            for (Node n : gridPane.getChildren()) {
+                if (n instanceof RadioButton radioButton) {
+                    if (radioButton.isSelected()) {
+                        System.out.println(radioButton.getId());
+                    }
+                }
             }
         }
     }

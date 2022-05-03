@@ -42,7 +42,6 @@ public class FunktionsDAO implements IFunktionsDAO {
             String sql = "SELECT fTilstandsID, guititel from FunktionsVanskligheder ORDER by fTilstandsID asc";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
-
             //gen arraylist for hver ny key
             int currentKey = 0;
             ArrayList<String> currentArraylist = new ArrayList<>();
