@@ -3,6 +3,18 @@ package dk.easv.dal;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.dal.interfaces.*;
 
+import dk.easv.be.Category;
+import dk.easv.dal.interfaces.ICitizienDAO;
+import dk.easv.dal.interfaces.IHealthReport;
+import dk.easv.dal.interfaces.ILoginDAO;
+import dk.easv.dal.interfaces.ITeacherDAO;
+
+import java.util.List;
+import dk.easv.dal.interfaces.IGenInfoDAO;
+import dk.easv.dal.interfaces.ILoginDAO;
+import dk.easv.dal.interfaces.ITeacherDAO;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,17 +51,18 @@ public class Facade {
         return iGenInfoDAO.getGeneralinfoFields();
     }
 
+
     public HashMap<Integer, String> getFunktionsTilstande() {
         return iFunktionsDAO.getFunktionsTilstande();
     }
 
-
-    private List<String> getAllTitles() throws SQLServerException {
+    private List<Category> getAllTitles() throws SQLServerException {
         return iHealthReport.getAllTitle();
     }
 
-    private List<String> getAllSubTitles() {
-        return iHealthReport.getSubTitles();
+    private List<String> getAllSubTitles(Category category) throws SQLServerException {
+        return iHealthReport.getSubTitles(category);
+
     }
 
     public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {

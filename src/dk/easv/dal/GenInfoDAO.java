@@ -1,5 +1,6 @@
 package dk.easv.dal;
 
+import dk.easv.dal.DatabaseConnector;
 import dk.easv.dal.interfaces.IGenInfoDAO;
 
 import java.io.IOException;
