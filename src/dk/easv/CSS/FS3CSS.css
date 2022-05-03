@@ -1,3 +1,7 @@
+/**
+Id's til LoginView
+ */
+
 #login-textfield{
     -fx-background-color: transparent;
     -fx-border-color: black;
@@ -20,6 +24,10 @@
     -fx-background-color: #0e6a38;
     -fx-text-fill: white;
 }
+
+/**
+Id's til TeacherMainViewController
+ */
 #TeacherviewBtn{
     -fx-text-fill: white;
     -fx-border-width: 0 0 0 0;
@@ -44,4 +52,35 @@
 
 #darkerPane {
     -fx-background-color: #074523;
+}
+
+/**
+Id's til TeacherSkabelonerView
+ */
+
+#SkabelonBtn{
+    -fx-font-size: 20;
+    -fx-background-color: lightgreen;
+    -fx-border-color: lightgreen;
+    -fx-border-width: 2px;
+}
+
+#SkabelonBtn:hover{
+    -fx-border-color: limegreen;
+    -fx-border-width: 2px;
+}
+
+#SkabelonBtn:pressed{
+    -fx-background-color: limegreen;
+}
+
+#menuVBox{
+    -fx-background-color: red;
+}
+
+.split-menu-button{
+    -fx-font-size: 25;
+}
+#skabelonLabel{
+    -fx-font-size: 25;
 }
