@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="792.0" prefWidth="1114.0" stylesheets="@../teacherCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.NySkabelonMainController">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="792.0" prefWidth="1240.0" stylesheets="@../teacherCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.NySkabelonMainController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -42,8 +42,8 @@
                                        <children>
                                           <Label text="Fødselsdato" GridPane.columnIndex="2" />
                                           <DatePicker prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Label text="Fødselsdato" />
-                                          <Label text="Fødselsdato" GridPane.columnIndex="1" />
+                                          <Label text="Fornavn" />
+                                          <Label text="Efternavn" GridPane.columnIndex="1" />
                                           <TextField GridPane.rowIndex="1" />
                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
@@ -74,11 +74,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane fx:id="funkScrollPane" layoutY="-2.0" prefHeight="668.0" prefWidth="1114.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                          </content>
-                        </ScrollPane>
+                        <TabPane fx:id="funktionInnerTabPane" layoutX="6.0" tabClosingPolicy="UNAVAILABLE" />
                      </children>
                   </AnchorPane>
             </content>
