@@ -1,14 +1,12 @@
 package dk.easv.gui.teacher.controller;
 
-import dk.easv.gui.teacher.model.SkabelonModel;
+import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -22,7 +20,7 @@ public class NySkabelonMainController implements Initializable {
     public javafx.scene.control.ScrollPane genScrollPane;
     public ScrollPane funkScrollPane;
 
-    SkabelonModel sM = new SkabelonModel();
+    CitizenModel sM = new CitizenModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

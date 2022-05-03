@@ -5,7 +5,7 @@ import dk.easv.bll.CitizenManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SkabelonModel {
+public class CitizenModel {
     CitizenManager cM = new CitizenManager();
     public ArrayList<String> getGeneralinfoFields(){
         return cM.getGeneralinfoFields();
