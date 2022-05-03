@@ -1,7 +1,4 @@
-import dk.easv.dal.CitizienDAO;
-import dk.easv.dal.Facade;
-import dk.easv.dal.LoginDAO;
-import dk.easv.dal.TeacherDAO;
+import dk.easv.dal.*;
 import dk.easv.dal.interfaces.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +16,9 @@ public class Main extends Application {
          ITeacherDAO iTeacherDAO = new TeacherDAO();
          ICitizienDAO iCitizienDAO = new CitizienDAO();
          IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
+         IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
 
-        Facade.createInstance(iLoginDAO,iCitizienDAO,iTeacherDAO,iGenInfoDAO);
+        Facade.createInstance(iLoginDAO,iCitizienDAO,iTeacherDAO,iGenInfoDAO,iFunktionsDAO);
 
         launch();
     }
