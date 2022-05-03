@@ -9,4 +9,5 @@ public interface ILoginDAO {
 
     User loginUser(String username, String password) throws SQLException;
 
+    void createUser(String username, String hashedPassword, String salt) throws SQLException;
 }

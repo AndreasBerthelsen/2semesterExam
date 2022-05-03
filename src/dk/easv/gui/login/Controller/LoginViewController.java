@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginViewController {
+    public TextField fakeuser;
+    public TextField fakePW;
     @FXML
     private TextField usernameInput;
     @FXML
@@ -69,5 +71,12 @@ public class LoginViewController {
         alert.setTitle("Warning");
         alert.setHeaderText(errorTxt);
         alert.showAndWait();
+    }
+
+    public void fakeBtn(ActionEvent actionEvent) throws SQLException {
+        String username = fakeuser.getText();
+        String password = fakePW.getText();
+
+        loginModel.createUser(username, password);
     }
 }

@@ -5,15 +5,13 @@ public class User {
     private String firstname;
     private String lastname;
     private String username;
-    private String password;
     private UserType type;
 
-    public User(int id, String firstname, String lastname, String username, String password, UserType type) {
+    public User(int id, String firstname, String lastname, String username, UserType type) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
-        this.password = password;
         this.type = type;
     }
 
@@ -49,13 +47,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public UserType getType() {
         return type;
@@ -72,7 +63,6 @@ public class User {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", type=" + type +
                 '}';
     }

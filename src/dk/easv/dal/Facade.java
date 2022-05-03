@@ -72,4 +72,8 @@ public class Facade {
     public User loginUser(String username, String password) throws SQLException {
         return iLoginDAO.loginUser(username, password);
     }
+
+    public void createUser(String username, String hashedPassword, String salt) throws SQLException {
+        iLoginDAO.createUser(username, hashedPassword, salt);
+    }
 }

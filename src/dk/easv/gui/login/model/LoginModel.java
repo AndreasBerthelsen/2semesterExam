@@ -15,4 +15,8 @@ public class LoginModel {
     public User loginUser(String username, String password) throws SQLException {
        return lM.loginUser(username,password);
     }
+
+    public void createUser(String username, String password) throws SQLException {
+        lM.createUser(username, password);
+    }
 }
