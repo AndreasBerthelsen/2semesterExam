@@ -11,7 +11,7 @@
      -fx-font-size: 25;
  }
 
-#loginbutton{
+#loginbutton {
     -fx-font-size: 15;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
@@ -19,5 +19,29 @@
     -fx-border-width: 2;
     -fx-background-color: #0e6a38;
     -fx-text-fill: white;
+}
+#TeacherviewBtn{
+    -fx-text-fill: white;
+    -fx-border-width: 0 0 0 0;
+    -fx-background-color: transparent;
+    -fx-font-size: 22;
+    -fx-font-family: "Lucida Sans";
+}
 
+#TeacherviewBtn:hover{
+    -fx-background-color: #065c2d;
+    -fx-cursor: hand;
+}
+
+#Vbox {
+    -fx-background-color: #0e6a38;
+}
+
+#TeacherLbl {
+    -fx-text-fill: white;
+    -fx-font-size: 28;
+}
+
+#darkerPane {
+    -fx-background-color: #074523;
 }
