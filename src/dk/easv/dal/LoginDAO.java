@@ -52,13 +52,16 @@ public class LoginDAO implements ILoginDAO {
      */
 
     @Override
-    public void createUser(String username, String hashedPassword, String salt) {
+    public void createUser(String firstName,String lastName,String username, String hashedPassword, String salt, UserType userType) {
         try (Connection connection = dc.getConnection()){
-            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt) VALUES ('hEJSA','Hejsa',?,?,3,?)";
+            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt) VALUES (?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, hashedPassword);
-            preparedStatement.setString(3, salt);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, hashedPassword);
+            preparedStatement.setInt(5, userType.getI());
+            preparedStatement.setString(6, salt);
             preparedStatement.execute();
         }
         catch (SQLException throwables) {

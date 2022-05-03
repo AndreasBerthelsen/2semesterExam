@@ -2,6 +2,7 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.User;
+import dk.easv.be.UserType;
 import dk.easv.dal.interfaces.*;
 
 import dk.easv.be.Category;
@@ -73,7 +74,7 @@ public class Facade {
         return iLoginDAO.loginUser(username, password);
     }
 
-    public void createUser(String username, String hashedPassword, String salt) throws SQLException {
-        iLoginDAO.createUser(username, hashedPassword, salt);
+    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException {
+        iLoginDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
     }
 }

@@ -40,7 +40,7 @@ public class LoginViewController {
                 UserType type = user.getType();
                 switch (type) {
                     case TEACHER -> openNewScene(user, "/dk/easv/gui/teacher/view/TeacherViewMain.fxml", "TeacherView", actionEvent);
-                    case STUDENT -> openNewScene(user, "/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml", "StudentView", actionEvent);
+                    case STUDENT -> openNewScene(user, "/dk/easv/gui/elev/View/ElevView.fxml", "StudentView", actionEvent);
                 }
             } else {
                 errorMessage("Fejl i brugernavn eller adgangskode");
@@ -76,7 +76,9 @@ public class LoginViewController {
     public void fakeBtn(ActionEvent actionEvent) throws SQLException {
         String username = fakeuser.getText();
         String password = fakePW.getText();
+        String firstName = "Bob";
+        String lastName = "Jakob";
 
-        loginModel.createUser(username, password);
+        loginModel.createStudent(firstName, lastName ,username, password);
     }
 }

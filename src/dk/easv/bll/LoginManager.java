@@ -1,6 +1,7 @@
 package dk.easv.bll;
 
 import dk.easv.be.User;
+import dk.easv.be.UserType;
 import dk.easv.dal.BCrypt;
 import dk.easv.dal.Facade;
 
@@ -17,9 +18,9 @@ public class LoginManager {
        return facade.loginUser(username, password);
     }
 
-    public void createUser(String username, String password) throws SQLException {
+    public void createUser(String firstName, String lastName, String username, String password, UserType userType) throws SQLException {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
-        facade.createUser(username, hashedPassword, salt);
+        facade.createUser(firstName, lastName,username, hashedPassword, salt, userType);
     }
 }
