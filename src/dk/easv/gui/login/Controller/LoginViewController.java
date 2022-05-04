@@ -4,6 +4,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.gui.login.model.LoginModel;
+import dk.easv.gui.supercontroller.SuperController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class LoginViewController {
+public class LoginViewController extends SuperController {
     @FXML
     private TextField usernameInput;
     @FXML
@@ -37,37 +38,12 @@ public class LoginViewController {
             if (user != null){
                 UserType type = user.getType();
                 switch (type) {
-                    case TEACHER -> openNewScene(user, "/dk/easv/gui/teacher/view/TeacherViewMain.fxml", "TeacherView", actionEvent);
-                    case STUDENT -> openNewScene(user, "/dk/easv/gui/elev/View/ElevView.fxml", "StudentView", actionEvent);
+                    case TEACHER -> openScene(user, "/dk/easv/gui/teacher/view/TeacherViewMain.fxml", "TeacherView", actionEvent);
+                    case STUDENT -> openScene(user, "/dk/easv/gui/elev/View/ElevView.fxml", "StudentView", actionEvent);
                 }
             } else {
                 errorMessage("Fejl i brugernavn eller adgangskode");
             }
         }
-    }
-
-    public void setUserInfo(User user) {
-    }
-
-    private void openNewScene(User user,String fxmlPath, String Title, ActionEvent actionEvent) throws IOException, SQLServerException {
-        FXMLLoader root = new FXMLLoader(getClass().getResource(fxmlPath));
-        Scene scene = new Scene(root.load());
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-
-        setUserInfo(user);
-
-        stage.setTitle(Title);
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    public void errorMessage(String errorTxt) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Warning");
-        alert.setHeaderText(errorTxt);
-        alert.showAndWait();
     }
 }

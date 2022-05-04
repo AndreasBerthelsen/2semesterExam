@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.AdminstrateStudentsController">
    <top>
       <Pane id="Vbox" prefHeight="225.0" prefWidth="1150.0" BorderPane.alignment="CENTER">
          <children>
@@ -24,7 +23,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="175.0" prefWidth="1150.0" spacing="100.0">
                <children>
-                  <Button id="SkabelonBtn" mnemonicParsing="false" text="Tilføj" />
+                  <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleAddStudentBtn" text="Tilføj" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" text="Rediger" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" text="Slet" />
                </children>
