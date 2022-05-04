@@ -1,3 +1,7 @@
+.backgroundColor {
+    -fx-background-color: #11ed75;
+}
+
 /**
 Id's til LoginView
  */
@@ -60,20 +64,20 @@ Id's til TeacherSkabelonerView
 
 #SkabelonBtn{
     -fx-font-size: 20;
-    -fx-background-color: lightgreen;
-    -fx-border-color: lightgreen;
+    -fx-background-color: #55e600;
+    -fx-border-color: #55e600;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
 
 #SkabelonBtn:hover{
-    -fx-border-color: limegreen;
+    -fx-border-color: #48c200;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
 
 #SkabelonBtn:pressed{
-    -fx-background-color: limegreen;
+    -fx-background-color: #48c200;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
@@ -90,7 +94,7 @@ Id's til TeacherSkabelonerView
 }
 
 /**
-Id's til AddStudentView
+CSS til tableviews
  */
 
 .table-view {
@@ -141,4 +145,43 @@ Id's til AddStudentView
 
 .table-column {
     -fx-text-fill: white;
+}
+/**
+Id's til Tilføj / rediger / slet elever
+ */
+
+#AddOrEditLabel {
+    -fx-text-fill: white;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 24;
+}
+
+#AddOrEditTxtfield {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: white;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 18;
+}
+
+#AddOrEditBtn{
+    -fx-font-size: 14;
+    -fx-background-color: #55e600;
+    -fx-border-color: #55e600;
+    -fx-border-radius: 90;
+    -fx-background-radius: 90;
+}
+
+#AddOrEditBtn:hover{
+    -fx-border-color: #101a0a;
+    -fx-border-radius: 90;
+    -fx-background-radius: 90;
+}
+
+#AddOrEditBtn:pressed{
+    -fx-background-color: #48c200;
+    -fx-border-radius: 90;
+    -fx-background-radius: 90;
 }

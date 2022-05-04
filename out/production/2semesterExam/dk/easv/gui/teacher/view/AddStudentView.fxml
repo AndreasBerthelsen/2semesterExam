@@ -1,54 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" styleClass="backgroundColor" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.AddStudentController">
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
                      <children>
-                        <Label text="Fornavn" />
-                        <TextField />
+                        <Label id="AddOrEditLabel" text="Fornavn">
+                           <VBox.margin>
+                              <Insets left="20.0" right="187.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField id="AddOrEditTxtfield">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </TextField>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
                      <children>
-                        <Label text="Efternavn" />
-                        <TextField />
+                        <Label id="AddOrEditLabel" text="Efternavn">
+                           <VBox.margin>
+                              <Insets left="20.0" right="170.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField id="AddOrEditTxtfield">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </TextField>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="100.0" prefWidth="300.0">
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0">
                      <children>
-                        <Label text="Brugernavn" />
-                        <TextField />
+                        <Label id="AddOrEditLabel" text="Brugernavn">
+                           <VBox.margin>
+                              <Insets left="20.0" right="145.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField id="AddOrEditTxtfield">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </TextField>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="100.0" prefWidth="300.0">
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0">
                      <children>
-                        <Label text="Adgangskode" />
-                        <TextField />
+                        <Label id="AddOrEditLabel" text="Adgangskode">
+                           <VBox.margin>
+                              <Insets left="20.0" right="120.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField id="AddOrEditTxtfield">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </TextField>
                      </children>
                   </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
+               <children>
+                  <Button id="AddOrEditBtn" fx:id="saveBtn" alignment="CENTER" mnemonicParsing="false" onAction="#handleSaveBtn" prefHeight="37.0" prefWidth="84.0" text="Gem">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="120.0" top="10.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView id="SkabelonBtn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Images/save.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button id="AddOrEditBtn" fx:id="cancelBtn" alignment="CENTER" mnemonicParsing="false" onAction="#handleCancelBtn" text="Luk">
+                     <font>
+                        <Font name="Lucida Sans Regular" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Images/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </HBox>
          </children>
