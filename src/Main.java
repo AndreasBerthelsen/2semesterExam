@@ -26,12 +26,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/login/view/LoginView.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/Teacher/view/NySkabelonMain.fxml")));
         Scene scene = new Scene(parent);
         stage.setTitle("SOSU FS3");
         stage.setResizable(true);
         stage.setScene(scene);
-        stage.setMaximized(false);
+        stage.setMaximized(true);
         //stage.setFullScreen(true); Giver en F11 fullscreen
         stage.show();
     }

@@ -8,7 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,13 +52,14 @@ public class NySkabelonMainController implements Initializable {
     private void setupFunkTab() {
         HashMap<Integer, String> tilstandsList = sM.getFunktionsTilstande();
         HashMap<Integer, ArrayList<String>> problemMap = sM.getFunktionsVandskligheder();
-        int index = 0;
+        List<Image> imageList = createImages();
         for (int key : tilstandsList.keySet()) {
             //tab for hver afdeling
             Tab tab = new Tab(tilstandsList.get(key));
 
-            VBox contentVBox = new VBox(20);
-            contentVBox.prefHeight(Region.USE_COMPUTED_SIZE);
+            VBox contentVBox = new VBox(80);
+            contentVBox.setPrefWidth(800);
+
             for (String string : problemMap.get(key)) {
                 //underpunkter
                 VBox section = new VBox();
@@ -66,12 +72,13 @@ public class NySkabelonMainController implements Initializable {
                 gridPane.setVgap(10);
                 gridPane.addRow(1, new Label("Nuværende Niveau"), new Label("Forventet Niveau"));
 
-                ComboBox<ImageView> currentBox = createNiveauComboBox(); // måske replace med combobox factory
-                ComboBox<String> targetBox = createTargetComboBox(); //Udføre selv | Udfører dele af aktiviteten | Udfører ikke selv aktiviteten | Ikke relevant
+                ComboBox<ImageView> currentBox = createNiveauComboBox(imageList, string); // måske replace med combobox factory
+                ComboBox<String> targetBox = createTargetComboBox(string); //Udføre selv | Udfører dele af aktiviteten | Udfører ikke selv aktiviteten | Ikke relevant
                 gridPane.addRow(2, currentBox, targetBox);
 
                 Label boxTitle = new Label("Borgerens Ønsker og mål");
                 TextArea textArea = new TextArea();
+                textArea.setId(string+"TextArea");
                 textArea.setWrapText(true);
 
                 section.getChildren().addAll(headerBox, gridPane, boxTitle, textArea);
@@ -79,11 +86,11 @@ public class NySkabelonMainController implements Initializable {
 
 
                 //TODO FIX SCROLLPANE SCROLL???
-                ScrollPane scrollPane = new ScrollPane(contentVBox);
-                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-                scrollPane.prefHeight(11140);
-                scrollPane.prefWidth(5000);
+                ScrollPane scrollPane = new ScrollPane();
+                scrollPane.setContent(contentVBox);
+
+
+                scrollPane.setPrefSize(contentVBox.getPrefWidth() + 20, 700);
                 tab.setContent(scrollPane);
             }
             funktionInnerTabPane.getTabs().add(tab);
@@ -91,23 +98,29 @@ public class NySkabelonMainController implements Initializable {
 
     }
 
-    private ComboBox<String> createTargetComboBox() {
+    private ComboBox<String> createTargetComboBox(String id) {
+        String idSuffix = "Target";
         ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setId(id + idSuffix);
         comboBox.getItems().add("Udføre selv");
         comboBox.getItems().add("Udfører dele af aktiviteten");
-        comboBox.getItems().add("Udfører ikke selv aktiviteten");
+        comboBox.getItems().add("Udfører ikke selv aktviteten");
         comboBox.getItems().add("Ikke relevant");
         return comboBox;
     }
 
-    private ComboBox<ImageView> createNiveauComboBox() {
+    private ComboBox<ImageView> createNiveauComboBox(List<Image> imageList, String id) {
+        String idSuffix = "Current";
+
         List<ImageView> imgViewList = new ArrayList<>();
-        for(Image image : createImages()){
+        for (Image image : imageList) {
             imgViewList.add(new ImageView(image));
         }
         ComboBox<ImageView> comboBox = new ComboBox<>(
                 FXCollections.observableArrayList(imgViewList)
         );
+
+        comboBox.setId(id + idSuffix);
         //TODO STOP MED A LOADE ALT FOR MANGE BILLDER APP TAGER 3 SEC OM AT ÅBNE
         //TODO update databasen med nye textfelt + forventet status
         comboBox.setButtonCell(new ListCell<>() {
@@ -122,8 +135,6 @@ public class NySkabelonMainController implements Initializable {
                                    }
                                }
         );
-
-
         return comboBox;
     }
 
@@ -141,7 +152,7 @@ public class NySkabelonMainController implements Initializable {
         //5 ikke en god ide, ændre til funktion mængder??
         for (int i = 0; i <= 5; i++) {
             Image image = new Image("/dk/easv/Images/funktion" + i + ".png");
-           list.add(image);
+            list.add(image);
         }
         return list;
     }
@@ -158,13 +169,36 @@ public class NySkabelonMainController implements Initializable {
         }
          */
 
-
+        // Giga forloop for at tjekke alle inputs i funktioninnerpane
         for (Tab tab : funktionInnerTabPane.getTabs()) {
-            GridPane gridPane = (GridPane) tab.getContent();
-            for (Node n : gridPane.getChildren()) {
-                if (n instanceof RadioButton radioButton) {
-                    if (radioButton.isSelected()) {
-                        System.out.println(radioButton.getId());
+            ScrollPane scrollPane = (ScrollPane) tab.getContent();
+            VBox contentVBox = (VBox) scrollPane.getContent();
+            List<Node> list = contentVBox.getChildren();
+            for (Node n : list) {
+                if (n instanceof VBox section) {
+                    for (Node sN : section.getChildren()) {
+                        //3 cases nu combobox, ønsket combobox og textarea
+                        if (sN instanceof GridPane gridPane){
+                            for(Node gN : gridPane.getChildren()){
+                                if (gN instanceof ComboBox comboBox) {
+                                    String comboId = comboBox.getId();
+                                    if (comboId != null) {
+                                        if (comboId.endsWith("Current")) {
+                                            int index = comboBox.getSelectionModel().getSelectedIndex();
+                                            System.out.println(comboId + ": " + index);
+                                        } else if (comboId.endsWith("Target")) {
+                                            int index = comboBox.getSelectionModel().getSelectedIndex();
+                                            System.out.println(comboId + ": " + index);
+                                        }
+                                    }
+                                }
+                            }
+                        }else if (sN instanceof TextArea textArea){
+                            String string = textArea.getText();
+                            if(!string.isBlank()){
+                                System.out.println(textArea.getId() + string);
+                            }
+                        }
                     }
                 }
             }
