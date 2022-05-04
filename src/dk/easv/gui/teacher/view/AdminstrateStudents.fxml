@@ -25,7 +25,7 @@
                <children>
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleAddStudentBtn" text="Tilføj" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" text="Rediger" />
-                  <Button id="SkabelonBtn" mnemonicParsing="false" text="Slet" />
+                  <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleDeleteStudentBtn" text="Slet" />
                </children>
             </HBox>
             <TableView fx:id="studentTable" prefHeight="600.0" prefWidth="1150.0">

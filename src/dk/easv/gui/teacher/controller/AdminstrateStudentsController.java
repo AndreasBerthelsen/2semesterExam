@@ -7,6 +7,7 @@ import dk.easv.gui.teacher.model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,6 +45,18 @@ public class AdminstrateStudentsController extends SuperController implements In
             studentTable.setItems(uM.getObservableStudents());
         } catch (SQLServerException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void handleDeleteStudentBtn(ActionEvent actionEvent) {
+        if (studentTable.getSelectionModel().getSelectedItem() == null) {
+            errorMessage("Vælg den elev, som du vil slette");
+        } else {
+            User user = (User) studentTable.getSelectionModel().getSelectedItem();
+            if (confirmationBox("Er du sikker på, at du vil slette" + " " + user.getFirstname() + " " + user.getLastname() + "?").get() == ButtonType.YES) {
+                uM.deleteUser(user);
+                studentTable.getItems().remove(user);
+            }
         }
     }
 }

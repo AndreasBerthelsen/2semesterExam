@@ -28,4 +28,9 @@ public class UserManager {
     public List<User> getAllTeachers() throws SQLServerException {
         return facade.getAllUsers(UserType.TEACHER);
     }
+
+    public void deleteUser(User user)  {
+        facade.deleteUser(user);
+    }
+
 }

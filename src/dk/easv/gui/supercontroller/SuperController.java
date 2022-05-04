@@ -9,10 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public abstract class SuperController {
 
@@ -145,4 +147,8 @@ public abstract class SuperController {
         }
     }
 
+    public Optional<ButtonType> confirmationBox(String string){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,string,ButtonType.YES,ButtonType.NO);
+        return alert.showAndWait();
+    }
 }
