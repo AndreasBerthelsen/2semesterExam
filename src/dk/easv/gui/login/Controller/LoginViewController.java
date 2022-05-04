@@ -38,8 +38,8 @@ public class LoginViewController extends SuperController {
             if (user != null){
                 UserType type = user.getType();
                 switch (type) {
-                    case TEACHER -> openScene(user, "/dk/easv/gui/teacher/view/TeacherViewMain.fxml", "TeacherView", actionEvent);
-                    case STUDENT -> openScene(user, "/dk/easv/gui/elev/View/ElevView.fxml", "StudentView", actionEvent);
+                    case TEACHER -> openSceneAsUser(user, "/dk/easv/gui/teacher/view/TeacherViewMain.fxml", "TeacherView", actionEvent);
+                    case STUDENT -> openSceneAsUser(user, "/dk/easv/gui/elev/View/ElevView.fxml", "StudentView", actionEvent);
                 }
             } else {
                 errorMessage("Fejl i brugernavn eller adgangskode");
