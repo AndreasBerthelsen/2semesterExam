@@ -26,6 +26,7 @@ public class NySkabelonMainController implements Initializable {
     public TabPane funktionInnerTabPane;
     public TabPane helbredsInnerTabPane;
     private  HashMap<String, ToggleGroup> toggleMap = new HashMap<>();
+    private  HashMap<String, TextArea> textAreaMap = new HashMap<>();
 
 
     CitizenModel sM = new CitizenModel();
@@ -154,7 +155,7 @@ public class NySkabelonMainController implements Initializable {
                 gridPane.setHgap(50);
                 TextArea textArea = new TextArea();
                 textArea.setWrapText(true);
-
+                ArrayList<TextArea> textAreaArrayList = createTextArea(textAreaMap, subTitles, index);
                 gridPane.addRow(index, labelSub,radioButtonList.get(0),radioButtonList.get(1),radioButtonList.get(2), textArea);
                 index++;
             }
@@ -190,6 +191,16 @@ public class NySkabelonMainController implements Initializable {
         }
         toggleMap.put(toggleMapKey, toggleGroup);
         return radioList;
+    }
+
+    private ArrayList<TextArea> createTextArea(HashMap<String, TextArea> helbredsTextMap, String textAreaKey, int index){
+        ArrayList<TextArea> textAreas = new ArrayList<>();
+        TextArea textArea = new TextArea();
+        for (int i = 0; i < index; i++){
+            textAreas.add(textArea);
+        }
+        helbredsTextMap.put(textAreaKey, textArea);
+        return textAreas;
     }
 
 
