@@ -42,3 +42,20 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
+
+.button{
+    -fx-font-size: 15;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #55e600;
+    -fx-border-width: 2;
+    -fx-background-color: #55e600;
+}
+
+.button:hover{
+    -fx-border-color:#389900;
+}
+.button:pressed{
+    -fx-text-fill: white;
+    -fx-background-color:#389900;
+}
