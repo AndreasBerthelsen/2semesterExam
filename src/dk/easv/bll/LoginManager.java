@@ -17,10 +17,4 @@ public class LoginManager {
     public User loginUser(String username, String password) throws SQLException {
        return facade.loginUser(username, password);
     }
-
-    public void createUser(String firstName, String lastName, String username, String password, UserType userType) throws SQLException {
-        String salt = BCrypt.gensalt();
-        String hashedPassword = BCrypt.hashpw(password, salt);
-        facade.createUser(firstName, lastName,username, hashedPassword, salt, userType);
-    }
 }
