@@ -24,13 +24,14 @@ public class UserDAO implements IUserDAO {
 
     /**
      * Ikke færdig, mangler input til navn og rollefordeling OG POTENTIELT ALT MULIGT ANDET SOM SKOLE OG KLASSE
+     *
      * @param username
      * @param hashedPassword
      */
 
     @Override
-    public void createUser(String firstName,String lastName,String username, String hashedPassword, String salt, UserType userType) {
-        try (Connection connection = dc.getConnection()){
+    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) {
+        try (Connection connection = dc.getConnection()) {
             String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt) VALUES (?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, firstName);
@@ -40,8 +41,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(5, userType.getI());
             preparedStatement.setString(6, salt);
             preparedStatement.execute();
-        }
-        catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -57,7 +57,7 @@ public class UserDAO implements IUserDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userType.getI());
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("userID");
                 String fName = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
@@ -68,6 +68,33 @@ public class UserDAO implements IUserDAO {
             throwables.printStackTrace();
         }
         return allUsers;
+    }
+
+    @Override
+    public void deleteUser(User userToBeDeleted) {
+        try (Connection connection = dc.getConnection()) {
+            String sql = "DELETE FROM [User] WHERE userID = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userToBeDeleted.getId());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        try (Connection connection = dc.getConnection()) {
+            String sql = "UPDATE [User] SET fName = ?, lName =?, username=? WHERE userID=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setInt(4, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 
