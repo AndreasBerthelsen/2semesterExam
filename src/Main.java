@@ -13,13 +13,13 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
          ILoginDAO iLoginDAO = new LoginDAO();
-         ITeacherDAO iTeacherDAO = new TeacherDAO();
+         IUserDAO iUserDAO = new UserDAO();
          ICitizienDAO iCitizienDAO = new CitizienDAO();
          IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
          IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
          IHealthDAO iHealthDAO = new HealthDAO();
 
-        Facade.createInstance(iLoginDAO,iCitizienDAO,iTeacherDAO,iGenInfoDAO,iFunktionsDAO, iHealthDAO);
+        Facade.createInstance(iLoginDAO,iCitizienDAO,iUserDAO,iGenInfoDAO,iFunktionsDAO, iHealthDAO);
 
         launch();
     }

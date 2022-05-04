@@ -41,5 +41,6 @@ public class AddStudentController extends SuperController {
     }
 
     public void handleCancelBtn(ActionEvent actionEvent) {
+        closeWindow(cancelBtn);
     }
 }

@@ -9,7 +9,7 @@ import dk.easv.be.Category;
 import dk.easv.dal.interfaces.ICitizienDAO;
 import dk.easv.dal.interfaces.IHealthDAO;
 import dk.easv.dal.interfaces.ILoginDAO;
-import dk.easv.dal.interfaces.ITeacherDAO;
+import dk.easv.dal.interfaces.IUserDAO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,24 +23,24 @@ public class Facade {
 
     private static Facade instance;
     private ILoginDAO iLoginDAO;
-    private ITeacherDAO iTeacherDAO;
+    private IUserDAO iUserDAO;
     private ICitizienDAO iCitizienDAO;
     private IHealthDAO iHealthDAO;
     private IGenInfoDAO iGenInfoDAO;
     private IFunktionsDAO iFunktionsDAO;
 
-    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
+    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
         this.iLoginDAO = iLoginDAO;
-        this.iTeacherDAO = iTeacherDAO;
+        this.iUserDAO = iUserDAO;
         this.iCitizienDAO = iCitizienDAO;
         this.iGenInfoDAO = iGenInfoDAO;
         this.iFunktionsDAO = iFunktionsDAO;
         this.iHealthDAO = iHealthDAO;
     }
 
-    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, ITeacherDAO iTeacherDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
+    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
         if (instance == null) {
-            instance = new Facade(iLoginDAO, iCitizienDAO, iTeacherDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO);
+            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO);
         }
     }
 
@@ -75,7 +75,7 @@ public class Facade {
     }
 
     public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException {
-        iTeacherDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
+        iUserDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
     }
 
     public HashMap<Integer, String> getHelbredsTilstande() {

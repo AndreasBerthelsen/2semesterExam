@@ -1,18 +1,19 @@
 package dk.easv.dal;
 
 import dk.easv.be.UserType;
-import dk.easv.dal.interfaces.ITeacherDAO;
+import dk.easv.dal.interfaces.IUserDAO;
+import dk.easv.dal.interfaces.IUserDAO;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class TeacherDAO implements ITeacherDAO {
+public class UserDAO implements IUserDAO {
     private DatabaseConnector dc;
 
 
-    public TeacherDAO() throws IOException {
+    public UserDAO() throws IOException {
         dc = new DatabaseConnector();
     }
 
