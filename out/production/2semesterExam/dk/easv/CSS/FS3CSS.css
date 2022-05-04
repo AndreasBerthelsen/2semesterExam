@@ -62,16 +62,20 @@ Id's til TeacherSkabelonerView
     -fx-font-size: 20;
     -fx-background-color: lightgreen;
     -fx-border-color: lightgreen;
-    -fx-border-width: 2px;
+    -fx-border-radius: 90;
+    -fx-background-radius: 90;
 }
 
 #SkabelonBtn:hover{
     -fx-border-color: limegreen;
-    -fx-border-width: 2px;
+    -fx-border-radius: 90;
+    -fx-background-radius: 90;
 }
 
 #SkabelonBtn:pressed{
     -fx-background-color: limegreen;
+    -fx-border-radius: 90;
+    -fx-background-radius: 90;
 }
 
 #menuVBox{
@@ -81,6 +85,60 @@ Id's til TeacherSkabelonerView
 .split-menu-button{
     -fx-font-size: 25;
 }
-#skabelonLabel{
+#skabelonLabel {
     -fx-font-size: 25;
+}
+
+/**
+Id's til AddStudentView
+ */
+
+.table-view {
+    -fx-background-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-insets: 0 0 10 0;
+    -fx-padding: 0 0 10 0;
+    -fx-font-size: 14;
+    -fx-font-family: "Lucida Sans";
+}
+
+.table-view .column-header-background {
+    -fx-background-radius: 10;
+    -fx-background-insets: 0 0 10 0;
+    -fx-padding: 0 0 10 0;
+    -fx-font-size: 14;
+    -fx-font-family: "Lucida Sans";
+}
+
+.table-view .column-header, table-view .filler{
+    -fx-size: 40;
+    -fx-border-width: 0 0 10 0;
+}
+
+.table-row-cell{
+    -fx-background-color: rgba(0,0,0,0.7);
+    -fx-font-weight:bold;
+    -fx-font-size: 14;
+    -fx-font-family: "Lucida Sans";
+    -fx-text-alignment: center;
+}
+.table-row-cell.table-row-cell:filled:focused:selected {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.9), 10, 0, 0, 0);
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.9), 10, 0, 0, 0);
+}
+
+
+.table-view .virtual-flow .scroll-bar .increment-button,
+.table-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+
+.table-column {
+    -fx-text-fill: white;
 }

@@ -22,7 +22,7 @@ public class TeacherViewMainController {
     }
 
     public void handleEleverbtn(ActionEvent actionEvent) throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/AdminstrateStudents.fxml")));
         borderpane.setCenter(pane);
     }
 }
