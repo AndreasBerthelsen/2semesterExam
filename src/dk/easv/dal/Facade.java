@@ -89,4 +89,10 @@ public class Facade {
     public List<User> getAllUsers(UserType userType) throws SQLServerException {
         return iUserDAO.getAllUsers(userType);
     }
+    public void deleteUser(User user){
+        iUserDAO.deleteUser(user);
+    }
+    public void updateUser(User user){
+        iUserDAO.updateUser(user);
+    }
 }
