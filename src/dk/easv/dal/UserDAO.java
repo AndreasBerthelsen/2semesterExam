@@ -1,5 +1,7 @@
 package dk.easv.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.dal.interfaces.IUserDAO;
 import dk.easv.dal.interfaces.IUserDAO;
@@ -7,7 +9,10 @@ import dk.easv.dal.interfaces.IUserDAO;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO implements IUserDAO {
     private DatabaseConnector dc;
@@ -40,4 +45,30 @@ public class UserDAO implements IUserDAO {
             throwables.printStackTrace();
         }
     }
+
+
+    @Override
+    public List<User> getAllUsers(UserType userType) throws SQLServerException {
+        ArrayList<User> allUsers = new ArrayList<>();
+        try(Connection connection = dc.getConnection()) {
+            String sql = "SELECT [User].userID, [User].fName, [User].lName, [User].username" +
+                    "FROM [User] \n" +
+                    "WHERE roleID = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userType.getI());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("userID");
+                String fName = resultSet.getString("fName");
+                String lName = resultSet.getString("lName");
+                String username = resultSet.getString("username");
+                allUsers.add(new User(id, fName, lName, username, userType));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return allUsers;
+    }
+    
+
 }

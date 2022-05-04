@@ -85,4 +85,8 @@ public class Facade {
     public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
         return iHealthDAO.getHelbredsVanskligheder();
     }
+
+    public List<User> getAllUsers(UserType userType){
+        return iUserDAO.getAllUsers(userType);
+    }
 }
