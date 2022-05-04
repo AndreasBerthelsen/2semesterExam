@@ -153,9 +153,7 @@ public class NySkabelonMainController implements Initializable {
                 Label labelSub = new Label(subTitles);
                 ArrayList<RadioButton> radioButtonList = createRadioButtons(toggleMap, subTitles);
                 gridPane.setHgap(50);
-                TextArea textArea = new TextArea();
-                textArea.setWrapText(true);
-                ArrayList<TextArea> textAreaArrayList = createTextArea(textAreaMap, subTitles, index);
+                TextArea textArea = createTextArea(textAreaMap, subTitles);
                 gridPane.addRow(index, labelSub,radioButtonList.get(0),radioButtonList.get(1),radioButtonList.get(2), textArea);
                 index++;
             }
@@ -189,18 +187,36 @@ public class NySkabelonMainController implements Initializable {
             radio.setUserData(radioNames.get(i));
             radioList.add(radio);
         }
+        radioList.get(0).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textAreaMap.get(toggleMapKey).setDisable(false);
+            }
+        });
+        radioList.get(1).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textAreaMap.get(toggleMapKey).setDisable(false);
+            }
+        });
+        radioList.get(2).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textAreaMap.get(toggleMapKey).setDisable(true);
+
+            }
+        });
         toggleMap.put(toggleMapKey, toggleGroup);
         return radioList;
     }
 
-    private ArrayList<TextArea> createTextArea(HashMap<String, TextArea> helbredsTextMap, String textAreaKey, int index){
-        ArrayList<TextArea> textAreas = new ArrayList<>();
+
+    private TextArea createTextArea(HashMap<String, TextArea> helbredsTextMap, String textAreaKey){
         TextArea textArea = new TextArea();
-        for (int i = 0; i < index; i++){
-            textAreas.add(textArea);
-        }
+        textArea.setWrapText(true);
+        textArea.setDisable(true);
         helbredsTextMap.put(textAreaKey, textArea);
-        return textAreas;
+        return textArea;
     }
 
 
@@ -249,10 +265,18 @@ public class NySkabelonMainController implements Initializable {
                 }
             }
         }*/
+        /*
         for (String key: toggleMap.keySet()){
             ToggleGroup currentGroup = toggleMap.get(key);
             if ( currentGroup.getSelectedToggle() != null){
                 System.out.println(key + ": " + currentGroup.getSelectedToggle().getUserData());
+            }
+        }
+         */
+        for (String key: textAreaMap.keySet()){
+            TextArea textArea = textAreaMap.get(key);
+            if (!textArea.isDisabled()){
+                System.out.println(key + ": " + textArea.getText());
             }
         }
     }
