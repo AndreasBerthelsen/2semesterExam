@@ -75,7 +75,7 @@ public class Facade {
     }
 
     public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException {
-        iLoginDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
+        iTeacherDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
     }
 
     public HashMap<Integer, String> getHelbredsTilstande() {

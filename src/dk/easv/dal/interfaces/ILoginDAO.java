@@ -9,6 +9,4 @@ import java.sql.SQLException;
 public interface ILoginDAO {
 
     User loginUser(String username, String password) throws SQLException;
-
-    void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException;
 }
