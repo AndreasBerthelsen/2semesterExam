@@ -3,6 +3,7 @@ package dk.easv.gui.teacher.controller;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -15,17 +16,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
+
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class NySkabelonMainController implements Initializable {
     public BorderPane borderpane;
     public javafx.scene.control.ScrollPane genScrollPane;
     public TabPane funktionInnerTabPane;
     public TabPane helbredsInnerTabPane;
+    private  HashMap<String, ToggleGroup> toggleMap = new HashMap<>();
+
 
     CitizenModel sM = new CitizenModel();
 
@@ -142,8 +143,25 @@ public class NySkabelonMainController implements Initializable {
         //gen tabs -> gridpane -> header + radiobuttons -> textArea (Radio buttons event handler til inactive textArea)
         HashMap<Integer, String> tilstandsMap = sM.getHelbredsTilstande();
         HashMap<Integer, ArrayList<String>> vansklighedsMap = sM.getHelbredVanskligheder();
+        for (int key: tilstandsMap.keySet()){
+            Tab tab = new Tab(tilstandsMap.get(key));
+            GridPane gridPane = new GridPane();
+            ScrollPane scrollPane = new ScrollPane();
+            int index = 0;
+            for (String subTitles: vansklighedsMap.get(key)){
+                Label labelSub = new Label(subTitles);
+                ArrayList<RadioButton> radioButtonList = createRadioButtons(toggleMap, subTitles);
+                gridPane.setHgap(50);
+                TextArea textArea = new TextArea();
+                textArea.setWrapText(true);
 
-
+                gridPane.addRow(index, labelSub,radioButtonList.get(0),radioButtonList.get(1),radioButtonList.get(2), textArea);
+                index++;
+            }
+            scrollPane.setContent(gridPane);
+            tab.setContent(scrollPane);
+            helbredsInnerTabPane.getTabs().add(tab);
+        }
     }
 
 
@@ -155,6 +173,23 @@ public class NySkabelonMainController implements Initializable {
             list.add(image);
         }
         return list;
+    }
+    private ArrayList<RadioButton> createRadioButtons(HashMap<String, ToggleGroup> toggleMap, String toggleMapKey){
+        ArrayList<RadioButton> radioList = new ArrayList<>();
+        ToggleGroup toggleGroup = new ToggleGroup();
+        ArrayList<String> radioNames = new ArrayList<>();
+        radioNames.add("Relevant");
+        radioNames.add("Potentielt");
+        radioNames.add("Ikke relevant");
+
+        for (int i = 0; i < 3; i++){
+            RadioButton radio = new RadioButton(radioNames.get(i));
+            radio.setToggleGroup(toggleGroup);
+            radio.setUserData(radioNames.get(i));
+            radioList.add(radio);
+        }
+        toggleMap.put(toggleMapKey, toggleGroup);
+        return radioList;
     }
 
 
@@ -168,7 +203,7 @@ public class NySkabelonMainController implements Initializable {
             }
         }
          */
-
+/*
         // Giga forloop for at tjekke alle inputs i funktioninnerpane
         for (Tab tab : funktionInnerTabPane.getTabs()) {
             ScrollPane scrollPane = (ScrollPane) tab.getContent();
@@ -201,6 +236,12 @@ public class NySkabelonMainController implements Initializable {
                         }
                     }
                 }
+            }
+        }*/
+        for (String key: toggleMap.keySet()){
+            ToggleGroup currentGroup = toggleMap.get(key);
+            if ( currentGroup.getSelectedToggle() != null){
+                System.out.println(key + ": " + currentGroup.getSelectedToggle().getUserData());
             }
         }
     }
