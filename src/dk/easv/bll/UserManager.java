@@ -1,15 +1,18 @@
 package dk.easv.bll;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.dal.BCrypt;
 import dk.easv.dal.Facade;
 
 import java.sql.SQLException;
+import java.util.List;
 
-public class TeacherManager {
+public class UserManager {
     Facade facade;
 
-    public TeacherManager() {
+    public UserManager() {
         facade = Facade.getInstance();
     }
 
@@ -17,5 +20,12 @@ public class TeacherManager {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
         facade.createUser(firstName, lastName,username, hashedPassword, salt, userType);
+    }
+
+    public List<User> getAllStudents() throws SQLServerException {
+        return facade.getAllUsers(UserType.STUDENT);
+    }
+    public List<User> getAllTeachers() throws SQLServerException {
+        return facade.getAllUsers(UserType.TEACHER);
     }
 }

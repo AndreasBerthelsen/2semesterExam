@@ -28,15 +28,15 @@
                   <Button id="SkabelonBtn" mnemonicParsing="false" text="Slet" />
                </children>
             </HBox>
-            <TableView prefHeight="600.0" prefWidth="1150.0">
+            <TableView fx:id="studentTable" prefHeight="600.0" prefWidth="1150.0">
                <VBox.margin>
                   <Insets bottom="100.0" left="100.0" right="100.0" />
                </VBox.margin>
                <columns>
                   <TableColumn prefWidth="0.0" text="Liste af elever">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Fornavn" />
-                        <TableColumn prefWidth="75.0" text="Efternavn" />
+                        <TableColumn fx:id="firstnameCol" prefWidth="75.0" text="Fornavn" />
+                        <TableColumn fx:id="lastnameCol" prefWidth="75.0" text="Efternavn" />
                      </columns>
                   </TableColumn>
                </columns>
