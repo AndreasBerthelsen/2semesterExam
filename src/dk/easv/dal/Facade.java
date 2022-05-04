@@ -86,7 +86,7 @@ public class Facade {
         return iHealthDAO.getHelbredsVanskligheder();
     }
 
-    public List<User> getAllUsers(UserType userType){
+    public List<User> getAllUsers(UserType userType) throws SQLServerException {
         return iUserDAO.getAllUsers(userType);
     }
 }
