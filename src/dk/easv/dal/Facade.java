@@ -1,6 +1,7 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.Section;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.dal.interfaces.*;
@@ -84,5 +85,17 @@ public class Facade {
 
     public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
         return iHealthDAO.getHelbredsVanskligheder();
+    }
+
+    public List<Section> getFunkSections(){
+        return iFunktionsDAO.getFunkSections();
+    }
+
+    public List<Section> getHealthSections(){
+        return iHealthDAO.getHealthSections();
+    }
+
+    public void saveTemplate() {
+        //todo save et sted??
     }
 }

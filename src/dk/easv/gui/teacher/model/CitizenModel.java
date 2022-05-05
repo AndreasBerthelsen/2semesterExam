@@ -1,9 +1,11 @@
 package dk.easv.gui.teacher.model;
 
+import dk.easv.be.Section;
 import dk.easv.bll.CitizenManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class CitizenModel {
     CitizenManager cM = new CitizenManager();
@@ -25,5 +27,17 @@ public class CitizenModel {
 
     public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
         return cM.getHelbredVanskligheder();
+    }
+
+    public List<Section> getFunkSections() {
+        return cM.getFunkSections();
+    }
+
+    public List<Section> getHealthSections(){
+        return cM.getHealthSections();
+    }
+
+    public void saveTemplate() {
+        cM.saveTemplate();
     }
 }
