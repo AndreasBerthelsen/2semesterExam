@@ -92,6 +92,11 @@ public class Facade {
         return iCitizienDAO.getAllCitizens();
     }
 
+
+    public List<Citizen> getAllCitiziensFromUser(User user) {
+        return iCitizienDAO.getAllCitizensFromUser(user);
+    }
+
     public void createCitizen(String fname, String lname, Date birthDay) {
         iCitizienDAO.createCitizen(fname, lname, birthDay);
     }
@@ -107,6 +112,7 @@ public class Facade {
     public List<Section> getHealthSections() {
         return iHealthDAO.getHealthSections();
     }
+
 
     public void saveTemplate(Citizen citizen) throws SQLServerException {
         iCitizienDAO.createTemplate(citizen);

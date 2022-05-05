@@ -45,6 +45,7 @@ public class NySkabelonMainController implements Initializable {
     public NySkabelonMainController() throws IOException {
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupGeneralInfo();
@@ -131,7 +132,6 @@ public class NySkabelonMainController implements Initializable {
             helbredsInnerTabPane.getTabs().add(tab);
         }
 
-        //___________________________________________________________________________________________________________________________________________________________________
 
     }
 
@@ -244,8 +244,7 @@ public class NySkabelonMainController implements Initializable {
         String fname=fNameInput.getText().trim();
         String lname=lNameInput.getText().trim();
         java.sql.Date date = Date.valueOf(dateInput.getValue().toString());
-
-
+        
         sM.saveTemplate(new Citizen(fname,lname,date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo));
     }
 

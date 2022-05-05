@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -30,7 +29,7 @@
             <VBox alignment="TOP_CENTER">
                <children>
                   <Label id="overskriftLbl" alignment="CENTER" contentDisplay="CENTER" text="Skabeloner" />
-                  <TableView fx:id="templateTableView" prefHeight="700.0" prefWidth="200.0">
+                  <TableView fx:id="templateTableView" prefHeight="300.0" prefWidth="200.0">
                     <columns>
                       <TableColumn prefWidth="75.0" text="C1" />
                       <TableColumn prefWidth="75.0" text="C2" />
@@ -50,14 +49,12 @@
             <VBox alignment="TOP_CENTER">
                <children>
                   <Label id="overskriftLbl" text="Borgere" />
-                  <TreeTableView id="treeTable" fx:id="citizenTreeTableView" prefHeight="700.0" prefWidth="200.0">
+                  <TableView fx:id="citizenTableView" prefHeight="300.0" prefWidth="200.0">
                     <columns>
-                      <TreeTableColumn id="treeTableHeader" fx:id="citizenTreeColumn" prefWidth="75.0" text="C1" />
+                      <TableColumn fx:id="citizenFnameCol" prefWidth="75.19995422363263" text="Fornavn" />
+                        <TableColumn fx:id="citizenLnameCol" prefWidth="124.80003356933594" text="Efternavn" />
                     </columns>
-                     <columnResizePolicy>
-                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TreeTableView>
+                  </TableView>
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
@@ -69,17 +66,26 @@
             <VBox alignment="TOP_CENTER">
                <children>
                   <Label id="overskriftLbl" text="Elever" />
-                  <TreeTableView id="treeTable" fx:id="studentTreeTableView" prefHeight="700.0" prefWidth="200.0">
+                  <TableView fx:id="studentTableView" prefHeight="300.0" prefWidth="200.0">
                     <columns>
-                      <TreeTableColumn id="treeTableHeader" fx:id="studentTreeColumn" prefWidth="75.0" text="C1" />
+                      <TableColumn fx:id="studentFnameCol" prefWidth="84.800048828125" text="Fornavn" />
+                        <TableColumn fx:id="studentLnameCol" prefWidth="114.39996337890625" text="Efternavn" />
                     </columns>
-                     <columnResizePolicy>
-                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TreeTableView>
+                  </TableView>
                </children>
             </VBox>
          </children>
       </HBox>
    </center>
+   <bottom>
+      <TableView fx:id="displayTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="citizenDisplayFname" prefWidth="581.5999267578127" text="C1" />
+          <TableColumn fx:id="studentDisplayName" minWidth="0.0" prefWidth="569.5999145507812" text="C2" />
+        </columns>
+         <BorderPane.margin>
+            <Insets bottom="150.0" />
+         </BorderPane.margin>
+      </TableView>
+   </bottom>
 </BorderPane>

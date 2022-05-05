@@ -3,6 +3,8 @@ package dk.easv.gui.teacher.model;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
+import dk.easv.be.User;
+
 
 import dk.easv.be.Section;
 
@@ -18,8 +20,15 @@ import java.util.List;
 
 public class CitizenModel {
     CitizenManager cM = new CitizenManager();
+    private ObservableList<Citizen> citizenList;
 
     public CitizenModel() throws IOException {
+        citizenList = FXCollections.observableArrayList();
+        citizenList.addAll(getAllCitizens());
+    }
+
+    private List<Citizen> getAllCitizens() {
+        return cM.getAllCitizen();
     }
 
     public ArrayList<String> getGeneralinfoFields() {
@@ -44,11 +53,21 @@ public class CitizenModel {
 
 
     public ObservableList<Citizen> getAllCitizenObservable() {
+    citizenList.setAll(getAllCitizens());
+    return citizenList;
+    }
+
+    public ObservableList<Citizen> getAllCitizenFromUserObservable(User user){
         List<Citizen> tempCitizenList;
         ObservableList<Citizen> citizens = FXCollections.observableArrayList();
-        tempCitizenList = this.cM.getAllCitizen();
+        tempCitizenList = this.cM.getAllCitizenFromUser(user);
         citizens.addAll(tempCitizenList);
         return citizens;
+
+    }
+
+    public void addUserToCitizen(Citizen citizen, User user){
+        cM.addUserToCitizen(citizen, user);
     }
     public List<Section> getFunkSections() {
         return cM.getFunkSections();

@@ -13,4 +13,7 @@ public interface ICitizienDAO {
     void addUserToCitizen(User user, Citizen citizen);
 
     void createTemplate(Citizen citizen) throws SQLServerException;
+
+    List<Citizen> getAllCitizensFromUser(User user);
+
 }
