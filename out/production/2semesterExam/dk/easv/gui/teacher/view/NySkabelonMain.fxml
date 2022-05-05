@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../teacherCSS.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.NySkabelonMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../teacherCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.NySkabelonMainController">
 
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -42,11 +42,11 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Fødselsdato" GridPane.columnIndex="2" />
-                                          <DatePicker prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <DatePicker fx:id="dateInput" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <Label text="Fornavn" />
                                           <Label text="Efternavn" GridPane.columnIndex="1" />
-                                          <TextField GridPane.rowIndex="1" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="fNameInput" GridPane.rowIndex="1" />
+                                          <TextField fx:id="lNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                        <opaqueInsets>
                                           <Insets />

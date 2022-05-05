@@ -1,7 +1,12 @@
 package dk.easv.gui.teacher.model;
 
+
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
+
+
+import dk.easv.be.Section;
+
 import dk.easv.bll.CitizenManager;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -45,6 +50,7 @@ public class CitizenModel {
         return cM.getHelbredVanskligheder();
     }
 
+
     public ObservableList<Citizen> getAllCitizenObservable() {
     citizenList.setAll(getAllCitizens());
     return citizenList;
@@ -61,5 +67,17 @@ public class CitizenModel {
 
     public void addUserToCitizen(Citizen citizen, User user){
         cM.addUserToCitizen(citizen, user);
+    }
+    public List<Section> getFunkSections() {
+        return cM.getFunkSections();
+    }
+
+    public List<Section> getHealthSections(){
+        return cM.getHealthSections();
+    }
+
+    public void saveTemplate() {
+        cM.saveTemplate();
+
     }
 }
