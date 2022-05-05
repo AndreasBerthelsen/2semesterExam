@@ -44,8 +44,8 @@ public class Citizen {
         this.funkInfo = funkInfo;
         this.relevansMap = relevansMap;
         this.helbredInfo = helbredInfo;
-        this.fName = fName;
-        this.lName = lName;
+        this.firstname = fName;
+        this.lastname = lName;
         this.bDate = date;
     }
 

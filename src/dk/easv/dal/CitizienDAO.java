@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,8 +25,6 @@ public class CitizienDAO implements ICitizienDAO {
     public List<Citizen> getAllCitizens() {
         ArrayList<Citizen> allCitizen = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
-
-            String sql = "SELECT * FROM Borger";
 
             String sql = "SELECT borgerID, fName, lName, dato\n" +
                     "FROM Borger";
@@ -92,8 +89,8 @@ public class CitizienDAO implements ICitizienDAO {
             //skab borger -> udfyld journaler
             String sql = "INSERT INTO Borger (fname, lname, dato) VALUES (?,?,?)";
             PreparedStatement psB = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            psB.setString(1, citizen.getfName());
-            psB.setString(2, citizen.getlName());
+            psB.setString(1, citizen.getFirstname());
+            psB.setString(2, citizen.getLastname());
             psB.setDate(3, citizen.getbDate());
             psB.execute();
 
@@ -125,34 +122,37 @@ public class CitizienDAO implements ICitizienDAO {
                     .distinct()
                     .collect(Collectors.toList());
 
-            String sqlF= "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, note) values(?,?,?,?,?)";
+            String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, note) values(?,?,?,?,?)";
             PreparedStatement psF = connection.prepareStatement(sqlF);
-            for (int key :funkMasterKeys) {
-                psF.setInt(1,id);
-                psF.setInt(2,key);
-                psF.setInt(3,funkCurrentCombo.get(key));
-                psF.setInt(4,funkTargetCombo.get(key));
-                psF.setString(5,funkInfo.get(key));
+            for (int key : funkMasterKeys) {
+                psF.setInt(1, id);
+                psF.setInt(2, key);
+                psF.setInt(3, funkCurrentCombo.get(key));
+                psF.setInt(4, funkTargetCombo.get(key));
+                psF.setString(5, funkInfo.get(key));
                 psF.addBatch();
             }
             psF.executeBatch();
 
             //helbred
-            List<Integer> healthMasterKeys = Stream.of(healthInfoMap.keySet(),healthRelevansMap.keySet())
+            List<Integer> healthMasterKeys = Stream.of(healthInfoMap.keySet(), healthRelevansMap.keySet())
                     .flatMap(Collection::stream)
                     .distinct()
                     .collect(Collectors.toList());
-            String sqlH= "insert into Helbredsjournal(borgerID,problemID,value,relevans) values(?,?,?,?)";
+            String sqlH = "insert into Helbredsjournal(borgerID,problemID,value,relevans) values(?,?,?,?)";
             PreparedStatement psH = connection.prepareStatement(sqlH);
-            for (int key :healthMasterKeys) {
-                psH.setInt(1,id);
-                psH.setInt(2,key);
-                psH.setString(3,healthInfoMap.get(key));
-                psH.setInt(4,healthRelevansMap.get(key));
+            for (int key : healthMasterKeys) {
+                psH.setInt(1, id);
+                psH.setInt(2, key);
+                psH.setString(3, healthInfoMap.get(key));
+                psH.setInt(4, healthRelevansMap.get(key));
                 psH.addBatch();
             }
             psH.executeBatch();
-
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     public List<Citizen> getAllCitizensFromUser(User user) {
         List<Citizen> citizensFromUser = new ArrayList<>();
@@ -176,7 +176,6 @@ public class CitizienDAO implements ICitizienDAO {
             throwables.printStackTrace();
         }
 
-    }
 
 
         return citizensFromUser;

@@ -244,7 +244,7 @@ public class NySkabelonMainController implements Initializable {
         String fname=fNameInput.getText().trim();
         String lname=lNameInput.getText().trim();
         java.sql.Date date = Date.valueOf(dateInput.getValue().toString());
-        
+
         sM.saveTemplate(new Citizen(fname,lname,date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo));
     }
 
