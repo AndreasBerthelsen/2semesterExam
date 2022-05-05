@@ -41,8 +41,7 @@ public class NySkabelonMainController implements Initializable {
     public NySkabelonMainController() throws IOException {
     }
 
-    public NySkabelonMainController() throws IOException {
-    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -246,7 +245,7 @@ public class NySkabelonMainController implements Initializable {
         String lname="";
         Date date = new Date();
 
-        new Citizen(fname,lname,date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo);
+        new Citizen(fname,lname, (java.sql.Date) date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo);
        // sM.saveTemplate();
     }
 
