@@ -28,6 +28,10 @@ public class UserModel {
         uM.deleteUser(user);
     }
 
+    public void updateUser(User user) {
+        uM.udpateUser(user);
+    }
+
     public void createTeacher(String firstName, String lastName, String username, String password) throws SQLException {
         uM.createUser(firstName, lastName, username, password, UserType.TEACHER);
     }

@@ -24,7 +24,7 @@
             <HBox alignment="CENTER" prefHeight="175.0" prefWidth="1150.0" spacing="100.0">
                <children>
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleAddStudentBtn" text="Tilføj" />
-                  <Button id="SkabelonBtn" mnemonicParsing="false" text="Rediger" />
+                  <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleUpdateStudentBtn" text="Rediger" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleDeleteStudentBtn" text="Slet" />
                </children>
             </HBox>
