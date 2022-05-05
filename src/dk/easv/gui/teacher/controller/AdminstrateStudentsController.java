@@ -30,12 +30,6 @@ public class AdminstrateStudentsController extends SuperController implements In
         uM = new UserModel();
     }
 
-    public void handleAddStudentBtn(ActionEvent actionEvent) throws IOException, SQLServerException {
-        openScene("/dk/easv/gui/teacher/view/AddStudentView.fxml",true, "Tilføj en elev", false);
-        studentTable.setItems(uM.getObservableStudents());
-    }
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         firstnameCol.setCellValueFactory(new PropertyValueFactory<User, String>("Firstname"));
@@ -48,6 +42,11 @@ public class AdminstrateStudentsController extends SuperController implements In
         }
     }
 
+    public void handleAddStudentBtn(ActionEvent actionEvent) throws IOException, SQLServerException {
+        openScene("/dk/easv/gui/teacher/view/AddStudentView.fxml",true, "Tilføj en elev", false);
+        studentTable.setItems(uM.getObservableStudents());
+    }
+
     public void handleDeleteStudentBtn(ActionEvent actionEvent) {
         if (studentTable.getSelectionModel().getSelectedItem() == null) {
             errorMessage("Vælg den elev, som du vil slette");
@@ -57,6 +56,16 @@ public class AdminstrateStudentsController extends SuperController implements In
                 uM.deleteUser(user);
                 studentTable.getItems().remove(user);
             }
+        }
+    }
+
+    public void handleUpdateStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
+        User user = (User) studentTable.getSelectionModel().getSelectedItem();
+        if (user != null) {
+            openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev");
+            studentTable.setItems(uM.getObservableStudents());
+        } else {
+            errorMessage("Vælg den elev, som du vil redigere");
         }
     }
 }
