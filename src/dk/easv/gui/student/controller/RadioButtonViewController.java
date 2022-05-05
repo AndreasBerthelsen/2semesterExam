@@ -28,7 +28,7 @@ public class RadioButtonViewController implements Initializable {
     CitizenModel citizenModel = new CitizenModel();
 
 
-    public RadioButtonViewController(){
+    public RadioButtonViewController() throws IOException {
 
     }
 

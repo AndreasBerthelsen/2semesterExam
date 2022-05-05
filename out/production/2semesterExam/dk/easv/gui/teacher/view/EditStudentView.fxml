@@ -117,7 +117,15 @@
                         <Insets left="15.0" right="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button id="AddOrEditBtn" mnemonicParsing="false" text="Sæt ny adgangskode" />
+                  <Button id="AddOrEditBtn" mnemonicParsing="false" text="Sæt ny adgangskode">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../Images/adgangskode.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </VBox>
          </children>

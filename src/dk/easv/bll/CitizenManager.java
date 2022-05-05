@@ -1,6 +1,7 @@
 package dk.easv.bll;
 
 import dk.easv.be.Citizen;
+import dk.easv.be.User;
 import dk.easv.dal.CitizienDAO;
 import dk.easv.dal.Facade;
 
@@ -11,11 +12,10 @@ import java.util.List;
 
 public class CitizenManager {
     Facade facade;
-    private CitizienDAO citizienDAO;
+
 
     public CitizenManager() throws IOException {
         facade = Facade.getInstance();
-        citizienDAO = new CitizienDAO();
     }
 
     public ArrayList<String> getGeneralinfoFields(){
@@ -36,6 +36,14 @@ public class CitizenManager {
     }
 
     public List<Citizen> getAllCitizen(){
-        return citizienDAO.getAllCitizens();
+        return facade.getAllCitiziens();
+    }
+
+    public List<Citizen> getAllCitizenFromUser(User user){
+        return facade.getAllCitiziensFromUser(user);
+    }
+
+    public void addUserToCitizen(Citizen citizen, User user){
+        facade.addUserToCitizen(citizen, user);
     }
 }

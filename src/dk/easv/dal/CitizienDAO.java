@@ -21,11 +21,12 @@ public class CitizienDAO implements ICitizienDAO {
     @Override
     public List<Citizen> getAllCitizens() {
         ArrayList<Citizen> allCitizen = new ArrayList<>();
-        try (Connection connection = dc.getConnection()){
-            String sql = "SELECT * FROM Borger";
+        try (Connection connection = dc.getConnection()) {
+            String sql = "SELECT borgerID, fName, lName, dato\n" +
+                    "FROM Borger";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet =preparedStatement.executeQuery();
-            while (resultSet.next()){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 int id = resultSet.getInt("borgerID");
                 String fname = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
@@ -53,10 +54,10 @@ public class CitizienDAO implements ICitizienDAO {
             throwables.printStackTrace();
         }
     }
-    
+
     @Override
     public void addUserToCitizen(User user, Citizen citizen) {
-        try(Connection connection = dc.getConnection()) {
+        try (Connection connection = dc.getConnection()) {
             String sql = "INSERT INTO CitUser (citFK, userFK) VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, citizen.getId());
@@ -65,6 +66,30 @@ public class CitizienDAO implements ICitizienDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Citizen> getAllCitizensFromUser(User user) {
+        List<Citizen> citizensFromUser = new ArrayList<>();
+        try (Connection connection = dc.getConnection()) {
+            String citizenSQL = "SELECT borgerID, fName, lName, dato FROM Borger\n" +
+                    "INNER JOIN CitUser ON Borger.borgerID = CitUser.citFK\n" +
+                    "WHERE CitUser.userFK = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(citizenSQL);
+            preparedStatement.setInt(1, user.getId());
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("borgerID");
+                String fName = rs.getString("fName");
+                String lName = rs.getString("lName");
+                Date dato = rs.getDate("dato");
+                citizensFromUser.add(new Citizen(id, fName, lName, dato));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return citizensFromUser;
     }
 
 }

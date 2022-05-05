@@ -10,4 +10,5 @@ public interface ICitizienDAO {
     List<Citizen> getAllCitizens();
     void createCitizen(String fName, String lName, Date birthDate);
     void addUserToCitizen(User user, Citizen citizen);
+    List<Citizen> getAllCitizensFromUser(User user);
 }

@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -45,6 +46,9 @@ public class NySkabelonMainController implements Initializable {
     //helbred
     private HashMap<String, ToggleGroup> toggleMap = new HashMap<>();
     private HashMap<String, TextArea> helbredTextAreaMap = new HashMap<>();
+
+    public NySkabelonMainController() throws IOException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
