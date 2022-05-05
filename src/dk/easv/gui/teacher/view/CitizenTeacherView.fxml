@@ -52,8 +52,7 @@
                   <Label id="overskriftLbl" text="Borgere" />
                   <TreeTableView id="treeTable" fx:id="citizenTreeTableView" prefHeight="700.0" prefWidth="200.0">
                     <columns>
-                      <TreeTableColumn id="treeTableHeader" prefWidth="75.0" text="C1" />
-                      <TreeTableColumn id="treeTableHeader" prefWidth="75.0" text="C2" />
+                      <TreeTableColumn id="treeTableHeader" fx:id="citizenTreeColumn" prefWidth="75.0" text="C1" />
                     </columns>
                      <columnResizePolicy>
                         <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -72,8 +71,7 @@
                   <Label id="overskriftLbl" text="Elever" />
                   <TreeTableView id="treeTable" fx:id="studentTreeTableView" prefHeight="700.0" prefWidth="200.0">
                     <columns>
-                      <TreeTableColumn id="treeTableHeader" prefWidth="75.0" text="C1" />
-                      <TreeTableColumn id="treeTableHeader" prefWidth="75.0" text="C2" />
+                      <TreeTableColumn id="treeTableHeader" fx:id="studentTreeColumn" prefWidth="75.0" text="C1" />
                     </columns>
                      <columnResizePolicy>
                         <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -1,15 +1,21 @@
 package dk.easv.bll;
 
+import dk.easv.be.Citizen;
+import dk.easv.dal.CitizienDAO;
 import dk.easv.dal.Facade;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class CitizenManager {
     Facade facade;
+    private CitizienDAO citizienDAO;
 
-    public CitizenManager() {
+    public CitizenManager() throws IOException {
         facade = Facade.getInstance();
+        citizienDAO = new CitizienDAO();
     }
 
     public ArrayList<String> getGeneralinfoFields(){
@@ -27,5 +33,9 @@ public class CitizenManager {
 
     public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
         return facade.getHelbredVanskligheder();
+    }
+
+    public List<Citizen> getAllCitizen(){
+        return citizienDAO.getAllCitizens();
     }
 }

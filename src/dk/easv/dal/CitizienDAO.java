@@ -38,16 +38,20 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     @Override
+
     public void createCitizen(String fName, String lName, Date birthDate) {
         try (Connection connection = dc.getConnection()) {
             String sql = "INSERT INTO Borger (fname, lname, dato) VALUES (?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, fName);
             preparedStatement.setString(2, lName);
-            preparedStatement.setDate(3, birthDate);;
+            preparedStatement.setDate(3, birthDate);
+            ;
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
+
 }
