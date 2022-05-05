@@ -1,6 +1,7 @@
 package dk.easv.bll;
 
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.dal.CitizienDAO;
 
@@ -51,7 +52,7 @@ public class CitizenManager {
         return facade.getHealthSections();
     }
 
-    public void saveTemplate() {
-        facade.saveTemplate();
+    public void saveTemplate(Citizen citizen) throws SQLServerException {
+        facade.saveTemplate(citizen);
     }
 }

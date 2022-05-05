@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Facade {
-
     private static Facade instance;
     private ILoginDAO iLoginDAO;
     private IUserDAO iUserDAO;
@@ -100,15 +99,16 @@ public class Facade {
     public void addUserToCitizen(Citizen citizen, User user) {
         iCitizienDAO.addUserToCitizen(user, citizen);
     }
-        public List<Section> getFunkSections(){
-            return iFunktionsDAO.getFunkSections();
-        }
 
-        public List<Section> getHealthSections() {
-            return iHealthDAO.getHealthSections();
-        }
-
-        public void saveTemplate () {
-            //todo save et sted??
-        }
+    public List<Section> getFunkSections() {
+        return iFunktionsDAO.getFunkSections();
     }
+
+    public List<Section> getHealthSections() {
+        return iHealthDAO.getHealthSections();
+    }
+
+    public void saveTemplate(Citizen citizen) throws SQLServerException {
+        iCitizienDAO.createTemplate(citizen);
+    }
+}

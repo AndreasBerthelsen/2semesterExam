@@ -1,6 +1,7 @@
 package dk.easv.gui.teacher.model;
 
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 
 import dk.easv.be.Section;
@@ -57,8 +58,8 @@ public class CitizenModel {
         return cM.getHealthSections();
     }
 
-    public void saveTemplate() {
-        cM.saveTemplate();
+    public void saveTemplate(Citizen citizen) throws SQLServerException {
+        cM.saveTemplate(citizen);
 
     }
 }

@@ -1,5 +1,6 @@
 package dk.easv.gui.teacher.controller;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.Section;
 import dk.easv.gui.teacher.model.CitizenModel;
@@ -13,12 +14,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import java.sql.Date;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class NySkabelonMainController implements Initializable {
+    public TextField fNameInput;
+    public DatePicker dateInput;
+    public TextField lNameInput;
     //todo hent alle info fields med ny thread
     CitizenModel sM = new CitizenModel();
     //funktion
@@ -195,15 +199,13 @@ public class NySkabelonMainController implements Initializable {
             radio.setUserData(radioNames.get(i));
 
             //TODO FIX MED ENUM DET HER ER SHIT måske ændre visable
-            if (Objects.equals(radio.getText(), "Relevant") || Objects.equals(radio.getText(), "Potentielt")) {
+            if (Objects.equals(radio.getText(), "Aktuel") || Objects.equals(radio.getText(), "Potentiel")) {
                 radio.setOnAction(event -> {
                     helbredTextAreaMap.get(key).setDisable(false);
-                    // textAreaMap.get(toggleMapKey).setVisible(true);
                 });
             } else {
                 radio.setOnAction(event -> {
                     helbredTextAreaMap.get(key).setDisable(true);
-                    // textAreaMap.get(toggleMapKey).setVisible(false);
                 });
             }
             radioList.add(radio);
@@ -226,7 +228,7 @@ public class NySkabelonMainController implements Initializable {
         return textArea;
     }
 
-    public void handleGembtn(ActionEvent actionEvent) {
+    public void handleGembtn(ActionEvent actionEvent) throws SQLServerException {
         //Gen info
         HashMap<String, String> genInfoText = saveGenInfo();
 
@@ -238,13 +240,13 @@ public class NySkabelonMainController implements Initializable {
         //Helbred
         HashMap<Integer, Integer> relevansMap = saveHealthRelevans();
         HashMap<Integer, String> helbredInfo = saveHealthInfo();
+//TODO LÆS FELTER
+        String fname=fNameInput.getText().trim();
+        String lname=lNameInput.getText().trim();
+        java.sql.Date date = Date.valueOf(dateInput.getValue().toString());
 
-        String fname="";
-        String lname="";
-        Date date = new Date();
 
-        new Citizen(fname,lname,date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo);
-       // sM.saveTemplate();
+        sM.saveTemplate(new Citizen(fname,lname,date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo));
     }
 
     private HashMap<String, String> saveGenInfo() {
@@ -275,16 +277,17 @@ public class NySkabelonMainController implements Initializable {
             ComboBox<ImageView> comboBox = currentComboMap.get(key);
             int index = comboBox.getSelectionModel().getSelectedIndex();
             int value = 0;
-            if (index != -1){
+
                 switch (index) {
                     case 0 -> value = 1;
                     case 1 -> value = 2;
                     case 2 -> value = 3;
                     case 3 -> value = 4;
                     case 4 -> value = 5;
+                    case -1 -> value = 5;
                 }
                 map.put(key, value);
-            }
+
         }
         return map;
     }
@@ -295,15 +298,16 @@ public class NySkabelonMainController implements Initializable {
             ComboBox<String> comboBox = targetComboMap.get(key);
             int index = comboBox.getSelectionModel().getSelectedIndex();
             int value = 0;
-            if (index != -1){
+
                 switch (index) {
                     case 0 -> value = 1;
                     case 1 -> value = 2;
                     case 2 -> value = 3;
                     case 3 -> value = 4;
+                    case -1 -> value = 4;
                 }
                 map.put(key,value);
-            }
+
         }
         return map;
     }

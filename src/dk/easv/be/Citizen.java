@@ -1,5 +1,6 @@
 package dk.easv.be;
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.HashMap;
 
 public class Citizen {
@@ -36,6 +37,9 @@ public class Citizen {
         this.funkInfo = funkInfo;
         this.relevansMap = relevansMap;
         this.helbredInfo = helbredInfo;
+        this.fName = fName;
+        this.lName = lName;
+        this.bDate = date;
     }
 
     public int getId() {
