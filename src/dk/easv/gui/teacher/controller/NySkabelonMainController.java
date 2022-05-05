@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -36,6 +37,9 @@ public class NySkabelonMainController implements Initializable {
     private final HashMap<Integer, ToggleGroup> healthToggleMap = new HashMap<>();
     private final HashMap<Integer, TextArea> helbredTextAreaMap = new HashMap<>();
     public TabPane helbredsInnerTabPane;
+
+    public NySkabelonMainController() throws IOException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -235,8 +239,12 @@ public class NySkabelonMainController implements Initializable {
         HashMap<Integer, Integer> relevansMap = saveHealthRelevans();
         HashMap<Integer, String> helbredInfo = saveHealthInfo();
 
-        new Citizen( genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo);
-        sM.saveTemplate();
+        String fname="";
+        String lname="";
+        Date date = new Date();
+
+        new Citizen(fname,lname,date, genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo);
+       // sM.saveTemplate();
     }
 
     private HashMap<String, String> saveGenInfo() {
