@@ -5,14 +5,17 @@ import java.util.Date;
 public class Citizen {
 
     private int id;
-    private String name;
+    private String fName;
+    private String lName;
     private Date bDate;
 
-    public Citizen(int id, String name, Date bDate) {
+    public Citizen(int id, String fName, String lName, Date bDate) {
         this.id = id;
-        this.name = name;
+        this.fName = fName;
+        this.lName = lName;
         this.bDate = bDate;
     }
+
 
     public int getId() {
         return id;
@@ -22,12 +25,24 @@ public class Citizen {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getfName() {
+        return fName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    public Date getbDate() {
+        return bDate;
     }
 
     public void setbDate(Date bDate) {
