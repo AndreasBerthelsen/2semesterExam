@@ -1,13 +1,15 @@
 package dk.easv.gui.teacher.controller;
 
+import dk.easv.be.Citizen;
+import dk.easv.be.Section;
 import dk.easv.gui.teacher.model.CitizenModel;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,35 +18,24 @@ import java.net.URL;
 import java.util.*;
 
 public class NySkabelonMainController implements Initializable {
-    //Gen info
-    private final HashMap<String, TextArea> genInfoTextAreaMap = new HashMap<>();
+    //todo hent alle info fields med ny thread
+    CitizenModel sM = new CitizenModel();
     //funktion
-    private final HashMap<String, TextArea> funkInfoTextAreaMap = new HashMap<>();
-    public BorderPane borderpane;
-    public javafx.scene.control.ScrollPane genScrollPane;
+    private final HashMap<Integer, TextArea> funkInfoTextAreaMap = new HashMap<>();
+    private final HashMap<Integer, ComboBox<ImageView>> currentComboMap = new HashMap<>();
+    private final HashMap<Integer, ComboBox<String>> targetComboMap = new HashMap<>();
     public TabPane funktionInnerTabPane;
 
-    //todo hent alle info fields med ny thread
-    public TabPane helbredsInnerTabPane;
-    CitizenModel sM = new CitizenModel();
+    //Gen info
+    public javafx.scene.control.ScrollPane genScrollPane;
+    private final HashMap<String, TextArea> genInfoTextAreaMap = new HashMap<>();
     private final ArrayList<String> genInfoFieldList = sM.getGeneralinfoFields();
-    private final HashMap<Integer, String> funkTilstandsList = sM.getFunktionsTilstande();
-    private final HashMap<Integer, ArrayList<String>> funkProblemMap = sM.getFunktionsVandskligheder();
 
-    /*
-    //section
-        overcat ID:
-        gui string:
-        own ID
-
-        Arraylist<Section>
-     */
-
-    private HashMap<Integer,ArrayList<HashMap<Integer,String>>> cancer = new HashMap<>();
 
     //helbred
-    private HashMap<String, ToggleGroup> toggleMap = new HashMap<>();
-    private HashMap<String, TextArea> helbredTextAreaMap = new HashMap<>();
+    private final HashMap<Integer, ToggleGroup> healthToggleMap = new HashMap<>();
+    private final HashMap<Integer, TextArea> helbredTextAreaMap = new HashMap<>();
+    public TabPane helbredsInnerTabPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,18 +57,18 @@ public class NySkabelonMainController implements Initializable {
 
     private void setupFunkTab() {
         List<Image> imageList = createImages();
-        for (int key : funkTilstandsList.keySet()) {
-            //tab for hver afdeling
-            Tab tab = new Tab(funkTilstandsList.get(key));
+        List<Section> funkSectionList = sM.getFunkSections();
 
+        for (Section section : funkSectionList) {
+            //tab for hver afdeling
+            Tab tab = new Tab(section.getSectionTitle());
             VBox contentVBox = new VBox(80);
             contentVBox.setPrefWidth(800);
-
-            for (String string : funkProblemMap.get(key)) {
-                //underpunkter
+            for (int key : section.getProblemidTitleMap().keySet()) {
+                String chunkTitle = section.getProblemidTitleMap().get(key);
 
                 HBox headerBox = new HBox();
-                Label headerLabel = new Label(string);
+                Label headerLabel = new Label(chunkTitle);
                 headerBox.getChildren().add(headerLabel);
 
                 GridPane gridPane = new GridPane();
@@ -85,24 +76,21 @@ public class NySkabelonMainController implements Initializable {
                 gridPane.setVgap(10);
                 gridPane.addRow(1, new Label("Nuværende Niveau"), new Label("Forventet Niveau"));
 
-                ComboBox<ImageView> currentBox = createNiveauComboBox(imageList, string); // måske replace med combobox factory
-                ComboBox<String> targetBox = createTargetComboBox(string); //Udføre selv | Udfører dele af aktiviteten | Udfører ikke selv aktiviteten | Ikke relevant
+                ComboBox<ImageView> currentBox = createNiveauComboBox(currentComboMap, key, imageList); // måske replace med combobox factory
+                ComboBox<String> targetBox = createTargetComboBox(targetComboMap, key); //Udføre selv | Udfører dele af aktiviteten | Udfører ikke selv aktiviteten | Ikke relevant
                 gridPane.addRow(2, currentBox, targetBox);
 
                 Label boxTitle = new Label("Borgerens Ønsker og mål");
-                TextArea textArea = createTextArea(funkInfoTextAreaMap, string);
-                textArea.setId(string + "TextArea");
+                TextArea textArea = createTextArea(funkInfoTextAreaMap, key);
                 textArea.setWrapText(true);
 
-                VBox section = new VBox();
-                section.getChildren().addAll(headerBox, gridPane, boxTitle, textArea);
-                contentVBox.getChildren().add(section);
-
+                VBox chunk = new VBox();
+                chunk.getChildren().addAll(headerBox, gridPane, boxTitle, textArea);
+                contentVBox.getChildren().add(chunk);
 
                 //TODO FIX SCROLLPANE SCROLL???
                 ScrollPane scrollPane = new ScrollPane();
                 scrollPane.setContent(contentVBox);
-
 
                 scrollPane.setPrefSize(contentVBox.getPrefWidth() + 20, 700);
                 tab.setContent(scrollPane);
@@ -113,42 +101,45 @@ public class NySkabelonMainController implements Initializable {
     }
 
     private void setupHelbredTab() {
-        //gen tabs -> gridpane -> header + radiobuttons -> textArea (Radio buttons event handler til inactive textArea)
-        HashMap<Integer, String> tilstandsMap = sM.getHelbredsTilstande();
-        HashMap<Integer, ArrayList<String>> vansklighedsMap = sM.getHelbredVanskligheder();
-        for (int key : tilstandsMap.keySet()) {
+        List<Section> healthSections = sM.getHealthSections();
+
+        for(Section section : healthSections){
             GridPane gridPane = new GridPane();
             gridPane.setHgap(50);
-
             int index = 0;
-            for (String subTitles : vansklighedsMap.get(key)) {
-                Label labelSub = new Label(subTitles);
-                ArrayList<RadioButton> radioButtonList = createRadioButtons(toggleMap, subTitles);
-                TextArea textArea = createTextArea(helbredTextAreaMap, subTitles);
+
+            for (int key : section.getProblemidTitleMap().keySet()) {
+                String chunkTitle = section.getProblemidTitleMap().get(key);
+                Label labelSub = new Label(chunkTitle);
+                ArrayList<RadioButton> radioButtonList = createRadioButtons(healthToggleMap, key);
+                TextArea textArea = createTextArea(helbredTextAreaMap, key);
                 textArea.setDisable(true);
                 gridPane.addRow(index++, labelSub, radioButtonList.get(0), radioButtonList.get(1), radioButtonList.get(2), textArea);
             }
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(gridPane);
-            Tab tab = new Tab(tilstandsMap.get(key));
+            Tab tab = new Tab(section.getSectionTitle());
             tab.setContent(scrollPane);
             helbredsInnerTabPane.getTabs().add(tab);
         }
+
+        //___________________________________________________________________________________________________________________________________________________________________
+
     }
 
-    private ComboBox<String> createTargetComboBox(String id) {
-        String idSuffix = "Target";
+    private ComboBox<String> createTargetComboBox(HashMap<Integer, ComboBox<String>> comboBoxMap, int id) {
         ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.setId(id + idSuffix);
+        //todo træk valgmuligheder fra database
         comboBox.getItems().add("Udføre selv");
         comboBox.getItems().add("Udfører dele af aktiviteten");
-        comboBox.getItems().add("Udfører ikke selv aktviteten");
+        comboBox.getItems().add("Udfører ikke selv aktiviteten");
         comboBox.getItems().add("Ikke relevant");
+
+        comboBoxMap.put(id, comboBox);
         return comboBox;
     }
 
-    private ComboBox<ImageView> createNiveauComboBox(List<Image> imageList, String id) {
-        String idSuffix = "Current";
+    private ComboBox<ImageView> createNiveauComboBox(HashMap<Integer, ComboBox<ImageView>> comboBoxMap, int id, List<Image> imageList) {
         List<ImageView> imgViewList = new ArrayList<>();
         for (Image image : imageList) {
             imgViewList.add(new ImageView(image));
@@ -156,10 +147,6 @@ public class NySkabelonMainController implements Initializable {
         ComboBox<ImageView> comboBox = new ComboBox<>(
                 FXCollections.observableArrayList(imgViewList)
         );
-        comboBox.setId(id + idSuffix);
-
-
-        //TODO update databasen med nye textfelt + forventet status
         comboBox.setButtonCell(new ListCell<>() {
                                    @Override
                                    protected void updateItem(ImageView item, boolean empty) {
@@ -172,6 +159,9 @@ public class NySkabelonMainController implements Initializable {
                                    }
                                }
         );
+
+        comboBoxMap.put(id, comboBox);
+
         return comboBox;
     }
 
@@ -186,12 +176,13 @@ public class NySkabelonMainController implements Initializable {
         return list;
     }
 
-    private ArrayList<RadioButton> createRadioButtons(HashMap<String, ToggleGroup> toggleMap, String toggleMapKey) {
+    private ArrayList<RadioButton> createRadioButtons(HashMap<Integer, ToggleGroup> toggleMap, int key) {
         ArrayList<RadioButton> radioList = new ArrayList<>();
         ToggleGroup toggleGroup = new ToggleGroup();
         ArrayList<String> radioNames = new ArrayList<>();
-        radioNames.add("Relevant");
-        radioNames.add("Potentielt");
+        //TODO REPLACE STRINGS MED ENUM HOLY SHIT
+        radioNames.add("Aktuel");
+        radioNames.add("Potentiel");
         radioNames.add("Ikke relevant");
 
         for (int i = 0; i < 3; i++) {
@@ -202,21 +193,20 @@ public class NySkabelonMainController implements Initializable {
             //TODO FIX MED ENUM DET HER ER SHIT måske ændre visable
             if (Objects.equals(radio.getText(), "Relevant") || Objects.equals(radio.getText(), "Potentielt")) {
                 radio.setOnAction(event -> {
-                    helbredTextAreaMap.get(toggleMapKey).setDisable(false);
+                    helbredTextAreaMap.get(key).setDisable(false);
                     // textAreaMap.get(toggleMapKey).setVisible(true);
                 });
             } else {
                 radio.setOnAction(event -> {
-                    helbredTextAreaMap.get(toggleMapKey).setDisable(true);
+                    helbredTextAreaMap.get(key).setDisable(true);
                     // textAreaMap.get(toggleMapKey).setVisible(false);
                 });
             }
             radioList.add(radio);
         }
-        toggleMap.put(toggleMapKey, toggleGroup);
+        toggleMap.put(key, toggleGroup);
         return radioList;
     }
-
 
     private TextArea createTextArea(HashMap<String, TextArea> helbredsTextMap, String textAreaKey) {
         TextArea textArea = new TextArea();
@@ -225,32 +215,31 @@ public class NySkabelonMainController implements Initializable {
         return textArea;
     }
 
-    private TextArea createTextArea(HashMap<Integer, TextArea> helbredsTextMap, int textAreaKey) {
+    private TextArea createTextArea(HashMap<Integer, TextArea> textAreaMap, int textAreaKey) {
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
-        helbredsTextMap.put(textAreaKey, textArea);
+        textAreaMap.put(textAreaKey, textArea);
         return textArea;
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        HashMap<String, String> genInfoText = gemGenInfo();
+        //Gen info
+        HashMap<String, String> genInfoText = saveGenInfo();
 
         //funktion
-        HashMap<Integer, Integer> currentCombo;
-        HashMap<Integer, Integer> targetCombo;
-        HashMap<String, String> funkInfoMap = gemFunkTextArea();;
+        HashMap<Integer, Integer> currentCombo = saveFunkCurrentCombo();
+        HashMap<Integer, Integer> targetCombo = saveFunkTargetCombo();
+        HashMap<Integer, String> funkInfoMap = saveFunkTextArea();
 
         //Helbred
-        HashMap<Integer, Integer> relevansMap;
-        HashMap<Integer, String> helbredInfo;
+        HashMap<Integer, Integer> relevansMap = saveHealthRelevans();
+        HashMap<Integer, String> helbredInfo = saveHealthInfo();
 
-
-        //ændre citezen så den passer overstående
-        //new Citizen( genInfoText,  currentCombo, targetCombo,  funkInfo, relevansMap,  helbredInfo);
-
+        new Citizen( genInfoText,  currentCombo, targetCombo,  funkInfoMap, relevansMap,  helbredInfo);
+        sM.saveTemplate();
     }
 
-    private HashMap<String, String> gemGenInfo() {
+    private HashMap<String, String> saveGenInfo() {
         HashMap<String, String> map = new HashMap<>();
         for (String key : genInfoTextAreaMap.keySet()) {
             TextArea textArea = genInfoTextAreaMap.get(key);
@@ -261,72 +250,85 @@ public class NySkabelonMainController implements Initializable {
         return map;
     }
 
-    private HashMap<String,String> gemFunkTextArea() {
-        HashMap<String,String> map = new HashMap<>();
-        for (String key : funkInfoTextAreaMap.keySet()) {
+    private HashMap<Integer, String> saveFunkTextArea() {
+        HashMap<Integer, String> map = new HashMap<>();
+        for (int key : funkInfoTextAreaMap.keySet()) {
             TextArea textArea = funkInfoTextAreaMap.get(key);
             if (!textArea.getText().isBlank()) {
-               map.put(key,textArea.getText().trim());
+                map.put(key, textArea.getText().trim());
             }
         }
-        System.out.println(map);
-
-        /*
-        //TODO REWORK LANG CANCER METODE TIL AT BRUGE HASHMAP
-
-        // Giga forloop for at tjekke alle inputs i funktioninnerpane
-        for (Tab tab : funktionInnerTabPane.getTabs()) {
-            ScrollPane scrollPane = (ScrollPane) tab.getContent();
-            VBox contentVBox = (VBox) scrollPane.getContent();
-            List<Node> list = contentVBox.getChildren();
-            for (Node n : list) {
-                if (n instanceof VBox section) {
-                    for (Node sN : section.getChildren()) {
-                        //3 cases nu combobox, ønsket combobox og textarea
-                        if (sN instanceof GridPane gridPane) {
-                            for (Node gN : gridPane.getChildren()) {
-                                if (gN instanceof ComboBox comboBox) {
-                                    String comboId = comboBox.getId();
-                                    if (comboId != null) {
-                                        if (comboId.endsWith("Current")) {
-                                            int index = comboBox.getSelectionModel().getSelectedIndex();
-                                            System.out.println(comboId + ": " + index);
-                                        } else if (comboId.endsWith("Target")) {
-                                            int index = comboBox.getSelectionModel().getSelectedIndex();
-                                            System.out.println(comboId + ": " + index);
-                                        }
-                                    }
-                                }
-                            }
-                        } else if (sN instanceof TextArea textArea) {
-                            String string = textArea.getText();
-                            if (!string.isBlank()) {
-                                System.out.println(textArea.getId() + string);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-         */
         return map;
     }
 
-    private void gemHelbred() {
-        //TODO PRINTER -> GEM I DB
-        for (String key : toggleMap.keySet()) {
-            ToggleGroup currentGroup = toggleMap.get(key);
-            if (currentGroup.getSelectedToggle() != null) {
-                System.out.println(key + ": " + currentGroup.getSelectedToggle().getUserData());
+    private HashMap<Integer, Integer> saveFunkCurrentCombo() {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int key : currentComboMap.keySet()) {
+            ComboBox<ImageView> comboBox = currentComboMap.get(key);
+            int index = comboBox.getSelectionModel().getSelectedIndex();
+            int value = 0;
+            if (index != -1){
+                switch (index) {
+                    case 0 -> value = 1;
+                    case 1 -> value = 2;
+                    case 2 -> value = 3;
+                    case 3 -> value = 4;
+                    case 4 -> value = 5;
+                }
+                map.put(key, value);
+            }
+        }
+        return map;
+    }
+
+    private HashMap<Integer, Integer> saveFunkTargetCombo() {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int key : targetComboMap.keySet()) {
+            ComboBox<String> comboBox = targetComboMap.get(key);
+            int index = comboBox.getSelectionModel().getSelectedIndex();
+            int value = 0;
+            if (index != -1){
+                switch (index) {
+                    case 0 -> value = 1;
+                    case 1 -> value = 2;
+                    case 2 -> value = 3;
+                    case 3 -> value = 4;
+                }
+                map.put(key,value);
+            }
+        }
+        return map;
+    }
+
+    private HashMap<Integer, String> saveHealthInfo() {
+        HashMap<Integer,String> map = new HashMap<>();
+        for(int key : helbredTextAreaMap.keySet()){
+            TextArea textArea = helbredTextAreaMap.get(key);
+            if (!textArea.isDisabled()){
+                map.put(key,textArea.getText().trim());
             }
         }
 
-        for (String key : helbredTextAreaMap.keySet()) {
-            TextArea textArea = helbredTextAreaMap.get(key);
-            if (!textArea.isDisabled()) {
-                System.out.println(key + ": " + textArea.getText());
+        return map;
+    }
+
+    private HashMap<Integer, Integer> saveHealthRelevans() {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int key : healthToggleMap.keySet()){
+            ToggleGroup toggleGroup = healthToggleMap.get(key);
+            if (toggleGroup.getSelectedToggle() != null){
+                String data = (String) toggleGroup.getSelectedToggle().getUserData();
+                int value = 0;
+                //TODO REPLACE STRINGS MED ENUM HOLY SHIT
+                switch (data){
+                    case "Aktuel" -> value = 1;
+                    case "Potentiel" -> value = 2;
+                    case "Ikke relevant" -> value = 3;
+                }
+                map.put(key,value);
             }
         }
+        System.out.println(map);
+        return map;
     }
 }

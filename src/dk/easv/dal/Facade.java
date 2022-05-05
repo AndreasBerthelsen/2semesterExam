@@ -1,25 +1,14 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.Citizen;
-import dk.easv.be.User;
-import dk.easv.be.UserType;
+import dk.easv.be.*;
 import dk.easv.dal.interfaces.*;
-
-import dk.easv.be.Category;
-import dk.easv.dal.interfaces.ICitizienDAO;
-import dk.easv.dal.interfaces.IHealthDAO;
-import dk.easv.dal.interfaces.ILoginDAO;
-import dk.easv.dal.interfaces.IUserDAO;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
-import dk.easv.dal.interfaces.IGenInfoDAO;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Facade {
 
@@ -77,7 +66,7 @@ public class Facade {
     }
 
     public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException {
-        iUserDAO.createUser(firstName,lastName, username, hashedPassword, salt, userType);
+        iUserDAO.createUser(firstName, lastName, username, hashedPassword, salt, userType);
     }
 
     public HashMap<Integer, String> getHelbredsTilstande() {
@@ -91,21 +80,35 @@ public class Facade {
     public List<User> getAllUsers(UserType userType) throws SQLServerException {
         return iUserDAO.getAllUsers(userType);
     }
-    public void deleteUser(User user){
+
+    public void deleteUser(User user) {
         iUserDAO.deleteUser(user);
     }
-    public void updateUser(User user){
+
+    public void updateUser(User user) {
         iUserDAO.updateUser(user);
     }
 
-    public List<Citizen> getAllCitiziens(){
+    public List<Citizen> getAllCitiziens() {
         return iCitizienDAO.getAllCitizens();
     }
 
-    public void createCitizen(String fname, String lname, Date birthDay){
+    public void createCitizen(String fname, String lname, Date birthDay) {
         iCitizienDAO.createCitizen(fname, lname, birthDay);
     }
-    public void addUserToCitizen(Citizen citizen, User user){
+
+    public void addUserToCitizen(Citizen citizen, User user) {
         iCitizienDAO.addUserToCitizen(user, citizen);
     }
-}
+        public List<Section> getFunkSections(){
+            return iFunktionsDAO.getFunkSections();
+        }
+
+        public List<Section> getHealthSections() {
+            return iHealthDAO.getHealthSections();
+        }
+
+        public void saveTemplate () {
+            //todo save et sted??
+        }
+    }

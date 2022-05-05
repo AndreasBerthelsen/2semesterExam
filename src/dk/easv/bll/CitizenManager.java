@@ -1,7 +1,11 @@
 package dk.easv.bll;
 
+
 import dk.easv.be.Citizen;
 import dk.easv.dal.CitizienDAO;
+
+import dk.easv.be.Section;
+
 import dk.easv.dal.Facade;
 
 import java.io.IOException;
@@ -35,7 +39,19 @@ public class CitizenManager {
         return facade.getHelbredVanskligheder();
     }
 
-    public List<Citizen> getAllCitizen(){
+
+    public List<Citizen> getAllCitizen() {
         return citizienDAO.getAllCitizens();
+    }
+    public List<Section> getFunkSections(){
+        return facade.getFunkSections();
+    }
+
+    public List<Section> getHealthSections(){
+        return facade.getHealthSections();
+    }
+
+    public void saveTemplate() {
+        facade.saveTemplate();
     }
 }
