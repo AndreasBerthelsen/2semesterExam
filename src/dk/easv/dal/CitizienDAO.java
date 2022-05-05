@@ -2,6 +2,7 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
+import dk.easv.be.User;
 import dk.easv.dal.interfaces.ICitizienDAO;
 
 import java.io.IOException;
@@ -52,6 +53,18 @@ public class CitizienDAO implements ICitizienDAO {
             throwables.printStackTrace();
         }
     }
-
+    
+    @Override
+    public void addUserToCitizen(User user, Citizen citizen) {
+        try(Connection connection = dc.getConnection()) {
+            String sql = "INSERT INTO CitUser (citFK, userFK) VALUES (?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, citizen.getId());
+            preparedStatement.setInt(2, user.getId());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
 }

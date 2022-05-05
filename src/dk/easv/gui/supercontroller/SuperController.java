@@ -2,6 +2,7 @@ package dk.easv.gui.supercontroller;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.User;
+import dk.easv.gui.teacher.Interfaces.IController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -150,5 +151,20 @@ public abstract class SuperController {
     public Optional<ButtonType> confirmationBox(String string){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,string,ButtonType.YES,ButtonType.NO);
         return alert.showAndWait();
+    }
+
+    public void openNewSceneAsUser2(User user,String fxmlPath, String Title) throws IOException, SQLServerException {
+        FXMLLoader root = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(root.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        IController controller = root.getController();
+        controller.setUserInfo(user);
+
+        stage.setTitle(Title);
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.showAndWait();
     }
 }

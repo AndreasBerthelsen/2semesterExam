@@ -33,4 +33,8 @@ public class UserManager {
         facade.deleteUser(user);
     }
 
+    public void udpateUser(User user) {
+        facade.updateUser(user);
+    }
+
 }
