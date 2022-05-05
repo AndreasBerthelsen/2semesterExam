@@ -1,5 +1,6 @@
 package dk.easv.dal.interfaces;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
 
@@ -10,5 +11,9 @@ public interface ICitizienDAO {
     List<Citizen> getAllCitizens();
     void createCitizen(String fName, String lName, Date birthDate);
     void addUserToCitizen(User user, Citizen citizen);
+
+    void createTemplate(Citizen citizen) throws SQLServerException;
+
     List<Citizen> getAllCitizensFromUser(User user);
+
 }

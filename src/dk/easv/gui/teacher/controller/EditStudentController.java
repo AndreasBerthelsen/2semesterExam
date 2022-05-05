@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class EditStudentController extends SuperController implements IController {
     @FXML
+    private TextField passwordTxtFIeld;
+    @FXML
     private Button saveBtn;
     @FXML
     private Button cancelBtn;
@@ -45,13 +47,15 @@ public class EditStudentController extends SuperController implements IControlle
         usernameTxtField.setText(user.getUsername());
     }
 
-    public void handleSaveBtn(ActionEvent actionEvent) {
+    public void handleSaveBtn(ActionEvent actionEvent) throws SQLServerException {
         String firstname = getFirstName(firstnameTxtField);
         String lastname = getLastName(lastnameTxtField);
         String username = getUsername(usernameTxtField);
+        String password = getPassword(passwordTxtFIeld);
         if (firstname != null && lastname != null && username != null) {
             int id = user.getId();
             User user = new User(id, firstname, lastname, username, UserType.STUDENT);
+            userModel.updatePassword(user, password);
             userModel.updateUser(user);
             closeWindow(saveBtn);
         }
@@ -59,5 +63,9 @@ public class EditStudentController extends SuperController implements IControlle
 
     public void handleCancelBtn(ActionEvent actionEvent) {
         closeWindow(cancelBtn);
+    }
+
+
+    public void handleUpdatePassword(ActionEvent actionEvent) {
     }
 }

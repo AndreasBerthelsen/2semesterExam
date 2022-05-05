@@ -112,12 +112,12 @@
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="290.0" spacing="10.0">
                <children>
                   <Label id="AddOrEditLabel" text="Angiv ny adgangskode" />
-                  <TextField id="AddOrEditTxtfield">
+                  <TextField id="AddOrEditTxtfield" fx:id="passwordTxtFIeld">
                      <VBox.margin>
                         <Insets left="15.0" right="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button id="AddOrEditBtn" mnemonicParsing="false" text="Sæt ny adgangskode">
+                  <Button id="AddOrEditBtn" mnemonicParsing="false" onAction="#handleUpdatePassword" text="Sæt ny adgangskode">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>

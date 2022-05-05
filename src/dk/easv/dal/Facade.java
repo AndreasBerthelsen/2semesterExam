@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Facade {
-
     private static Facade instance;
     private ILoginDAO iLoginDAO;
     private IUserDAO iUserDAO;
@@ -114,7 +113,12 @@ public class Facade {
         return iHealthDAO.getHealthSections();
     }
 
-    public void saveTemplate() {
-        //todo save et sted??
+
+    public void saveTemplate(Citizen citizen) throws SQLServerException {
+        iCitizienDAO.createTemplate(citizen);
+    }
+
+    public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
+        iUserDAO.updatePassword(user, hashPassword, salt);
     }
 }

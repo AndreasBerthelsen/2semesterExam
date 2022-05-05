@@ -12,4 +12,6 @@ public interface IUserDAO {
     List<User> getAllUsers(UserType userType) throws SQLServerException;
     void deleteUser(User userToBeDeleted);
     void updateUser(User user);
+
+    void updatePassword(User user, String hashPassword, String salt) throws SQLServerException;
 }
