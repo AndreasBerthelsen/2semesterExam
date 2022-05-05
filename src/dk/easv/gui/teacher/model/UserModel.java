@@ -44,4 +44,7 @@ public class UserModel {
         studentList.setAll(getAllStudents());
         return studentList;
     }
+    public void updatePassword(User user, String hashPassword) throws SQLServerException {
+        uM.updatePassword(user, hashPassword);
+    }
 }

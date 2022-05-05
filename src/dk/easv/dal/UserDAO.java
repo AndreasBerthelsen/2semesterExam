@@ -97,7 +97,19 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-
+    @Override
+    public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
+        try(Connection con = dc.getConnection()) {
+            String sql = "UPDATE [User] SET password = ?, salt = ? WHERE userID=?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, hashPassword);
+            preparedStatement.setString(2, salt);
+            preparedStatement.setInt(3,user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

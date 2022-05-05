@@ -117,4 +117,8 @@ public class Facade {
     public void saveTemplate() {
         //todo save et sted??
     }
+
+    public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
+        iUserDAO.updatePassword(user, hashPassword, salt);
+    }
 }
