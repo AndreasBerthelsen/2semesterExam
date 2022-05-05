@@ -101,8 +101,11 @@ public class Facade {
     public List<Citizen> getAllCitiziens(){
         return iCitizienDAO.getAllCitizens();
     }
-    
+
     public void createCitizen(String fname, String lname, Date birthDay){
         iCitizienDAO.createCitizen(fname, lname, birthDay);
+    }
+    public void addUserToCitizen(Citizen citizen, User user){
+        iCitizienDAO.addUserToCitizen(user, citizen);
     }
 }
