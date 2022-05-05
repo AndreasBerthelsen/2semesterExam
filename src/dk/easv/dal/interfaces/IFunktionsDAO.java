@@ -7,4 +7,6 @@ public interface IFunktionsDAO {
     HashMap<Integer,String> getFunktionsTilstande();
 
     HashMap<Integer,ArrayList<String>> getFunktionsVandskligheder();
+
+
 }

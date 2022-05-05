@@ -1,6 +1,7 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.Citizen;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.dal.interfaces.*;
@@ -11,6 +12,7 @@ import dk.easv.dal.interfaces.IHealthDAO;
 import dk.easv.dal.interfaces.ILoginDAO;
 import dk.easv.dal.interfaces.IUserDAO;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import dk.easv.dal.interfaces.IGenInfoDAO;
@@ -94,5 +96,13 @@ public class Facade {
     }
     public void updateUser(User user){
         iUserDAO.updateUser(user);
+    }
+
+    public List<Citizen> getAllCitiziens(){
+        return iCitizienDAO.getAllCitizens();
+    }
+    
+    public void createCitizen(String fname, String lname, Date birthDay){
+        iCitizienDAO.createCitizen(fname, lname, birthDay);
     }
 }
