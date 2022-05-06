@@ -31,7 +31,7 @@ public class Main extends Application {
         stage.setTitle("SOSU FS3");
         stage.setResizable(true);
         stage.setScene(scene);
-        stage.setMaximized(true);
+        stage.setMaximized(false);
         //stage.setFullScreen(true); Giver en F11 fullscreen
         stage.show();
     }

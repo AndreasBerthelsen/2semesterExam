@@ -3,6 +3,7 @@ package dk.easv.gui.teacher.controller;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.User;
 import dk.easv.gui.supercontroller.SuperController;
+import dk.easv.gui.teacher.Interfaces.IController;
 import dk.easv.gui.teacher.model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,10 +63,11 @@ public class AdminstrateStudentsController extends SuperController implements In
     public void handleUpdateStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
         User user = (User) studentTable.getSelectionModel().getSelectedItem();
         if (user != null) {
-            openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev");
+            openSceneAsUser(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev", actionEvent);
             studentTable.setItems(uM.getObservableStudents());
         } else {
             errorMessage("Vælg den elev, som du vil redigere");
         }
     }
+
 }

@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.bouncycastle.asn1.cms.PasswordRecipientInfo;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,13 +50,15 @@ public class EditStudentController extends SuperController implements IControlle
         String firstname = getFirstName(firstnameTxtField);
         String lastname = getLastName(lastnameTxtField);
         String username = getUsername(usernameTxtField);
-        String password = getPassword(passwordTxtFIeld);
+        String password = getPasswordUpdate(passwordTxtFIeld);
+        int id = user.getId();
+        User user = new User(id, firstname, lastname, username, UserType.STUDENT);
         if (firstname != null && lastname != null && username != null) {
-            int id = user.getId();
-            User user = new User(id, firstname, lastname, username, UserType.STUDENT);
-            userModel.updatePassword(user, password);
             userModel.updateUser(user);
             closeWindow(saveBtn);
+        }
+        if(password != null){
+            userModel.updatePassword(user, password);
         }
     }
 

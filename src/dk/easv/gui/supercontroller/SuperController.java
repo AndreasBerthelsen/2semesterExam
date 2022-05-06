@@ -82,7 +82,11 @@ public abstract class SuperController {
         return null;
     }
 
-    public void setUserInfo(User user) {
+    public String getPasswordUpdate(TextField password){
+        if (!password.getText().isEmpty()){
+            return password.getText();
+        }
+        return null;
     }
 
 
@@ -93,11 +97,13 @@ public abstract class SuperController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
 
-        setUserInfo(user);
+        IController controller = root.getController();
+        controller.setUserInfo(user);
 
         stage.setTitle(Title);
         stage.centerOnScreen();
         stage.setResizable(false);
+        stage.setMaximized(true);
         stage.show();
     }
 

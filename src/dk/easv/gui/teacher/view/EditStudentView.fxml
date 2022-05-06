@@ -11,17 +11,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="629.0" styleClass="backgroundColor" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.EditStudentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="655.0" styleClass="backgroundColor" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.EditStudentController">
    <left>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="341.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="133.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="87.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="119.0" prefWidth="338.0">
                      <children>
-                        <Label id="AddOrEditLabel" text="Fornavn">
+                        <Label id="AddOrEditLabel" prefHeight="28.0" prefWidth="117.0" text="Fornavn">
                            <VBox.margin>
-                              <Insets left="20.0" right="187.0" />
+                              <Insets left="20.0" />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="firstnameTxtField">
@@ -35,11 +35,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="133.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="119.0" prefWidth="324.0">
                      <children>
                         <Label id="AddOrEditLabel" text="Efternavn">
                            <VBox.margin>
-                              <Insets left="20.0" right="170.0" />
+                              <Insets left="20.0" />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="lastnameTxtField">
@@ -53,11 +53,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="133.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="119.0" prefWidth="322.0">
                      <children>
                         <Label id="AddOrEditLabel" text="Brugernavn">
                            <VBox.margin>
-                              <Insets left="20.0" right="145.0" />
+                              <Insets left="20.0" />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="usernameTxtField">
@@ -117,15 +117,6 @@
                         <Insets left="15.0" right="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button id="AddOrEditBtn" mnemonicParsing="false" onAction="#handleUpdatePassword" text="Sæt ny adgangskode">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../Images/adgangskode.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                </children>
             </VBox>
          </children>
