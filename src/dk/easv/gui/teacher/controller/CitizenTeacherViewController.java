@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +21,12 @@ public class CitizenTeacherViewController implements Initializable {
 
 
     @FXML
+    private TableColumn<Citizen, Integer> citizenDisplayID;
+    @FXML
+    private TableColumn<Citizen, String> citizenDisplayFname;
+    @FXML
+    private TableColumn<Citizen, String> citizenDisplayLname;
+    @FXML
     private TableColumn<Citizen, String> citizenFnameCol;
     @FXML
     private TableColumn<Citizen, String> citizenLnameCol;
@@ -27,10 +34,6 @@ public class CitizenTeacherViewController implements Initializable {
     private TableColumn<User, String> studentFnameCol;
     @FXML
     private TableColumn<User, String> studentLnameCol;
-    @FXML
-    private TableColumn<Citizen, String> citizenDisplayName;
-    @FXML
-    private TableColumn<User, String> studentDisplayName;
     @FXML
     private TableView<Citizen> displayTableView;
     @FXML
@@ -52,8 +55,6 @@ public class CitizenTeacherViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         citizenFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         citizenLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-
-
         studentFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         studentLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
 
@@ -113,5 +114,22 @@ public class CitizenTeacherViewController implements Initializable {
     private void error(String text) {
         Alert alert = new Alert(Alert.AlertType.ERROR, text, ButtonType.OK);
         alert.showAndWait();
+    }
+
+    public void displayCitizensFromStudent(User user){
+        user = selectedUser();
+        citizenDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        citizenDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        citizenDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        displayTableView.setItems(citizenModel.getAllCitizenFromUserObservable(user));
+
+    }
+
+    public User selectedUser(){
+    return studentTableView.getSelectionModel().getSelectedItem();
+    }
+
+    public void handleStudentTableCLicked(MouseEvent mouseEvent) {
+        displayCitizensFromStudent(selectedUser());
     }
 }
