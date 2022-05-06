@@ -18,8 +18,9 @@ public class Main extends Application {
          IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
          IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
          IHealthDAO iHealthDAO = new HealthDAO();
+         ITemplateDAO iTemplateDAO = new TemplateDAO();
 
-        Facade.createInstance(iLoginDAO,iCitizienDAO,iUserDAO,iGenInfoDAO,iFunktionsDAO, iHealthDAO);
+        Facade.createInstance(iLoginDAO,iCitizienDAO,iUserDAO,iGenInfoDAO,iFunktionsDAO, iHealthDAO,iTemplateDAO);
 
         launch();
     }

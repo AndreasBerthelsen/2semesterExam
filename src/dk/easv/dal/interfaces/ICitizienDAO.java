@@ -12,8 +12,6 @@ public interface ICitizienDAO {
     void createCitizen(String fName, String lName, Date birthDate);
     void addUserToCitizen(User user, Citizen citizen);
 
-    void createTemplate(Citizen citizen) throws SQLServerException;
-
     List<Citizen> getAllCitizensFromUser(User user);
 
 }

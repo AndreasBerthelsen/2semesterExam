@@ -18,19 +18,21 @@ public class Facade {
     private IHealthDAO iHealthDAO;
     private IGenInfoDAO iGenInfoDAO;
     private IFunktionsDAO iFunktionsDAO;
+    private ITemplateDAO iTemplateDAO;
 
-    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
+    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
         this.iLoginDAO = iLoginDAO;
         this.iUserDAO = iUserDAO;
         this.iCitizienDAO = iCitizienDAO;
         this.iGenInfoDAO = iGenInfoDAO;
         this.iFunktionsDAO = iFunktionsDAO;
         this.iHealthDAO = iHealthDAO;
+        this.iTemplateDAO = itemplateDAO;
     }
 
-    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO) {
+    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
         if (instance == null) {
-            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO);
+            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO,itemplateDAO);
         }
     }
 
@@ -115,7 +117,7 @@ public class Facade {
 
 
     public void saveTemplate(Citizen citizen) throws SQLServerException {
-        iCitizienDAO.createTemplate(citizen);
+        iTemplateDAO.createTemplate(citizen);
     }
 
     public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
