@@ -15,17 +15,19 @@ public class TeacherViewMainController implements IController {
     private User teacher;
 
     public void handleSkabelonerbtn(ActionEvent actionEvent) throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
-        borderpane.setCenter(pane);
+        setBorderpaneContent("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml");
     }
 
     public void handleBorgererbtn(ActionEvent actionEvent) throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml")));
-        borderpane.setCenter(pane);
+        setBorderpaneContent("/dk/easv/gui/teacher/view/CitizenTeacherView.fxml");
     }
 
     public void handleEleverbtn(ActionEvent actionEvent) throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/AdminstrateStudents.fxml")));
+        setBorderpaneContent("/dk/easv/gui/teacher/view/AdminstrateStudents.fxml");
+    }
+
+    private void setBorderpaneContent(String fxml) throws IOException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
         borderpane.setCenter(pane);
     }
 

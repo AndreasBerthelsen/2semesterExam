@@ -102,7 +102,7 @@ public abstract class SuperController {
 
         stage.setTitle(Title);
         stage.centerOnScreen();
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setMaximized(true);
         stage.show();
     }
