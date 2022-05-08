@@ -288,7 +288,8 @@ public class NySkabelonMainController implements Initializable {
                     case 2 -> value = 3;
                     case 3 -> value = 4;
                     case 4 -> value = 5;
-                    case -1 -> value = 5;
+                    case 5-> value = 6;
+                    case -1 -> value = 6;
                 }
                 map.put(key, value);
 

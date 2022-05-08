@@ -123,4 +123,12 @@ public class Facade {
     public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
         iUserDAO.updatePassword(user, hashPassword, salt);
     }
+
+    public void deleteTemplate(Citizen citizen) throws SQLException {
+     iTemplateDAO.deleteTemplate(citizen);
+    }
+
+    public List<Citizen> getAllTemplates() throws SQLException {
+        return iTemplateDAO.getAllTemplates();
+    }
 }

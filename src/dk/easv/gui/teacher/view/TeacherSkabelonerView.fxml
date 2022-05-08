@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.SkabelonerViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.SkabelonerViewController">
    <left>
-      <TableView id="skabelonLabel" prefHeight="775.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <TableView id="skabelonLabel" fx:id="templateTV" prefHeight="775.0" prefWidth="400.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn id="skabelonLabel" prefWidth="75.0" text="Navn?" />
+          <TableColumn id="skabelonLabel" fx:id="nameTC" prefWidth="75.0" text="Navn?" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -24,7 +24,7 @@
          <children>
             <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleNySkabelonbtn" text="Ny Skabelon" />
             <Button id="SkabelonBtn" mnemonicParsing="false" text="Rediger Skabelon" />
-            <Button id="SkabelonBtn" mnemonicParsing="false" text="Slet Skabelon" />
+            <Button id="SkabelonBtn" layoutX="311.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleDeletebtn" text="Slet Skabelon" />
          </children>
       </VBox>
    </center>

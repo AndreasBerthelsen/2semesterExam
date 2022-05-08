@@ -11,6 +11,7 @@ import dk.easv.be.Section;
 import dk.easv.dal.Facade;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,15 @@ public class CitizenManager {
         return facade.getHealthSections();
     }
 
+    //TODO måske flyt til template manager
     public void saveTemplate(Citizen citizen) throws SQLServerException {
         facade.saveTemplate(citizen);
+    }
+    public void deleteTemplate(Citizen citizen) throws SQLException {
+        facade.deleteTemplate(citizen);
+    }
+
+    public List<Citizen> getAllTemplates() throws SQLException {
+        return facade.getAllTemplates();
     }
 }

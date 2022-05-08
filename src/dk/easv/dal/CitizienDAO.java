@@ -1,6 +1,5 @@
 package dk.easv.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
 import dk.easv.dal.interfaces.ICitizienDAO;
@@ -8,11 +7,7 @@ import dk.easv.dal.interfaces.ICitizienDAO;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class CitizienDAO implements ICitizienDAO {
     private DatabaseConnector dc;
@@ -94,7 +89,6 @@ public class CitizienDAO implements ICitizienDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
 
 
         return citizensFromUser;

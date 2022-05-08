@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,14 +42,6 @@ public class CitizenModel {
 
     public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {
         return cM.getFunktionsVandskligheder();
-    }
-
-    public HashMap<Integer, String> getHelbredsTilstande() {
-        return cM.getHelbredsTilstande();
-    }
-
-    public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
-        return cM.getHelbredVanskligheder();
     }
 
 
@@ -79,6 +72,12 @@ public class CitizenModel {
 
     public void saveTemplate(Citizen citizen) throws SQLServerException {
         cM.saveTemplate(citizen);
+    }
+    public void deleteTemplate(Citizen citizen) throws SQLException {
+        cM.deleteTemplate(citizen);
+    }
 
+    public ObservableList<Citizen> getObservableTemplates() throws SQLException {
+        return FXCollections.observableArrayList(cM.getAllTemplates());
     }
 }
