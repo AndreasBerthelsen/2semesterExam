@@ -73,8 +73,8 @@ public class CitizenModel {
     public void saveTemplate(Citizen citizen) throws SQLServerException {
         cM.saveTemplate(citizen);
     }
-    public void deleteTemplate(Citizen citizen) throws SQLException {
-        cM.deleteTemplate(citizen);
+    public void deleteTemplate(int citizenId) throws SQLException {
+        cM.deleteTemplate(citizenId);
     }
 
     public ObservableList<Citizen> getObservableTemplates() throws SQLException {

@@ -12,7 +12,8 @@
    <left>
       <TableView id="skabelonLabel" fx:id="templateTV" prefHeight="775.0" prefWidth="400.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn id="skabelonLabel" fx:id="nameTC" prefWidth="75.0" text="Navn?" />
+          <TableColumn id="skabelonLabel" fx:id="fNameTC" prefWidth="75.0" text="Fornavn" />
+            <TableColumn fx:id="lNameTC" prefWidth="75.0" text="Efternavn" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

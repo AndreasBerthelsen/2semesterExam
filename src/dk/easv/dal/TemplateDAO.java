@@ -7,6 +7,7 @@ import dk.easv.dal.interfaces.ITemplateDAO;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.*;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -110,23 +111,28 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     @Override
-    public void deleteTemplate(Citizen citizen) throws SQLException {
+    public void deleteTemplate(int citizenId) throws SQLException {
         //delete grupper -> journaler x3 -> borger
         try (Connection connection = dc.getConnection()) {
             String sql = "delete from FunktionsJournal where borgerID = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, citizen.getId());
+            ps.setInt(1, citizenId);
             ps.execute();
 
             String sql2 = "delete from helbredsJournal where borgerID = ?";
             PreparedStatement ps2 = connection.prepareStatement(sql2);
-            ps2.setInt(1, citizen.getId());
+            ps2.setInt(1, citizenId);
             ps2.execute();
 
             String sql3 = "delete from generelinfo where borgerID = ?";
             PreparedStatement ps3 = connection.prepareStatement(sql3);
-            ps3.setInt(1, citizen.getId());
+            ps3.setInt(1, citizenId);
             ps3.execute();
+
+            String sql4 = "delete from borger where borgerID = ?";
+            PreparedStatement ps4 = connection.prepareStatement(sql4);
+            ps4.setInt(1, citizenId);
+            ps4.execute();
 
         }
     }
@@ -135,17 +141,18 @@ public class TemplateDAO implements ITemplateDAO {
     public List<Citizen> getAllTemplates() throws SQLException {
         //TODO WORK IN PROGRESS
         List<Citizen> list = new ArrayList<>();
-
         try (Connection connection = dc.getConnection()) {
-            String sql = "Select borgerId,fname,lname,dato from Borger where isTemplate = 1";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("borgerid");
-                String fName = rs.getString("fname");
-                String lName = rs.getString("lname");
-                Date date = rs.getDate("dato");
+            String sql = "SELECT borgerID, fName, lName, dato\n" +
+                    "FROM Borger where isTemplate = 1";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("borgerID");
+                String fName = resultSet.getString("fName");
+                String lName = resultSet.getString("lName");
+                Date date = resultSet.getDate("dato");
+/*
                 //gen info
                 LinkedHashMap<String, String> genInfoText = loadGenInfoFromId(id, connection);
 
@@ -161,12 +168,18 @@ public class TemplateDAO implements ITemplateDAO {
 
                 Map<Integer, String> helbredInfo = loadHealthInfo(id,connection);
 
-
-                // list.add(new Citizen(id,fName,lName,date));
+ */
+                list.add(new Citizen(id,fName,lName,date));
             }
         }
+
+
+
+
         return list;
     }
+
+
 
     private Map<Integer, String> loadHealthInfo(int id, Connection connection) throws SQLException {
         Map<Integer,String> map = new LinkedHashMap<>();
@@ -261,7 +274,6 @@ public class TemplateDAO implements ITemplateDAO {
         for (String column : columnTitles.split(",")) {
             genInfoMap.put(column, rs2.getString(column));
         }
-
         return genInfoMap;
     }
 
@@ -283,6 +295,7 @@ public class TemplateDAO implements ITemplateDAO {
         TemplateDAO templateDAO = new TemplateDAO();
         DatabaseConnector dc = new DatabaseConnector();
         Connection connection = dc.getConnection();
-        System.out.println(templateDAO.loadHealthInfo(38,connection));
+        //System.out.println(templateDAO.loadGenInfoFromId(35,connection));
+        templateDAO.deleteTemplate(23);
     }
 }

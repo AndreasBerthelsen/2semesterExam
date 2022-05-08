@@ -124,8 +124,8 @@ public class Facade {
         iUserDAO.updatePassword(user, hashPassword, salt);
     }
 
-    public void deleteTemplate(Citizen citizen) throws SQLException {
-     iTemplateDAO.deleteTemplate(citizen);
+    public void deleteTemplate(int citizenId) throws SQLException {
+     iTemplateDAO.deleteTemplate(citizenId);
     }
 
     public List<Citizen> getAllTemplates() throws SQLException {
