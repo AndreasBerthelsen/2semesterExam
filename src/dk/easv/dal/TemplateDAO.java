@@ -47,7 +47,7 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     private void createGenInfoTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        HashMap<String, String> genInfoMap = citizen.getGenInfoText();
+        Map<String, String> genInfoMap = citizen.getGenInfoText();
 
         String geninfoFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
         StringBuilder sb = new StringBuilder();
@@ -67,9 +67,9 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     private void createFunktionsJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        HashMap<Integer, Integer> funkCurrentCombo = citizen.getCurrentCombo();
-        HashMap<Integer, Integer> funkTargetCombo = citizen.getTargetCombo();
-        HashMap<Integer, String> funkInfo = citizen.getFunkInfo();
+        Map<Integer, Integer> funkCurrentCombo = citizen.getCurrentCombo();
+        Map<Integer, Integer> funkTargetCombo = citizen.getTargetCombo();
+        Map<Integer, String> funkInfo = citizen.getFunkInfo();
 
         List<Integer> funkMasterKeys = Stream.of(funkCurrentCombo.keySet(), funkTargetCombo.keySet(), funkInfo.keySet())
                 .flatMap(Collection::stream)
@@ -90,8 +90,8 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     private void createHealthJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        HashMap<Integer, String> healthInfoMap = citizen.getHelbredInfo();
-        HashMap<Integer, Integer> healthRelevansMap = citizen.getRelevansMap();
+        Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
+        Map<Integer, Integer> healthRelevansMap = citizen.getRelevansMap();
         //helbred
         List<Integer> healthMasterKeys = Stream.of(healthInfoMap.keySet(), healthRelevansMap.keySet())
                 .flatMap(Collection::stream)

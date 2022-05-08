@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 
 import java.sql.Date;
+import java.util.Map;
 
 public class Citizen {
 
@@ -14,16 +15,16 @@ public class Citizen {
     private int id;
 
     //gen info
-    private HashMap<String,String> genInfoText;
+    private Map<String,String> genInfoText;
 
     //funktion
-    private HashMap<Integer,Integer> currentCombo;
-    private HashMap<Integer,Integer> targetCombo;
-    private HashMap<Integer,String> funkInfo;
+    private Map<Integer,Integer> currentCombo;
+    private Map<Integer,Integer> targetCombo;
+    private Map<Integer,String> funkInfo;
 
     //Helbred
-    private HashMap<Integer, Integer> relevansMap;
-    private HashMap<Integer, String> helbredInfo;
+    private Map<Integer, Integer> relevansMap;
+    private Map<Integer, String> helbredInfo;
 
     private String firstname;
     private String lastname;
@@ -37,7 +38,7 @@ public class Citizen {
         this.bDate = bDate;
     }
 
-    public Citizen(String fName, String lName, Date date, HashMap<String, String> genInfoText, HashMap<Integer, Integer> currentCombo, HashMap<Integer, Integer> targetCombo, HashMap<Integer, String> funkInfo, HashMap<Integer, Integer> relevansMap, HashMap<Integer, String> helbredInfo) {
+    public Citizen(String fName, String lName, Date date, Map<String, String> genInfoText, Map<Integer, Integer> currentCombo, Map<Integer, Integer> targetCombo, Map<Integer, String> funkInfo, Map<Integer, Integer> relevansMap, Map<Integer, String> helbredInfo) {
         this.genInfoText = genInfoText;
         this.currentCombo = currentCombo;
         this.targetCombo = targetCombo;
@@ -53,16 +54,10 @@ public class Citizen {
         return id;
     }
 
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFirstname() {
         return firstname;
 
     }
-
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
@@ -79,35 +74,31 @@ public class Citizen {
         return bDate;
     }
 
-    public void setbDate(Date bDate) {
-        this.bDate = bDate;
-    }
 
 
-    public HashMap<String, String> getGenInfoText() {
+    public Map<String, String> getGenInfoText() {
         return genInfoText;
     }
 
-    public HashMap<Integer, Integer> getCurrentCombo() {
+    public Map<Integer, Integer> getCurrentCombo() {
         return currentCombo;
     }
 
-    public HashMap<Integer, Integer> getTargetCombo() {
+    public Map<Integer, Integer> getTargetCombo() {
         return targetCombo;
     }
 
-    public HashMap<Integer, String> getFunkInfo() {
+    public Map<Integer, String> getFunkInfo() {
         return funkInfo;
     }
 
-    public HashMap<Integer, Integer> getRelevansMap() {
+    public Map<Integer, Integer> getRelevansMap() {
         return relevansMap;
     }
 
-    public HashMap<Integer, String> getHelbredInfo() {
+    public Map<Integer, String> getHelbredInfo() {
         return helbredInfo;
     }
-
 
     @Override
     public String toString() {
