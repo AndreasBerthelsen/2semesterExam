@@ -20,7 +20,9 @@ import java.util.ResourceBundle;
 
 public class SkabelonerViewController implements Initializable {
     public TableView<Citizen> templateTV;
-    public TableColumn<Citizen, String> nameTC;
+    public TableColumn<Citizen, String> fNnameTC;
+    public TableColumn<Citizen,String> lNameTC;
+    public TableColumn<Citizen,String> fNameTC;
     private CitizenModel cM;
 
     public SkabelonerViewController() throws IOException {
@@ -33,7 +35,8 @@ public class SkabelonerViewController implements Initializable {
     }
 
     private void setTemplateTV() {
-        nameTC.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        fNameTC.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        lNameTC.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         try{
             templateTV.setItems(cM.getObservableTemplates());
         }catch (Exception e){
@@ -58,7 +61,8 @@ public class SkabelonerViewController implements Initializable {
         //TODO TEST MIG
         Citizen citizen = templateTV.getSelectionModel().getSelectedItem();
         try {
-            cM.deleteTemplate(citizen);
+            cM.deleteTemplate(citizen.getId());
+            templateTV.getItems().remove(citizen);
         } catch (Exception e) {
             //error here
             System.out.println("catch");

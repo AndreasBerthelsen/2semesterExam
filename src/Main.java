@@ -12,22 +12,22 @@ import java.util.Objects;
 public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
-         ILoginDAO iLoginDAO = new LoginDAO();
-         IUserDAO iUserDAO = new UserDAO();
-         ICitizienDAO iCitizienDAO = new CitizienDAO();
-         IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
-         IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
-         IHealthDAO iHealthDAO = new HealthDAO();
-         ITemplateDAO iTemplateDAO = new TemplateDAO();
+        ILoginDAO iLoginDAO = new LoginDAO();
+        IUserDAO iUserDAO = new UserDAO();
+        ICitizienDAO iCitizienDAO = new CitizienDAO();
+        IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
+        IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
+        IHealthDAO iHealthDAO = new HealthDAO();
+        ITemplateDAO iTemplateDAO = new TemplateDAO();
 
-        Facade.createInstance(iLoginDAO,iCitizienDAO,iUserDAO,iGenInfoDAO,iFunktionsDAO, iHealthDAO,iTemplateDAO);
+        Facade.createInstance(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO, iTemplateDAO);
 
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/citizenteacherview.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/teacherviewmain.fxml")));
         Scene scene = new Scene(parent);
         stage.setTitle("SOSU FS3");
         stage.setResizable(true);

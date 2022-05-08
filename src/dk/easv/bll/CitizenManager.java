@@ -71,8 +71,9 @@ public class CitizenManager {
         facade.saveTemplate(citizen);
     }
 
-    public void deleteTemplate(Citizen citizen) throws SQLException {
-        facade.deleteTemplate(citizen);
+
+    public void deleteTemplate(int citizenid) throws SQLException {
+        facade.deleteTemplate(citizenid);
     }
 
     public List<Citizen> getAllTemplates() throws SQLException {

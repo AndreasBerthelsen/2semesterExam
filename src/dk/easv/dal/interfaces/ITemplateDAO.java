@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ITemplateDAO {
     void createTemplate(Citizen citizen) throws SQLServerException;
-    void deleteTemplate(Citizen citizen) throws SQLException;
+    void deleteTemplate(int citizenId) throws SQLException;
 
     List<Citizen> getAllTemplates() throws SQLException;
 
