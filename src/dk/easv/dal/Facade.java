@@ -32,7 +32,7 @@ public class Facade {
 
     public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
         if (instance == null) {
-            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO,itemplateDAO);
+            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO, itemplateDAO);
         }
     }
 
@@ -94,6 +94,9 @@ public class Facade {
         return iCitizienDAO.getAllCitizens();
     }
 
+    public List<Citizen> getAllTemplatesOfCitizens() {
+        return iCitizienDAO.getAllTemplatesOfCitizens();
+    }
 
     public List<Citizen> getAllCitiziensFromUser(User user) {
         return iCitizienDAO.getAllCitizensFromUser(user);
@@ -125,14 +128,20 @@ public class Facade {
     }
 
     public void deleteTemplate(Citizen citizen) throws SQLException {
-     iTemplateDAO.deleteTemplate(citizen);
+        iTemplateDAO.deleteTemplate(citizen);
     }
 
     public List<Citizen> getAllTemplates() throws SQLException {
         return iTemplateDAO.getAllTemplates();
     }
 
+
     public void updateCitizen(Citizen citizen) {
         iTemplateDAO.updateCitizen(citizen);
+    }
+
+    public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
+        iCitizienDAO.deleteCitizenFromUser(citizenToBeDeleted, user);
+
     }
 }

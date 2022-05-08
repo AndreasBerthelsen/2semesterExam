@@ -27,7 +27,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/nyskabelonmain.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/citizenteacherview.fxml")));
         Scene scene = new Scene(parent);
         stage.setTitle("SOSU FS3");
         stage.setResizable(true);

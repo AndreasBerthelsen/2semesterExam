@@ -22,14 +22,22 @@ import java.util.List;
 public class CitizenModel {
     CitizenManager cM = new CitizenManager();
     private ObservableList<Citizen> citizenList;
+    private ObservableList<Citizen> templateList;
 
     public CitizenModel() throws IOException {
         citizenList = FXCollections.observableArrayList();
         citizenList.addAll(getAllCitizens());
+
+        templateList = FXCollections.observableArrayList();
+        templateList.addAll(getAllTemplatesOfCitizens());
     }
 
     private List<Citizen> getAllCitizens() {
         return cM.getAllCitizen();
+    }
+
+    public List<Citizen> getAllTemplatesOfCitizens() {
+        return cM.getAllTemplatesOfCitizens();
     }
 
     public ArrayList<String> getGeneralinfoFields() {
@@ -46,11 +54,16 @@ public class CitizenModel {
 
 
     public ObservableList<Citizen> getAllCitizenObservable() {
-    citizenList.setAll(getAllCitizens());
-    return citizenList;
+        citizenList.setAll(getAllCitizens());
+        return citizenList;
     }
 
-    public ObservableList<Citizen> getAllCitizenFromUserObservable(User user){
+    public ObservableList<Citizen> getAllTemplatesOfCitizensObservable() {
+        templateList.setAll(getAllTemplatesOfCitizens());
+        return templateList;
+    }
+
+    public ObservableList<Citizen> getAllCitizenFromUserObservable(User user) {
         List<Citizen> tempCitizenList;
         ObservableList<Citizen> citizens = FXCollections.observableArrayList();
         tempCitizenList = this.cM.getAllCitizenFromUser(user);
@@ -59,25 +72,31 @@ public class CitizenModel {
 
     }
 
-    public void addUserToCitizen(Citizen citizen, User user){
+    public void addUserToCitizen(Citizen citizen, User user) {
         cM.addUserToCitizen(citizen, user);
     }
+
     public List<Section> getFunkSections() {
         return cM.getFunkSections();
     }
 
-    public List<Section> getHealthSections(){
+    public List<Section> getHealthSections() {
         return cM.getHealthSections();
     }
 
     public void saveTemplate(Citizen citizen) throws SQLServerException {
         cM.saveTemplate(citizen);
     }
+
     public void deleteTemplate(Citizen citizen) throws SQLException {
         cM.deleteTemplate(citizen);
     }
 
     public ObservableList<Citizen> getObservableTemplates() throws SQLException {
         return FXCollections.observableArrayList(cM.getAllTemplates());
+    }
+
+    public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
+        cM.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
 }
