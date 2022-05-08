@@ -131,4 +131,8 @@ public class Facade {
     public List<Citizen> getAllTemplates() throws SQLException {
         return iTemplateDAO.getAllTemplates();
     }
+
+    public void updateCitizen(Citizen citizen) {
+        iTemplateDAO.updateCitizen(citizen);
+    }
 }

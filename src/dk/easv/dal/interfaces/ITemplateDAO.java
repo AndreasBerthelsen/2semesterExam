@@ -11,4 +11,6 @@ public interface ITemplateDAO {
     void deleteTemplate(Citizen citizen) throws SQLException;
 
     List<Citizen> getAllTemplates() throws SQLException;
+
+    void updateCitizen(Citizen citizen);
 }

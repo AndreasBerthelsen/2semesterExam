@@ -1,5 +1,6 @@
 package dk.easv.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.dal.interfaces.ITemplateDAO;
 
@@ -221,6 +222,20 @@ public class TemplateDAO implements ITemplateDAO {
         }
 
         return genInfoMap;
+    }
+
+    public void updateCitizen(Citizen citizen) {
+        try (Connection connection = dc.getConnection()) {
+            String sql = "UPDATE Borger SET fName=?, lName=?, dato=? WHERE borgerID=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, citizen.getFirstname());
+            preparedStatement.setString(2, citizen.getLastname());
+            preparedStatement.setDate(3, citizen.getbDate());
+            preparedStatement.setInt(4, citizen.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws IOException, SQLException {
