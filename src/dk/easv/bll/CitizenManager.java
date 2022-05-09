@@ -24,13 +24,17 @@ public class CitizenManager {
         facade = Facade.getInstance();
     }
 
-    public ArrayList<String> getGeneralinfoFields(){
+    public ArrayList<String> getGeneralinfoFields() {
         return facade.getGeneralinfoFields();
     }
-    public HashMap<Integer,String> getFunktionsTilstande(){
+
+    public HashMap<Integer, String> getFunktionsTilstande() {
         return facade.getFunktionsTilstande();
     }
-    public HashMap<Integer,ArrayList<String>> getFunktionsVandskligheder(){return facade.getFunktionsVandskligheder();}
+
+    public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {
+        return facade.getFunktionsVandskligheder();
+    }
 
 
     public HashMap<Integer, String> getHelbredsTilstande() {
@@ -42,11 +46,11 @@ public class CitizenManager {
     }
 
 
-    public List<Citizen> getAllCitizen(){
+    public List<Citizen> getAllCitizen() {
         return facade.getAllCitiziens();
     }
 
-    public List<Citizen> getAllCitizenFromUser(User user){
+    public List<Citizen> getAllCitizenFromUser(User user) {
         return facade.getAllCitiziensFromUser(user);
     }
 
@@ -54,11 +58,11 @@ public class CitizenManager {
         facade.addUserToCitizen(citizen, user);
     }
 
-    public List<Section> getFunkSections(){
+    public List<Section> getFunkSections() {
         return facade.getFunkSections();
     }
 
-    public List<Section> getHealthSections(){
+    public List<Section> getHealthSections() {
         return facade.getHealthSections();
     }
 
@@ -66,6 +70,8 @@ public class CitizenManager {
     public void saveTemplate(Citizen citizen) throws SQLServerException {
         facade.saveTemplate(citizen);
     }
+
+
     public void deleteTemplate(int citizenid) throws SQLException {
         facade.deleteTemplate(citizenid);
     }
@@ -73,7 +79,17 @@ public class CitizenManager {
     public List<Citizen> getAllTemplates() throws SQLException {
         return facade.getAllTemplates();
     }
-    public void createCopyCitizen(Citizen citizen){
+    public void createCopyCitizen(Citizen citizen) {
         facade.createCopyCitizen(citizen);
     }
+
+    public List<Citizen> getAllTemplatesOfCitizens() {
+        return facade.getAllTemplatesOfCitizens();
+    }
+
+    public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user){
+        facade.deleteCitizenFromUser(citizenToBeDeleted, user);
+    }
+
 }
+

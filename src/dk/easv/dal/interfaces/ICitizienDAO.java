@@ -11,9 +11,11 @@ import java.util.List;
 
 public interface ICitizienDAO {
     List<Citizen> getAllCitizens();
+    List<Citizen> getAllTemplatesOfCitizens();
     void createCitizen(String fName, String lName, Date birthDate);
     void addUserToCitizen(User user, Citizen citizen);
-
+    void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user);
+    
     List<Citizen> getAllCitizensFromUser(User user);
 
     void createCopyCitizen(Citizen citizen);

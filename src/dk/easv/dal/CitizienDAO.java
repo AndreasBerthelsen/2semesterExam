@@ -23,7 +23,7 @@ public class CitizienDAO implements ICitizienDAO {
         try (Connection connection = dc.getConnection()) {
 
             String sql = "SELECT borgerID, fName, lName, dato\n" +
-                    "FROM Borger";
+                    "FROM Borger WHERE isTemplate = 0";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -38,6 +38,29 @@ public class CitizienDAO implements ICitizienDAO {
             throwables.printStackTrace();
         }
         return allCitizen;
+    }
+
+    @Override
+    public List<Citizen> getAllTemplatesOfCitizens() {
+        ArrayList<Citizen> allTemp = new ArrayList<>();
+        try (Connection connection = dc.getConnection()) {
+
+            String sql = "SELECT borgerID, fName, lName, dato\n" +
+                    "FROM Borger WHERE isTemplate = 1";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("borgerID");
+                String fname = resultSet.getString("fName");
+                String lName = resultSet.getString("lName");
+                Date date = resultSet.getDate("dato");
+                allTemp.add(new Citizen(id, fname, lName, date));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return allTemp;
     }
 
     @Override
@@ -61,6 +84,19 @@ public class CitizienDAO implements ICitizienDAO {
             String sql = "INSERT INTO CitUser (citFK, userFK) VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, citizen.getId());
+            preparedStatement.setInt(2, user.getId());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
+        try (Connection connection = dc.getConnection()) {
+            String sql = "DELETE FROM CitUser WHERE citFK = ? AND userFK = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, citizenToBeDeleted.getId());
             preparedStatement.setInt(2, user.getId());
             preparedStatement.execute();
         } catch (SQLException throwables) {

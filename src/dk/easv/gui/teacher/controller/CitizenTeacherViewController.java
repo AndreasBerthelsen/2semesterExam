@@ -21,11 +21,17 @@ public class CitizenTeacherViewController implements Initializable {
 
 
     @FXML
-    private TableColumn<Citizen, Integer> citizenDisplayID;
+    private TableView<Citizen> tempTableView;
     @FXML
-    private TableColumn<Citizen, String> citizenDisplayFname;
+    private TableColumn<Citizen, String> tempFnameCol;
     @FXML
-    private TableColumn<Citizen, String> citizenDisplayLname;
+    private TableColumn<Citizen, String> tempLnameCol;
+    @FXML
+    private TableColumn<Citizen, Integer> tempDisplayID;
+    @FXML
+    private TableColumn<Citizen, String> tempDisplayFname;
+    @FXML
+    private TableColumn<Citizen, String> tempDisplayLname;
     @FXML
     private TableColumn<Citizen, String> citizenFnameCol;
     @FXML
@@ -40,8 +46,7 @@ public class CitizenTeacherViewController implements Initializable {
     private TableView<Citizen> citizenTableView;
     @FXML
     private TableView<User> studentTableView;
-    @FXML
-    private TableView<String> templateTableView;
+
 
     private UserModel userModel;
     private CitizenModel citizenModel;
@@ -53,15 +58,21 @@ public class CitizenTeacherViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        citizenFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        citizenLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        //sets the list with names of the templates/copies
+        tempFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        tempLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        //sets the list with names of the students
         studentFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         studentLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        //sets the list with names of the citizens
+        citizenFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        citizenLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
 
         try {
-            citizenTableView.setItems(citizenModel.getAllCitizenObservable());
+            tempTableView.setItems(citizenModel.getAllTemplatesOfCitizensObservable());
             studentTableView.setItems(userModel.getObservableStudents());
-            
+            citizenTableView.setItems(citizenModel.getAllCitizenObservable());
+
         } catch (SQLServerException throwables) {
             throwables.printStackTrace();
         }
@@ -75,7 +86,7 @@ public class CitizenTeacherViewController implements Initializable {
     public void handleRemoveCitizenBtn(ActionEvent actionEvent) {
     }
 
-    public void handleAddCitizenToStudentBtn(ActionEvent actionEvent) throws SQLServerException {
+    public void handleAddTemplateToStudentBtn(ActionEvent actionEvent) throws SQLServerException {
         boolean alreadyHasCitizen = false;
         Citizen selectedCitizen = citizenTableView.getSelectionModel().getSelectedItem();
         User selectedUser = studentTableView.getSelectionModel().getSelectedItem();
@@ -104,7 +115,8 @@ public class CitizenTeacherViewController implements Initializable {
     }
 
 
-    public void handleRemoveCitizenFromStudentBtn(ActionEvent actionEvent) {
+    public void handleRemoveTemplateFromStudentBtn(ActionEvent actionEvent) {
+        citizenModel.deleteCitizenFromUser(displayTableView.getSelectionModel().getSelectedItem(), studentTableView.getSelectionModel().getSelectedItem());
     }
 
     /**
@@ -117,20 +129,20 @@ public class CitizenTeacherViewController implements Initializable {
         alert.showAndWait();
     }
 
-    public void displayCitizensFromStudent(User user){
+    public void displayTempCitizensFromStudent(User user) {
         user = selectedUser();
-        citizenDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        citizenDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        citizenDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        tempDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tempDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        tempDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         displayTableView.setItems(citizenModel.getAllCitizenFromUserObservable(user));
 
     }
 
-    public User selectedUser(){
-    return studentTableView.getSelectionModel().getSelectedItem();
+    public User selectedUser() {
+        return studentTableView.getSelectionModel().getSelectedItem();
     }
 
     public void handleStudentTableCLicked(MouseEvent mouseEvent) {
-        displayCitizensFromStudent(selectedUser());
+        displayTempCitizensFromStudent(selectedUser());
     }
 }

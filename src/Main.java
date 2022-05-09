@@ -12,15 +12,15 @@ import java.util.Objects;
 public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
-         ILoginDAO iLoginDAO = new LoginDAO();
-         IUserDAO iUserDAO = new UserDAO();
-         ICitizienDAO iCitizienDAO = new CitizienDAO();
-         IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
-         IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
-         IHealthDAO iHealthDAO = new HealthDAO();
-         ITemplateDAO iTemplateDAO = new TemplateDAO();
+        ILoginDAO iLoginDAO = new LoginDAO();
+        IUserDAO iUserDAO = new UserDAO();
+        ICitizienDAO iCitizienDAO = new CitizienDAO();
+        IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
+        IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
+        IHealthDAO iHealthDAO = new HealthDAO();
+        ITemplateDAO iTemplateDAO = new TemplateDAO();
 
-        Facade.createInstance(iLoginDAO,iCitizienDAO,iUserDAO,iGenInfoDAO,iFunktionsDAO, iHealthDAO,iTemplateDAO);
+        Facade.createInstance(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO, iTemplateDAO);
 
         launch();
     }
