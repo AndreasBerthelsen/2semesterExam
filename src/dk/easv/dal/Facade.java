@@ -157,4 +157,8 @@ public class Facade {
     public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
         iTemplateDAO.updateTemplate(citizen,id);
     }
+
+    public Citizen loadCitizen(Citizen citizen) {
+        return iTemplateDAO.loadTemplate(citizen);
+    }
 }

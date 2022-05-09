@@ -20,5 +20,4 @@ public interface ICitizienDAO {
 
     void createCopyCitizen(Citizen citizen);
 
-
 }

@@ -1,4 +1,4 @@
-package dk.easv.gui.teacher.controller;
+package dk.easv.gui.student.controller;
 
 import dk.easv.be.Citizen;
 import dk.easv.be.Section;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
 
-public class TeacherEditSkabelonViewController extends saveCitizenController implements ICitizenSelector {
+public class StudentEditCitizenController extends saveCitizenController implements ICitizenSelector {
     public ScrollPane genScrollPane;
     public TabPane funktionInnerTabPane;
     public TabPane helbredsInnerTabPane;
@@ -40,7 +40,7 @@ public class TeacherEditSkabelonViewController extends saveCitizenController imp
     private Map<Integer, ToggleGroup> healthToggleMap;
     private Map<Integer, TextArea> helbredTextAreaMap;
 
-    public TeacherEditSkabelonViewController() throws IOException {
+    public StudentEditCitizenController() throws IOException {
         this.cM = new CitizenModel();
         genInfoTextAreaMap = new LinkedHashMap<>();
         currentComboMap = new LinkedHashMap<>();
@@ -50,13 +50,17 @@ public class TeacherEditSkabelonViewController extends saveCitizenController imp
         helbredTextAreaMap = new LinkedHashMap<>();
     }
 
+    //TODO REWORK ALT
     @Override
     public void setCitizen(Citizen citizen) {
-        this.citizen = cM.loadTemplate(citizen);
+        this.citizen = cM.loadCitizen(citizen);
         this.id = citizen.getId();
+        System.out.println(citizen.getFirstname() + " " + citizen.getLastname());
+        System.out.println(this.citizen.getGenInfoText());
         fNameInput.setText(citizen.getFirstname());
         lNameInput.setText(citizen.getLastname());
         dateInput.setValue(citizen.getbDate().toLocalDate());
+        System.out.println(this.id);
         setupGeneralInfo();
         setupFunkTab();
         setupHelbredTab();

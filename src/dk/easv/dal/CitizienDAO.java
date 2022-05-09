@@ -159,7 +159,6 @@ public class CitizienDAO implements ICitizienDAO {
         return idKey.getInt(1);
     }
 
-
     private void createHelbTilCopy(int oldId,  Connection connection, int newID) throws SQLException {
         String SQL = "INSERT INTO HelbredsJournal(borgerID, problemID, value, relevans)\n" +
                 "SELECT ?,problemID, [value], relevans\n" +
@@ -170,7 +169,6 @@ public class CitizienDAO implements ICitizienDAO {
         preparedStatement.setInt(2, oldId);
         preparedStatement.execute();
     }
-
 
     private void createFunkTilCopy(int oldId, Connection connection, int newID) throws SQLException {
         String sql = "INSERT INTO FunktionsJournal(borgerID,problemID, nuVurdering, målVurdering, note)\n" +

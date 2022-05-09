@@ -101,5 +101,8 @@ public class CitizenManager {
         facade.updateTemplate(citizen, id);
     }
 
+    public Citizen loadCitizen(Citizen citizen) {
+        return facade.loadCitizen(citizen);
+    }
 }
 
