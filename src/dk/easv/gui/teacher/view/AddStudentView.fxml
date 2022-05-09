@@ -11,22 +11,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" styleClass="backgroundColor" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.AddStudentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="457.0" prefWidth="355.0" styleClass="backgroundColor" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.AddStudentController">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER_LEFT">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="300.0">
                      <children>
                         <Label id="AddOrEditLabel" text="Fornavn">
                            <VBox.margin>
-                              <Insets left="20.0" right="187.0" />
+                              <Insets />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="fNameTxtfield">
                            <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
                      </children>
@@ -35,16 +35,16 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="300.0">
                      <children>
                         <Label id="AddOrEditLabel" text="Efternavn">
                            <VBox.margin>
-                              <Insets left="20.0" right="170.0" />
+                              <Insets />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="lNameTxtField">
                            <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
                      </children>
@@ -53,16 +53,16 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0">
                      <children>
                         <Label id="AddOrEditLabel" text="Brugernavn">
                            <VBox.margin>
-                              <Insets left="20.0" right="145.0" />
+                              <Insets />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="usernameTxtfield">
                            <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
                      </children>
@@ -71,16 +71,16 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="300.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0">
                      <children>
                         <Label id="AddOrEditLabel" text="Adgangskode">
                            <VBox.margin>
-                              <Insets left="20.0" right="120.0" />
+                              <Insets />
                            </VBox.margin>
                         </Label>
                         <TextField id="AddOrEditTxtfield" fx:id="passwordTxtfield">
                            <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
                      </children>
@@ -122,6 +122,9 @@
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
       </VBox>
    </center>
 </BorderPane>
