@@ -87,7 +87,7 @@ public class CitizenTeacherViewController implements Initializable {
 
     public void handleAddTemplateToStudentBtn(ActionEvent actionEvent) throws SQLServerException {
         boolean alreadyHasCitizen = false;
-        Citizen selectedCitizen = tempTableView.getSelectionModel().getSelectedItem();
+        Citizen selectedCitizen = citizenTableView.getSelectionModel().getSelectedItem();
         User selectedUser = studentTableView.getSelectionModel().getSelectedItem();
 
         if (selectedCitizen != null && selectedUser != null) {
