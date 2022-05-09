@@ -113,9 +113,10 @@ public class NySkabelonMainController extends saveCitizenController implements I
                 ScrollPane scrollPane = new ScrollPane();
                 scrollPane.setContent(contentVBox);
                 scrollPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+                scrollPane.setPrefSize(200,400);
                 scrollPane.setId("VBOX");
 
-                scrollPane.setPrefSize(contentVBox.getPrefWidth() + 20, 700);
+                scrollPane.setPrefSize(contentVBox.getPrefWidth() + 20, 500);
                 tab.setContent(scrollPane);
             }
             funktionInnerTabPane.getTabs().add(tab);
@@ -143,6 +144,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
             }
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(gridPane);
+            scrollPane.setPrefSize(gridPane.getPrefWidth(),500);
             Tab tab = new Tab(section.getSectionTitle());
             tab.setContent(scrollPane);
             helbredsInnerTabPane.getTabs().add(tab);
