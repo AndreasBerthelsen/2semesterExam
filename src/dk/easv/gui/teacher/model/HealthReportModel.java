@@ -9,13 +9,15 @@ import java.util.List;
 public class HealthReportModel {
 
     private HealthReportManager healthReportManager;
+
     public HealthReportModel() {
         healthReportManager = new HealthReportManager();
     }
 
     public List<Category> getAllTitles() throws SQLServerException {
-       return healthReportManager.getAllTitles();
+        return healthReportManager.getAllTitles();
     }
+
     public List<String> getAllSubTitles(Category category) throws SQLServerException {
         return healthReportManager.getAllSubTitles(category);
     }

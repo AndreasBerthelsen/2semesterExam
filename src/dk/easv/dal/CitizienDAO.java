@@ -146,7 +146,6 @@ public class CitizienDAO implements ICitizienDAO {
 
     public void deleteCitizen(int citizenId) throws SQLException {
         try (Connection connection = dc.getConnection()) {
-            System.out.println(citizenId);
             String sql = "delete from FunktionsJournal where borgerID = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, citizenId);

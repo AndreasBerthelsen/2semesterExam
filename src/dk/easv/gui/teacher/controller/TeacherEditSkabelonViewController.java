@@ -128,8 +128,6 @@ public class TeacherEditSkabelonViewController extends saveCitizenController imp
         List<Section> healthSections = cM.getHealthSections();
         Map<Integer, Integer> relevansMap = citizen.getRelevansMap();
         Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
-        System.out.println("rel" + relevansMap);
-        System.out.println("health" + healthInfoMap);
         //todo gem radio buttons og text til ale felter selv hvis tom
 
         for (Section section : healthSections) {

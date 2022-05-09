@@ -55,12 +55,9 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     public void setCitizen(Citizen citizen) {
         this.citizen = cM.loadCitizen(citizen);
         this.id = citizen.getId();
-        System.out.println(citizen.getFirstname() + " " + citizen.getLastname());
-        System.out.println(this.citizen.getGenInfoText());
         fNameInput.setText(citizen.getFirstname());
         lNameInput.setText(citizen.getLastname());
         dateInput.setValue(citizen.getbDate().toLocalDate());
-        System.out.println(this.id);
         setupGeneralInfo();
         setupFunkTab();
         setupHelbredTab();
@@ -132,8 +129,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
         List<Section> healthSections = cM.getHealthSections();
         Map<Integer, Integer> relevansMap = citizen.getRelevansMap();
         Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
-        System.out.println("rel" + relevansMap);
-        System.out.println("health" + healthInfoMap);
+
         //todo gem radio buttons og text til ale felter selv hvis tom
 
         for (Section section : healthSections) {

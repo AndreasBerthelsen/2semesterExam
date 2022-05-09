@@ -20,11 +20,11 @@ public class UserModel {
         studentList.addAll(getAllStudents());
     }
 
-    public void createStudent(String firstName, String lastName,String username, String password) throws SQLException {
-        uM.createUser(firstName, lastName,username, password, UserType.STUDENT);
+    public void createStudent(String firstName, String lastName, String username, String password) throws SQLException {
+        uM.createUser(firstName, lastName, username, password, UserType.STUDENT);
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         uM.deleteUser(user);
     }
 
@@ -44,6 +44,7 @@ public class UserModel {
         studentList.setAll(getAllStudents());
         return studentList;
     }
+
     public void updatePassword(User user, String hashPassword) throws SQLServerException {
         uM.updatePassword(user, hashPassword);
     }

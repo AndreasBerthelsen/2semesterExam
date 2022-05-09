@@ -97,7 +97,7 @@ public class CitizenTeacherViewController implements Initializable {
                 citizenTableView.getItems().remove(citizen);
             } catch (Exception e) {
                 //error here
-                System.out.println("catch");
+                e.printStackTrace();
             }
         } else {
             // ... user chose CANCEL or closed the dialog

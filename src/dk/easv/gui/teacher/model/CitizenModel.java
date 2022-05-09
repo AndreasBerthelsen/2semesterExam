@@ -3,17 +3,12 @@ package dk.easv.gui.teacher.model;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
-import dk.easv.be.User;
-
-
 import dk.easv.be.Section;
-
+import dk.easv.be.User;
 import dk.easv.bll.CitizenManager;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -97,19 +92,22 @@ public class CitizenModel {
     public ObservableList<Citizen> getObservableTemplates() throws SQLException {
         return FXCollections.observableArrayList(cM.getAllTemplates());
     }
+
     public void createCopyCitizen(Citizen citizen) {
         cM.createCopyCitizen(citizen);
     }
+
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         cM.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
+
     public Citizen loadTemplate(Citizen citizen) {
         return cM.loadTemplate(citizen);
 
     }
 
-    public void updateTemplate(Citizen citizen,int id) throws SQLServerException {
-       cM.updateTemplate(citizen,id);
+    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
+        cM.updateTemplate(citizen, id);
     }
 
     public void deleteCitizen(int citizenId) throws SQLException {
