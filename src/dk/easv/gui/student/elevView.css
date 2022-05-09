@@ -1,5 +1,6 @@
 .table-view {
     -fx-background-color: transparent;
+
 }
 
 .table-view .column-header-background .filler {
@@ -22,13 +23,19 @@
     -fx-background-color: transparent;
 }
 .table-view .table-cell{
+    -fx-text-fill: white;
+    -fx-font-size: 25;
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
 }
 
 .table-row-cell:hover {
     -fx-background-color: #93f9b911;
-    -fx-text-background-color: red;
+    -fx-border-color: white;
+}
+.table-row-cell:selected {
+    -fx-background-color: #93f9b911;
+    -fx-border-color: white;
 }
 
 .table-row-cell:odd{
@@ -58,4 +65,10 @@
 .button:pressed{
     -fx-text-fill: white;
     -fx-background-color:#389900;
+}
+.hbox{
+    -fx-background-color: #385263;
+}
+.borderpane{
+    -fx-background-color: #426175;
 }

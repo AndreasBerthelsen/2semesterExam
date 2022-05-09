@@ -52,7 +52,7 @@ public class AdminstrateStudentsController extends SuperController implements In
         if (studentTable.getSelectionModel().getSelectedItem() == null) {
             errorMessage("Vælg den elev, som du vil slette");
         } else {
-            User user = (User) studentTable.getSelectionModel().getSelectedItem();
+            User user = studentTable.getSelectionModel().getSelectedItem();
             if (confirmationBox("Er du sikker på, at du vil slette" + " " + user.getFirstname() + " " + user.getLastname() + "?").get() == ButtonType.YES) {
                 uM.deleteUser(user);
                 studentTable.getItems().remove(user);
@@ -61,7 +61,7 @@ public class AdminstrateStudentsController extends SuperController implements In
     }
 
     public void handleUpdateStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
-        User user = (User) studentTable.getSelectionModel().getSelectedItem();
+        User user = studentTable.getSelectionModel().getSelectedItem();
         if (user != null) {
             openSceneAsUser(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev", actionEvent);
             studentTable.setItems(uM.getObservableStudents());
