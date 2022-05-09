@@ -110,4 +110,9 @@ public class CitizenModel {
     public void updateTemplate(Citizen citizen,int id) throws SQLServerException {
        cM.updateTemplate(citizen,id);
     }
+
+    public void deleteCitizen(int citizenId) throws SQLException {
+        cM.deleteCitizen(citizenId);
+    }
+
 }

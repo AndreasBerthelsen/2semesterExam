@@ -142,7 +142,36 @@ public class CitizienDAO implements ICitizienDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
 
+    public void deleteCitizen(int citizenId) throws SQLException {
+        try (Connection connection = dc.getConnection()) {
+            System.out.println(citizenId);
+            String sql = "delete from FunktionsJournal where borgerID = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, citizenId);
+            ps.execute();
+
+            String sql2 = "delete from helbredsJournal where borgerID = ?";
+            PreparedStatement ps2 = connection.prepareStatement(sql2);
+            ps2.setInt(1, citizenId);
+            ps2.execute();
+
+            String sql3 = "delete from generelinfo where borgerID = ?";
+            PreparedStatement ps3 = connection.prepareStatement(sql3);
+            ps3.setInt(1, citizenId);
+            ps3.execute();
+
+            String sql4 = "delete from CitUser where citFK = ?";
+            PreparedStatement ps4 = connection.prepareStatement(sql4);
+            ps4.setInt(1, citizenId);
+            ps4.execute();
+
+            String sql5 = "delete from borger where borgerID = ?";
+            PreparedStatement ps5 = connection.prepareStatement(sql5);
+            ps5.setInt(1, citizenId);
+            ps5.execute();
+        }
     }
 
     private int createCitizenToCopy(Citizen citizen, Connection connection) throws SQLException {

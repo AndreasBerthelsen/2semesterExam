@@ -101,5 +101,9 @@ public class CitizenManager {
         facade.updateTemplate(citizen, id);
     }
 
+    public void deleteCitizen(int citizenId) throws SQLException {
+        facade.deleteCitizen(citizenId);
+    }
+
 }
 

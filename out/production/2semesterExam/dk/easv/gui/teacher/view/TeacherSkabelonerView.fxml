@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.SkabelonerViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.SkabelonerViewController">
    <top>
       <Pane id="Vbox" prefHeight="225.0" prefWidth="1150.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,7 +23,7 @@
          <children>
             <TableView id="skabelonLabel" fx:id="templateTV" prefHeight="775.0" prefWidth="400.0">
               <columns>
-                <TableColumn id="skabelonLabel" fx:id="fNameTC" prefWidth="75.0" text="Fornavn" />
+                <TableColumn fx:id="fNameTC" prefWidth="75.0" text="Fornavn" />
                   <TableColumn fx:id="lNameTC" prefWidth="75.0" text="Efternavn" />
               </columns>
                <columnResizePolicy>

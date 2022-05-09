@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CitizenTeacherViewController implements Initializable {
@@ -84,6 +85,22 @@ public class CitizenTeacherViewController implements Initializable {
     }
 
     public void handleRemoveCitizenBtn(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Er du sikker på du ville slette denne kopi?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            Citizen citizen = citizenTableView.getSelectionModel().getSelectedItem();
+            try {
+                citizenModel.deleteCitizen(citizen.getId());
+                citizenTableView.getItems().remove(citizen);
+            } catch (Exception e) {
+                //error here
+                System.out.println("catch");
+            }
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
     }
 
     public void handleAddTemplateToStudentBtn(ActionEvent actionEvent) throws SQLServerException {
