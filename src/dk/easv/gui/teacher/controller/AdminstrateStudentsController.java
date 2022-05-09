@@ -63,7 +63,7 @@ public class AdminstrateStudentsController extends SuperController implements In
     public void handleUpdateStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
         User user = studentTable.getSelectionModel().getSelectedItem();
         if (user != null) {
-            openSceneAsUser(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev", actionEvent);
+            openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev");
             studentTable.setItems(uM.getObservableStudents());
         } else {
             errorMessage("Vælg den elev, som du vil redigere");
