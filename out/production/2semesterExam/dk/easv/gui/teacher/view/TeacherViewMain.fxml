@@ -6,11 +6,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderpane" prefHeight="1000.0" prefWidth="1400.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.TeacherViewMainController">
+<BorderPane fx:id="borderpane" prefHeight="883.0" prefWidth="1215.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.TeacherViewMainController">
    <left>
       <VBox id="Vbox" layoutX="250.0" prefHeight="1000.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
@@ -82,17 +84,22 @@
       </VBox>
    </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane id="Vbox" prefHeight="225.0" prefWidth="1150.0">
+            <HBox id="Vbox" alignment="CENTER" prefHeight="226.0" prefWidth="965.0">
                <children>
-                  <Label id="TeacherLbl" layoutX="467.0" layoutY="95.0" text="Velkommen lærer" textFill="#074523">
+                  <Label id="TeacherLbl" fx:id="velkommenLabel" text="Velkommen lærer" textFill="#074523">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
                </children>
-            </Pane>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Her kan du administre dine elever, og hvilke borger der findes i systemet">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
          </children>
       </VBox>
    </center>

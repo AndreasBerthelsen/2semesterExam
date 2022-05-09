@@ -107,43 +107,6 @@ CSS til tableviews
     -fx-font-family: "Lucida Sans";
 }
 
-.table-view .column-header-background {
-    -fx-background-radius: 10;
-    -fx-background-insets: 0 0 10 0;
-    -fx-padding: 0 0 10 0;
-    -fx-font-size: 14;
-    -fx-font-family: "Lucida Sans";
-}
-
-.table-view .column-header, table-view .filler{
-    -fx-size: 40;
-    -fx-border-width: 0 0 10 0;
-}
-
-.table-row-cell{
-    -fx-background-color: rgba(0,0,0,0.7);
-    -fx-font-weight:bold;
-    -fx-font-size: 14;
-    -fx-font-family: "Lucida Sans";
-    -fx-text-alignment: center;
-}
-.table-row-cell.table-row-cell:filled:focused:selected {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.9), 10, 0, 0, 0);
-    -fx-border-color: transparent;
-    -fx-background-color: transparent;
-}
-
-.table-row-cell:focused {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.9), 10, 0, 0, 0);
-}
-
-
-.table-view .virtual-flow .scroll-bar .increment-button,
-.table-view .virtual-flow .scroll-bar .decrement-button {
-    -fx-opacity: 0;
-    -fx-padding: 2;
-}
-
 /**
 Id's til Tilføj / rediger / slet elever
  */

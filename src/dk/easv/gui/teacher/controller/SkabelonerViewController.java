@@ -48,7 +48,7 @@ public class SkabelonerViewController implements Initializable {
         }
     }
 
-    public void handleNySkabelonbtn(ActionEvent actionEvent) throws IOException {
+    public void handleNySkabelonbtn(ActionEvent actionEvent) throws IOException, SQLException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
@@ -57,6 +57,7 @@ public class SkabelonerViewController implements Initializable {
         stage.setScene(scene);
         //stage.setFullScreen(true); Giver en F11 fullscreen
         stage.showAndWait();
+        templateTV.setItems(cM.getObservableTemplates());
     }
 
     public void handleDeletebtn(ActionEvent actionEvent) throws SQLException {
@@ -86,7 +87,7 @@ public class SkabelonerViewController implements Initializable {
 
     }
 
-    public void handleEditSkabelonbtn(ActionEvent actionEvent) throws IOException {
+    public void handleEditSkabelonbtn(ActionEvent actionEvent) throws IOException, SQLException {
         Citizen citizen = templateTV.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TeacherEditSkabelonView.fxml")));
         Scene scene = new Scene(loader.load());
@@ -95,6 +96,7 @@ public class SkabelonerViewController implements Initializable {
         ICitizenSelector controller = loader.getController();
         controller.setCitizen(citizen);
         stage.showAndWait();
+        templateTV.setItems(cM.getObservableTemplates());
     }
 
 }
