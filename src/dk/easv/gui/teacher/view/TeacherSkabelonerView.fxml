@@ -24,7 +24,7 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="721.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleNySkabelonbtn" text="Ny Skabelon" />
-            <Button id="SkabelonBtn" mnemonicParsing="false" text="Rediger Skabelon" />
+            <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleEditSkabelonbtn" text="Rediger Skabelon" />
             <Button id="SkabelonBtn" layoutX="311.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleDeletebtn" text="Slet Skabelon" />
          </children>
       </VBox>

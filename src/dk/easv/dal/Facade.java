@@ -144,6 +144,13 @@ public class Facade {
 
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         iCitizienDAO.deleteCitizenFromUser(citizenToBeDeleted, user);
+    }
+    public Citizen loadTemplate(Citizen citizen) {
+        return iTemplateDAO.loadTemplate(citizen);
 
+    }
+
+    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
+        iTemplateDAO.updateTemplate(citizen,id);
     }
 }

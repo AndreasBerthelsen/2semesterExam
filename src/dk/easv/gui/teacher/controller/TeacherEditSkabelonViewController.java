@@ -1,13 +1,12 @@
 package dk.easv.gui.teacher.controller;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.Section;
 import dk.easv.gui.supercontroller.saveCitizenController;
+import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,39 +16,50 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Date;
 import java.util.*;
 
-public class NySkabelonMainController extends saveCitizenController implements Initializable {
-    public TextField fNameInput;
-    public DatePicker dateInput;
-    public TextField lNameInput;
-    //todo hent alle info fields med ny thread
-    CitizenModel sM = new CitizenModel();
-    //funktion
-    private final HashMap<Integer, TextArea> funkInfoTextAreaMap = new HashMap<>();
-    private final HashMap<Integer, ComboBox<ImageView>> currentComboMap = new HashMap<>();
-    private final HashMap<Integer, ComboBox<String>> targetComboMap = new HashMap<>();
+public class TeacherEditSkabelonViewController extends saveCitizenController implements ICitizenSelector {
+    public ScrollPane genScrollPane;
     public TabPane funktionInnerTabPane;
-
-    //Gen info
-    public javafx.scene.control.ScrollPane genScrollPane;
-    private final HashMap<String, TextArea> genInfoTextAreaMap = new HashMap<>();
-    private final ArrayList<String> genInfoFieldList = sM.getGeneralinfoFields();
-
-
-    //helbred
-    private final HashMap<Integer, ToggleGroup> healthToggleMap = new HashMap<>();
-    private final HashMap<Integer, TextArea> helbredTextAreaMap = new HashMap<>();
     public TabPane helbredsInnerTabPane;
+    public DatePicker dateInput;
+    public TextField fNameInput;
+    public TextField lNameInput;
+    private CitizenModel cM;
+    private Citizen citizen;
+    private int id;
 
-    public NySkabelonMainController() throws IOException {
+    private Map<String, TextArea> genInfoTextAreaMap;
+
+
+    private Map<Integer, ComboBox<ImageView>> currentComboMap;
+    private Map<Integer, ComboBox<String>> targetComboMap;
+    private Map<Integer, TextArea> funkInfoTextAreaMap;
+
+    private Map<Integer, ToggleGroup> healthToggleMap;
+    private Map<Integer, TextArea> helbredTextAreaMap;
+
+    public TeacherEditSkabelonViewController() throws IOException {
+        this.cM = new CitizenModel();
+        genInfoTextAreaMap = new LinkedHashMap<>();
+        currentComboMap = new LinkedHashMap<>();
+        targetComboMap = new LinkedHashMap<>();
+        funkInfoTextAreaMap = new LinkedHashMap<>();
+        healthToggleMap = new LinkedHashMap<>();
+        helbredTextAreaMap = new LinkedHashMap<>();
     }
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void setCitizen(Citizen citizen) {
+        this.citizen = cM.loadTemplate(citizen);
+        this.id = citizen.getId();
+        System.out.println(citizen.getFirstname() + " " + citizen.getLastname());
+        System.out.println(this.citizen.getGenInfoText());
+        fNameInput.setText(citizen.getFirstname());
+        lNameInput.setText(citizen.getLastname());
+        dateInput.setValue(citizen.getbDate().toLocalDate());
+        System.out.println(this.id);
         setupGeneralInfo();
         setupFunkTab();
         setupHelbredTab();
@@ -57,9 +67,10 @@ public class NySkabelonMainController extends saveCitizenController implements I
 
     private void setupGeneralInfo() {
         VBox vBox = new VBox();
-        for (String field : genInfoFieldList) {
+        Map<String, String> generalInfoMap = citizen.getGenInfoText();
+        for (String field : generalInfoMap.keySet()) {
             Label label = new Label(field);
-            TextArea textArea = createTextArea(genInfoTextAreaMap, field);
+            TextArea textArea = createTextArea(genInfoTextAreaMap, field, generalInfoMap.get(field));
             vBox.getChildren().add(label);
             vBox.getChildren().add(textArea);
         }
@@ -68,7 +79,11 @@ public class NySkabelonMainController extends saveCitizenController implements I
 
     private void setupFunkTab() {
         List<Image> imageList = createImages();
-        List<Section> funkSectionList = sM.getFunkSections();
+        List<Section> funkSectionList = cM.getFunkSections();
+
+        Map<Integer, Integer> currentMap = citizen.getCurrentCombo();
+        Map<Integer, Integer> targetMap = citizen.getTargetCombo();
+        Map<Integer, String> funkTextMap = citizen.getFunkInfo();
 
         for (Section section : funkSectionList) {
             //tab for hver afdeling
@@ -87,13 +102,14 @@ public class NySkabelonMainController extends saveCitizenController implements I
                 gridPane.setVgap(10);
                 gridPane.addRow(1, new Label("Nuværende Niveau"), new Label("Forventet Niveau"));
 
-                ComboBox<ImageView> currentBox = createNiveauComboBox(currentComboMap, key, imageList); // måske replace med combobox factory
-                ComboBox<String> targetBox = createTargetComboBox(targetComboMap, key); //Udføre selv | Udfører dele af aktiviteten | Udfører ikke selv aktiviteten | Ikke relevant
+                //todo Fix start index det er mega shit
+
+                ComboBox<ImageView> currentBox = createNiveauComboBox(currentComboMap, key, imageList, currentMap.get(key)); // måske replace med combobox factory
+                ComboBox<String> targetBox = createTargetComboBox(targetComboMap, key, targetMap.get(key) - 1);//TODO YIKES
                 gridPane.addRow(2, currentBox, targetBox);
 
                 Label boxTitle = new Label("Borgerens Ønsker og mål");
-                TextArea textArea = createTextArea(funkInfoTextAreaMap, key);
-                textArea.setWrapText(true);
+                TextArea textArea = createTextArea(funkInfoTextAreaMap, key, funkTextMap.get(key));
 
                 VBox chunk = new VBox();
                 chunk.getChildren().addAll(headerBox, gridPane, boxTitle, textArea);
@@ -112,7 +128,12 @@ public class NySkabelonMainController extends saveCitizenController implements I
     }
 
     private void setupHelbredTab() {
-        List<Section> healthSections = sM.getHealthSections();
+        List<Section> healthSections = cM.getHealthSections();
+        Map<Integer, Integer> relevansMap = citizen.getRelevansMap();
+        Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
+        System.out.println("rel" + relevansMap);
+        System.out.println("health" + healthInfoMap);
+        //todo gem radio buttons og text til ale felter selv hvis tom
 
         for (Section section : healthSections) {
             GridPane gridPane = new GridPane();
@@ -122,9 +143,9 @@ public class NySkabelonMainController extends saveCitizenController implements I
             for (int key : section.getProblemidTitleMap().keySet()) {
                 String chunkTitle = section.getProblemidTitleMap().get(key);
                 Label labelSub = new Label(chunkTitle);
-                ArrayList<RadioButton> radioButtonList = createRadioButtons(healthToggleMap, key);
-                TextArea textArea = createTextArea(helbredTextAreaMap, key);
+                TextArea textArea = createTextArea(helbredTextAreaMap, key, healthInfoMap.get(key));
                 textArea.setDisable(true);
+                ArrayList<RadioButton> radioButtonList = createRadioButtons(healthToggleMap, key, relevansMap.get(key));
                 gridPane.addRow(index++, labelSub, radioButtonList.get(0), radioButtonList.get(1), radioButtonList.get(2), textArea);
             }
             ScrollPane scrollPane = new ScrollPane();
@@ -133,23 +154,41 @@ public class NySkabelonMainController extends saveCitizenController implements I
             tab.setContent(scrollPane);
             helbredsInnerTabPane.getTabs().add(tab);
         }
-
-
     }
 
-    private ComboBox<String> createTargetComboBox(HashMap<Integer, ComboBox<String>> comboBoxMap, int id) {
+    private TextArea createTextArea(Map<String, TextArea> map, String textAreaKey, String startingText) {
+        if (startingText == null){
+            startingText = "";
+        }
+        TextArea textArea = new TextArea(startingText);
+        textArea.setWrapText(true);
+        map.put(textAreaKey, textArea);
+        return textArea;
+    }
+
+    private TextArea createTextArea(Map<Integer, TextArea> textAreaMap, int textAreaKey, String startingText) {
+        if (startingText == null){
+            startingText="";
+        }
+        TextArea textArea = new TextArea(startingText);
+        textArea.setWrapText(true);
+        textAreaMap.put(textAreaKey, textArea);
+        return textArea;
+    }
+
+    private ComboBox<String> createTargetComboBox(Map<Integer, ComboBox<String>> comboBoxMap, int id, int startIndex) {
         ComboBox<String> comboBox = new ComboBox<>();
         //todo træk valgmuligheder fra database
         comboBox.getItems().add("Udføre selv");
         comboBox.getItems().add("Udfører dele af aktiviteten");
         comboBox.getItems().add("Udfører ikke selv aktiviteten");
         comboBox.getItems().add("Ikke relevant");
-
+        comboBox.getSelectionModel().select(startIndex);
         comboBoxMap.put(id, comboBox);
         return comboBox;
     }
 
-    private ComboBox<ImageView> createNiveauComboBox(HashMap<Integer, ComboBox<ImageView>> comboBoxMap, int id, List<Image> imageList) {
+    private ComboBox<ImageView> createNiveauComboBox(Map<Integer, ComboBox<ImageView>> comboBoxMap, int id, List<Image> imageList, int startIndex) {
         List<ImageView> imgViewList = new ArrayList<>();
         for (Image image : imageList) {
             imgViewList.add(new ImageView(image));
@@ -169,12 +208,14 @@ public class NySkabelonMainController extends saveCitizenController implements I
                                    }
                                }
         );
-
+        if (startIndex == 9) {
+            startIndex = 5; //TODO FIX DET ER SHIT
+        }
+        comboBox.getSelectionModel().select(startIndex);
         comboBoxMap.put(id, comboBox);
 
         return comboBox;
     }
-
 
     private ArrayList<Image> createImages() {
         ArrayList<Image> list = new ArrayList<>();
@@ -186,7 +227,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
         return list;
     }
 
-    private ArrayList<RadioButton> createRadioButtons(HashMap<Integer, ToggleGroup> toggleMap, int key) {
+    private ArrayList<RadioButton> createRadioButtons(Map<Integer, ToggleGroup> toggleMap, int key, int startIndex) {
         ArrayList<RadioButton> radioList = new ArrayList<>();
         ToggleGroup toggleGroup = new ToggleGroup();
         ArrayList<String> radioNames = new ArrayList<>();
@@ -210,55 +251,51 @@ public class NySkabelonMainController extends saveCitizenController implements I
                     helbredTextAreaMap.get(key).setDisable(true);
                 });
             }
+            //todo fix start index, det her er shit
+            if (toggleGroup.getSelectedToggle() == null) {
+                if (i == 0 && startIndex == 1) {
+                    radio.fire();
+                    helbredTextAreaMap.get(key).setDisable(false);
+                }
+                if (i == 1 && startIndex == 2) {
+                    radio.fire();
+                    helbredTextAreaMap.get(key).setDisable(false);
+                }
+                if (i == 2 && startIndex == 3) {
+                    radio.fire();
+                }
+            }
             radioList.add(radio);
         }
         toggleMap.put(key, toggleGroup);
         return radioList;
     }
 
-    private TextArea createTextArea(HashMap<String, TextArea> helbredsTextMap, String textAreaKey) {
-        TextArea textArea = new TextArea();
-        textArea.setWrapText(true);
-        helbredsTextMap.put(textAreaKey, textArea);
-        return textArea;
-    }
+    public void handleGembtn(ActionEvent actionEvent) {
+        //Gen info
+        HashMap<String, String> genInfoText = saveGenInfo(genInfoTextAreaMap);
 
-    private TextArea createTextArea(HashMap<Integer, TextArea> textAreaMap, int textAreaKey) {
-        TextArea textArea = new TextArea();
-        textArea.setWrapText(true);
-        textAreaMap.put(textAreaKey, textArea);
-        return textArea;
-    }
+        //funktion
+        HashMap<Integer, Integer> currentCombo = saveFunkCurrentCombo(currentComboMap);
+        HashMap<Integer, Integer> targetCombo = saveFunkTargetCombo(targetComboMap);
+        HashMap<Integer, String> funkInfoMap = saveFunkTextArea(funkInfoTextAreaMap);
 
-    public void handleGembtn(ActionEvent actionEvent) throws SQLServerException {
-        if (!fNameInput.getText().isEmpty() && !lNameInput.getText().isEmpty() && dateInput.getValue() != null) {
-            String fname = fNameInput.getText().trim();
-            String lname = lNameInput.getText().trim();
-            java.sql.Date date = Date.valueOf(dateInput.getValue().toString());
+        //Helbred
+        HashMap<Integer, Integer> relevansMap = saveHealthRelevans(healthToggleMap);
+        HashMap<Integer, String> helbredInfo = saveHealthInfo(helbredTextAreaMap);
 
-            //Gen info
-            HashMap<String, String> genInfoText = saveGenInfo(genInfoTextAreaMap);
-
-            //funktion
-            HashMap<Integer, Integer> currentCombo = saveFunkCurrentCombo(currentComboMap);
-            HashMap<Integer, Integer> targetCombo = saveFunkTargetCombo(targetComboMap);
-            HashMap<Integer, String> funkInfoMap = saveFunkTextArea(funkInfoTextAreaMap);
-
-            //Helbred
-            HashMap<Integer, Integer> relevansMap = saveHealthRelevans(healthToggleMap);
-            HashMap<Integer, String> helbredInfo = saveHealthInfo(helbredTextAreaMap);
-
-
-            new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo);
-            sM.saveTemplate(new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo));
-            Stage stage = (Stage) fNameInput.getScene().getWindow();
-            stage.close();
-        } else {
-            System.out.println("udfyld navn og dato");
+        String fname = fNameInput.getText().trim();
+        String lname = lNameInput.getText().trim();
+        java.sql.Date date = Date.valueOf(dateInput.getValue().toString());
+        new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo);
+        try {
+            cM.updateTemplate(new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo), id);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
-    public void handleAnullerbtn(ActionEvent actionEvent) {
+    public void handleAnnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
         stage.close();
     }

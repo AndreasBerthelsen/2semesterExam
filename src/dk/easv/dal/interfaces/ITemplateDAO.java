@@ -13,4 +13,8 @@ public interface ITemplateDAO {
     List<Citizen> getAllTemplates() throws SQLException;
 
     void updateCitizen(Citizen citizen);
+
+    Citizen loadTemplate(Citizen citizen);
+
+    void updateTemplate(Citizen citizen, int id) throws SQLServerException;
 }

@@ -7,7 +7,6 @@ import dk.easv.dal.interfaces.ITemplateDAO;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.*;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -152,44 +151,21 @@ public class TemplateDAO implements ITemplateDAO {
                 String fName = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
                 Date date = resultSet.getDate("dato");
-/*
-                //gen info
-                LinkedHashMap<String, String> genInfoText = loadGenInfoFromId(id, connection);
-
-                //funk
-                //todo convert id'er til combobox indexes
-                Map<Integer, Integer> currentCombo = loadCurrentComboFromId(id, connection);
-                Map<Integer, Integer> targetCombo = loadTargetCombo(id, connection);
-                Map<Integer, String> funkInfo = loadFunkInfo(id, connection);
-
-                //health
-                //todo convert id'er til combobox indexes | repalce med enums?
-                Map<Integer, Integer> relevansMap = loadRelevansMap(id, connection);
-
-                Map<Integer, String> helbredInfo = loadHealthInfo(id,connection);
-
- */
-                list.add(new Citizen(id,fName,lName,date));
+                list.add(new Citizen(id, fName, lName, date));
             }
         }
-
-
-
-
         return list;
     }
 
-
-
     private Map<Integer, String> loadHealthInfo(int id, Connection connection) throws SQLException {
-        Map<Integer,String> map = new LinkedHashMap<>();
+        Map<Integer, String> map = new LinkedHashMap<>();
         String sql = "select [value], problemid from helbredsjournal where borgerid = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1 , id);
+        ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
-        while (rs.next()){
-            map.put(rs.getInt("problemid"),rs.getString("value"));
+        while (rs.next()) {
+            map.put(rs.getInt("problemid"), rs.getString("value"));
         }
 
         return map;
@@ -199,10 +175,10 @@ public class TemplateDAO implements ITemplateDAO {
         Map<Integer, Integer> map = new LinkedHashMap<>();
         String sql = "SELECT problemid, relevans from Helbredsjournal where borgerID = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1,id);
+        ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()){
-            map.put(rs.getInt("problemid"),rs.getInt("relevans"));
+        while (rs.next()) {
+            map.put(rs.getInt("problemid"), rs.getInt("relevans"));
         }
         return map;
     }
@@ -291,11 +267,127 @@ public class TemplateDAO implements ITemplateDAO {
         }
     }
 
-    public static void main(String[] args) throws IOException, SQLException {
-        TemplateDAO templateDAO = new TemplateDAO();
-        DatabaseConnector dc = new DatabaseConnector();
-        Connection connection = dc.getConnection();
-        //System.out.println(templateDAO.loadGenInfoFromId(35,connection));
-        templateDAO.deleteTemplate(23);
+    @Override
+    public Citizen loadTemplate(Citizen citizen) {
+        int id = citizen.getId();
+        try (Connection connection = dc.getConnection()) {
+            //gen info
+            LinkedHashMap<String, String> genInfoText = loadGenInfoFromId(id, connection);
+
+            //funk
+            //todo convert id'er til combobox indexes
+            Map<Integer, Integer> currentCombo = loadCurrentComboFromId(id, connection);
+            Map<Integer, Integer> targetCombo = loadTargetCombo(id, connection);
+            Map<Integer, String> funkInfo = loadFunkInfo(id, connection);
+
+            //health
+            //todo convert id'er til combobox indexes | repalce med enums?
+            Map<Integer, Integer> relevansMap = loadRelevansMap(id, connection);
+
+            Map<Integer, String> helbredInfo = loadHealthInfo(id, connection);
+
+            return new Citizen(
+                    citizen.getFirstname(),
+                    citizen.getLastname(),
+                    citizen.getbDate(),
+                    genInfoText,
+                    currentCombo,
+                    targetCombo,
+                    funkInfo,
+                    relevansMap,
+                    helbredInfo);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
+        try (Connection connection = dc.getConnection()) {
+            updateCitizenTemplate(citizen,id, connection);
+            updateFunktionsJournalTemplate(citizen, id, connection);
+            updateGenInfoTemplate(citizen, id, connection);
+            
+            updateHealthJournalTemplate(citizen, id, connection);
+
+             
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void updateHealthJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
+        Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
+        Map<Integer, Integer> healthRelevansMap = citizen.getRelevansMap();
+        //helbred
+        List<Integer> healthMasterKeys = Stream.of(healthInfoMap.keySet(), healthRelevansMap.keySet())
+                .flatMap(Collection::stream)
+                .distinct()
+                .collect(Collectors.toList());
+        String sqlH = "Update Helbredsjournal set value=?,relevans=? where problemid = ? and borgerid =?";
+
+        PreparedStatement psH = connection.prepareStatement(sqlH);
+        for (int key : healthMasterKeys) {
+            psH.setString(1, healthInfoMap.get(key));
+            psH.setInt(2, healthRelevansMap.get(key));
+            psH.setInt(3,key);
+            psH.setInt(4,id);
+            psH.addBatch();
+        }
+        psH.executeBatch();
+    }
+
+    private void updateGenInfoTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
+        Map<String, String> genInfoMap = citizen.getGenInfoText();
+
+        String geninfoFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
+        StringBuilder sb = new StringBuilder();
+        for (String s : geninfoFields.split(",")) {
+            sb.append(s).append("=?,");
+        }
+        String genFieldsAndMarks = sb.deleteCharAt(sb.length() - 1).toString();
+
+        String genSql = "UPDATE Generelinfo set " + genFieldsAndMarks + " where borgerid ="+id;
+        PreparedStatement psGen = connection.prepareStatement(genSql);
+        int index = 1;
+        psGen.setInt(1, id);
+        for (String s : genInfoMap.values()) {
+            psGen.setString(index++, s);
+
+        }
+        psGen.execute();
+    }
+
+    private void updateFunktionsJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
+        Map<Integer, Integer> funkCurrentCombo = citizen.getCurrentCombo();
+        Map<Integer, Integer> funkTargetCombo = citizen.getTargetCombo();
+        Map<Integer, String> funkInfo = citizen.getFunkInfo();
+        List<Integer> funkMasterKeys = Stream.of(funkCurrentCombo.keySet(), funkTargetCombo.keySet(), funkInfo.keySet())
+                .flatMap(Collection::stream)
+                .distinct()
+                .collect(Collectors.toList());
+
+        String sqlF = "update FunktionsJournal set nuVurdering = ?, målvurdering = ?, note = ? where problemid = ? and borgerId =?";
+        PreparedStatement psF = connection.prepareStatement(sqlF);
+        for (int key : funkMasterKeys) {
+            psF.setInt(1, funkCurrentCombo.get(key));
+            psF.setInt(2, funkTargetCombo.get(key));
+            psF.setString(3, funkInfo.get(key));
+            psF.setInt(4, key);
+            psF.setInt(5, id);
+            psF.addBatch();
+        }
+        psF.executeBatch();
+    }
+
+    private void updateCitizenTemplate(Citizen citizen,int id,Connection connection) throws SQLException {
+        String sql = "update Borger set fname = ?, lname = ?, dato=? where borgerid = ?";
+        PreparedStatement psB = connection.prepareStatement(sql);
+        psB.setString(1, citizen.getFirstname());
+        psB.setString(2, citizen.getLastname());
+        psB.setDate(3, citizen.getbDate());
+        psB.setInt(4,id);
+        psB.execute();
     }
 }

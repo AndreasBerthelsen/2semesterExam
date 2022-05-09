@@ -80,11 +80,20 @@ public class CitizenManager {
         return facade.getAllTemplates();
     }
 
+
     public List<Citizen> getAllTemplatesOfCitizens() {
         return facade.getAllTemplatesOfCitizens();
     }
 
-    public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user){
+    public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         facade.deleteCitizenFromUser(citizenToBeDeleted, user);
+    }
+    public Citizen loadTemplate(Citizen citizen) {
+        return facade.loadTemplate(citizen);
+
+    }
+
+    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
+        facade.updateTemplate(citizen, id);
     }
 }

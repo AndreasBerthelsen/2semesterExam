@@ -100,4 +100,12 @@ public class CitizenModel {
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         cM.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
+    public Citizen loadTemplate(Citizen citizen) {
+        return cM.loadTemplate(citizen);
+
+    }
+
+    public void updateTemplate(Citizen citizen,int id) throws SQLServerException {
+       cM.updateTemplate(citizen,id);
+    }
 }
