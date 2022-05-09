@@ -1,0 +1,83 @@
+#VBOX {
+    -fx-background-color: #426175;
+}
+
+
+.tab-pane .tab-header-area. .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-min-width: 90;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #426175;
+    -fx-text-fill: #96b946;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #426175;
+
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #96b946;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffff;
+}
+
+#scrollPane {
+    -fx-background-color: #426175;
+}
+
+.scroll-pane {
+    -fx-background-color: #426175;
+}
+
+.tab-pane:top .tab-header-area {
+    -fx-background-color: #426175;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #426175;
+}
+
+
+.black-background {
+    -fx-background-color: #426175;
+}
+
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button .context-menu {
+-fx-background-color: #426175;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#hboxHeader {
+    -fx-background-color: #385263;
+}
+
+#textArea {
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+

@@ -57,13 +57,20 @@ public class NySkabelonMainController extends saveCitizenController implements I
 
     private void setupGeneralInfo() {
         VBox vBox = new VBox();
+        vBox.setPrefWidth(1200);
         for (String field : genInfoFieldList) {
             Label label = new Label(field);
             TextArea textArea = createTextArea(genInfoTextAreaMap, field);
+            textArea.setId("textArea");
+
             vBox.getChildren().add(label);
             vBox.getChildren().add(textArea);
         }
+        genScrollPane.setId("VBOX");
+        genScrollPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
         genScrollPane.setContent(vBox);
+        genScrollPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        vBox.setId("VBOX");
     }
 
     private void setupFunkTab() {
@@ -74,7 +81,9 @@ public class NySkabelonMainController extends saveCitizenController implements I
             //tab for hver afdeling
             Tab tab = new Tab(section.getSectionTitle());
             VBox contentVBox = new VBox(80);
+            contentVBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
             contentVBox.setPrefWidth(800);
+            contentVBox.setId("VBOX");
             for (int key : section.getProblemidTitleMap().keySet()) {
                 String chunkTitle = section.getProblemidTitleMap().get(key);
 
@@ -102,6 +111,8 @@ public class NySkabelonMainController extends saveCitizenController implements I
                 //TODO FIX SCROLLPANE SCROLL???
                 ScrollPane scrollPane = new ScrollPane();
                 scrollPane.setContent(contentVBox);
+                scrollPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+                scrollPane.setId("VBOX");
 
                 scrollPane.setPrefSize(contentVBox.getPrefWidth() + 20, 700);
                 tab.setContent(scrollPane);
@@ -117,6 +128,8 @@ public class NySkabelonMainController extends saveCitizenController implements I
         for (Section section : healthSections) {
             GridPane gridPane = new GridPane();
             gridPane.setHgap(50);
+            gridPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+            gridPane.setId("VBOX");
             int index = 0;
 
             for (int key : section.getProblemidTitleMap().keySet()) {
