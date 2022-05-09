@@ -22,5 +22,4 @@ public interface ICitizienDAO {
 
     void deleteCitizen(int citizenId) throws SQLException;
 
-
 }

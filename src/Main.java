@@ -27,7 +27,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/login/view/loginview.fxml")));
 
         Scene scene = new Scene(parent);

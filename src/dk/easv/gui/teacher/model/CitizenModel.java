@@ -13,6 +13,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.print.DocFlavor;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -110,9 +111,12 @@ public class CitizenModel {
     public void updateTemplate(Citizen citizen,int id) throws SQLServerException {
        cM.updateTemplate(citizen,id);
     }
-
+    
     public void deleteCitizen(int citizenId) throws SQLException {
         cM.deleteCitizen(citizenId);
     }
 
+    public Citizen loadCitizen(Citizen citizen) {
+        return cM.loadCitizen(citizen);
+    }
 }

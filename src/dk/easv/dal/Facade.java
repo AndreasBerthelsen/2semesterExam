@@ -161,4 +161,7 @@ public class Facade {
     public void deleteCitizen(int citizenId) throws SQLException {
         iCitizienDAO.deleteCitizen(citizenId);
     }
+    public Citizen loadCitizen(Citizen citizen) {
+        return iTemplateDAO.loadTemplate(citizen);
+    }
 }

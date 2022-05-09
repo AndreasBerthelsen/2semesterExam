@@ -14,8 +14,6 @@ public abstract class saveCitizenController {
         HashMap<String, String> map = new HashMap<>();
         for (String key : genInfoTextAreaMap.keySet()) {
             TextArea textArea = genInfoTextAreaMap.get(key);
-            System.out.println("textarea: " + textArea);
-
                 map.put(key, textArea.getText().trim());
 
         }
@@ -107,7 +105,7 @@ public abstract class saveCitizenController {
                 map.put(key,3);
             }
         }
-        System.out.println(map);
+
         return map;
     }
 }

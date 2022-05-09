@@ -105,5 +105,8 @@ public class CitizenManager {
         facade.deleteCitizen(citizenId);
     }
 
+    public Citizen loadCitizen(Citizen citizen) {
+        return facade.loadCitizen(citizen);
+    }
 }
 
