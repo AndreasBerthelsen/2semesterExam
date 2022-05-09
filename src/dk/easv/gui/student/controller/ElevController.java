@@ -2,6 +2,7 @@ package dk.easv.gui.student.controller;
 
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
+import dk.easv.gui.supercontroller.SuperController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
@@ -21,7 +22,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ElevController implements IController, Initializable {
+public class ElevController extends SuperController implements IController, Initializable {
     public Label nameLabel;
     public TableView<Citizen> tableView;
 
@@ -59,6 +60,8 @@ public class ElevController implements IController, Initializable {
         stage.showAndWait();
     }
 
-    public void handleExit(ActionEvent actionEvent) {
+    public void handleExit(ActionEvent actionEvent) throws IOException {
+        closeWindow(exitBtn);
+        openScene("/dk/easv/gui/login/view/loginview.fxml", false, "log ind som lærer eller elev", false);
     }
 }
