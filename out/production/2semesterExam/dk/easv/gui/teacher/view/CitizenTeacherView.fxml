@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@CitizenCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.CitizenTeacherViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@CitizenCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.CitizenTeacherViewController">
    <top>
-      <Pane id="Vbox" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane id="Vbox" prefHeight="225.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label id="CitizenLbl" alignment="CENTER" layoutX="532.0" layoutY="83.0" text="Borgere">
                <font>
@@ -28,28 +28,37 @@
          <children>
             <VBox alignment="TOP_CENTER">
                <children>
-                  <Label id="overskriftLbl" alignment="CENTER" contentDisplay="CENTER" text="Borgere" />
-                  <TableView fx:id="tempTableView" prefHeight="300.0" prefWidth="200.0">
+                  <TableView fx:id="tempTableView" prefHeight="300.0" prefWidth="280.0">
                     <columns>
-                      <TableColumn fx:id="tempFnameCol" prefWidth="75.19995422363263" text="Fornavn" />
-                        <TableColumn fx:id="tempLnameCol" prefWidth="124.80003356933594" text="Efternavn" />
+                        <TableColumn prefWidth="260.0" text="Liste med borgere">
+                           <columns>
+                            <TableColumn fx:id="tempFnameCol" prefWidth="130.0" text="Fornavn" />
+                              <TableColumn fx:id="tempLnameCol" prefWidth="130.0" text="Efternavn" />
+                           </columns>
+                        </TableColumn>
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <VBox alignment="CENTER" prefHeight="411.0" prefWidth="130.0" spacing="25.0">
                <children>
                   <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleCopyCitizenBtn" text="Kopiér" />
                   <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveCitizenBtn" text="Fjern" />
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="386.0" prefWidth="280.0">
                <children>
-                  <Label id="overskriftLbl" text="Kopiér af borgere" />
-                  <TableView fx:id="citizenTableView" prefHeight="300.0" prefWidth="200.0">
+                  <TableView fx:id="citizenTableView" prefHeight="300.0" prefWidth="280.0">
                     <columns>
-                      <TableColumn fx:id="citizenFnameCol" prefWidth="75.0" text="Fornavn" />
-                      <TableColumn fx:id="citizenLnameCol" prefWidth="75.0" text="Efternavn" />
+                        <TableColumn prefWidth="75.0" text="Kopi af borgere">
+                           <columns>
+                            <TableColumn fx:id="citizenLnameCol" prefWidth="130.0" text="Efternavn" />
+                            <TableColumn fx:id="citizenFnameCol" prefWidth="130.0" text="Fornavn" />
+                           </columns>
+                        </TableColumn>
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -64,12 +73,18 @@
             </VBox>
             <VBox alignment="TOP_CENTER">
                <children>
-                  <Label id="overskriftLbl" text="Elever" />
-                  <TableView fx:id="studentTableView" onMouseClicked="#handleStudentTableCLicked" prefHeight="300.0" prefWidth="200.0">
+                  <TableView fx:id="studentTableView" onMouseClicked="#handleStudentTableCLicked" prefHeight="300.0" prefWidth="280.0">
                     <columns>
-                      <TableColumn fx:id="studentFnameCol" prefWidth="84.800048828125" text="Fornavn" />
-                        <TableColumn fx:id="studentLnameCol" prefWidth="114.39996337890625" text="Efternavn" />
+                        <TableColumn prefWidth="280.0" text="Elever">
+                           <columns>
+                            <TableColumn fx:id="studentFnameCol" prefWidth="140.0" text="Fornavn" />
+                              <TableColumn fx:id="studentLnameCol" prefWidth="140.0" text="Efternavn" />
+                           </columns>
+                        </TableColumn>
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
             </VBox>
@@ -82,12 +97,15 @@
             <Insets bottom="150.0" />
          </BorderPane.margin>
          <children>
-            <Label text="Borgere tilknyttet den valgte elev" />
             <TableView fx:id="displayTableView" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="tempDisplayID" maxWidth="251.4667163530994" prefWidth="74.93335062662845" text="ID" />
-                <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="514.6667022705078" text="Fornavn" />
-                  <TableColumn fx:id="tempDisplayLname" prefWidth="631.2000732421875" text="Efternavn" />
+                  <TableColumn prefWidth="75.0" text="Borgere tilknyttet den valgte elev">
+                     <columns>
+                      <TableColumn fx:id="tempDisplayID" maxWidth="251.4667163530994" prefWidth="74.93335062662845" text="ID" />
+                      <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="514.6667022705078" text="Fornavn" />
+                        <TableColumn fx:id="tempDisplayLname" prefWidth="631.2000732421875" text="Efternavn" />
+                     </columns>
+                  </TableColumn>
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

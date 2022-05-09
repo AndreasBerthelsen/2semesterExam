@@ -17,6 +17,7 @@ Id's til LoginView
 #login-label{
      -fx-font-family: "Lucida Sans";
      -fx-font-size: 25;
+    -fx-text-fill: #065c2d;
  }
 
 #loginbutton {
@@ -143,9 +144,6 @@ CSS til tableviews
     -fx-padding: 2;
 }
 
-.table-column {
-    -fx-text-fill: white;
-}
 /**
 Id's til Tilføj / rediger / slet elever
  */
@@ -200,37 +198,6 @@ Id's til Tilføj / rediger / slet elever
 
 .button:pressed{
     -fx-background-color: limegreen;
-}
-
-#Anchor {
-    -fx-background-color: #426175;
-}
-
-.tab-pane {
-    -fx-background-color: #426175;
-}
-
-
-
-.label {
-    -fx-text-fill: white;
-    -fx-font-family: "Lucida Sans";
-    -fx-font-size: 24;
-}
-
-.radio-button .radio {
-    -fx-border-width: 1px;
-    -fx-border-color: darkgray;
-    -fx-background-color: white;
-    -fx-border-radius: 15px;
-    -fx-padding: 3px;
-}
-
-.radio-button .dot {
-    -fx-background-radius: 15px;
-    -fx-padding: 8px;
-    -fx-border-width: 1px;
-    -fx-border-radius: 15px;
 }
 
 

@@ -60,6 +60,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
         vBox.setPrefWidth(1200);
         for (String field : genInfoFieldList) {
             Label label = new Label(field);
+            label.getStylesheets().add("dk/easv/CSS/Skabelon.css");
             TextArea textArea = createTextArea(genInfoTextAreaMap, field);
             textArea.setId("textArea");
 
