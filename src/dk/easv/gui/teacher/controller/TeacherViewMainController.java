@@ -43,6 +43,6 @@ public class TeacherViewMainController extends SuperController implements IContr
 
     public void handleSignOut(ActionEvent actionEvent) throws IOException {
         closeWindow(exitBtn);
-        openScene("/dk/easv/gui/login/view/loginview.fxml",true, "Log ind som lærer eller elev", false);
+        openScene("/dk/easv/gui/login/view/loginview.fxml",false, "Log ind som lærer eller elev", false);
     }
 }
