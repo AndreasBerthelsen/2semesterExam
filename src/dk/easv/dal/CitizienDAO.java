@@ -138,6 +138,7 @@ public class CitizienDAO implements ICitizienDAO {
             int oldID = citizen.getId();
             createFunkTilCopy(oldID, connection, newID);
             createHelbTilCopy(oldID, connection, newID);
+            createGenInfoCopy(oldID, connection, newID);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -180,6 +181,19 @@ public class CitizienDAO implements ICitizienDAO {
         preparedStatement.setInt(1, newID);
         preparedStatement.setInt(2, oldId);
         preparedStatement.execute();
+    }
+
+    //TODO gør så den scaler
+    private void createGenInfoCopy(int oldId, Connection connection, int newID) throws SQLException {
+        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netvaerk, Helbredsoplysninger, Hjaelpemidler, Bolig, borgerID)\n"+
+                "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netvaerk, Helbredsoplysninger, Hjaelpemidler, Bolig, ? \n"
+                + "FROM Generelinfo \n"
+                + "WHERE borgerID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, newID);
+        preparedStatement.setInt(2, oldId);
+        preparedStatement.execute();
+
     }
 
 }
