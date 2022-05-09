@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" stylesheets="@../teacherCSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.NySkabelonMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.NySkabelonMainController">
 
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -25,9 +26,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="500.0">
                      <children>
-                        <VBox prefHeight="871.0" prefWidth="1114.0">
+                        <VBox id="VBOX" prefHeight="871.0" prefWidth="1114.0">
                            <children>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                              <HBox id="VBOX" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <GridPane hgap="10.0" prefHeight="100.0" prefWidth="710.0">
                                       <columnConstraints>
@@ -92,11 +93,15 @@
       </TabPane>
    </center>
    <top>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox id="hboxHeader" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#handleGembtn" text="Gem" />
-            <Button mnemonicParsing="false" text="Annuller" />
+            <Button mnemonicParsing="false" onAction="#handleAnullerbtn" text="Annuller" />
          </children>
       </HBox>
    </top>
+   <stylesheets>
+      <URL value="@../../../CSS/Skabelon.css" />
+      <URL value="@../../../CSS/FS3CSS.css" />
+   </stylesheets>
 </BorderPane>
