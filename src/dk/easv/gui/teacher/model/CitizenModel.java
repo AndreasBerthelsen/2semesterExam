@@ -80,4 +80,7 @@ public class CitizenModel {
     public ObservableList<Citizen> getObservableTemplates() throws SQLException {
         return FXCollections.observableArrayList(cM.getAllTemplates());
     }
+    public void createCopyCitizen(Citizen citizen){
+        cM.createCopyCitizen(citizen);
+    }
 }

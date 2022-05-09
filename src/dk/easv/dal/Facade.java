@@ -135,4 +135,8 @@ public class Facade {
     public void updateCitizen(Citizen citizen) {
         iTemplateDAO.updateCitizen(citizen);
     }
+
+    public void createCopyCitizen(Citizen citizen){
+        iCitizienDAO.createCopyCitizen(citizen);
+    }
 }

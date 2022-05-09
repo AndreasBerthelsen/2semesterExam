@@ -1,5 +1,6 @@
 package dk.easv.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
 import dk.easv.dal.interfaces.ICitizienDAO;
@@ -94,5 +95,52 @@ public class CitizienDAO implements ICitizienDAO {
         return citizensFromUser;
     }
 
+    @Override
+    public void createCopyCitizen(Citizen citizen) {
+        try(Connection connection = dc.getConnection()) {
+            int id = createCitizenToCopy(citizen, connection);
+            createFunkTilCopy(id, connection);
+            createHelbTilCopy(id, connection);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    private int createCitizenToCopy(Citizen citizen, Connection connection) throws SQLException {
+        String sql = "INSERT INTO Borger (fName, lName, dato, isTemplate)\n" +
+                "SELECT fName, lName, dato, 0 \n" +
+                "FROM Borger\n" +
+                "WHERE borgerID = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setInt(1, citizen.getId());
+        preparedStatement.execute();
+
+        ResultSet idKey = preparedStatement.getGeneratedKeys();
+        idKey.next();
+        return idKey.getInt(1);
+    }
+
+
+    private void createHelbTilCopy(int id, Connection connection) throws SQLException {
+        String SQL = "INSERT INTO HelbredsJournal(problemID, value, relevans)\n" +
+                "SELECT problemID, [value], relevans\n" +
+                "FROM Helbredsjournal\n" +
+                "WHERE borgerID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+        preparedStatement.setInt(1, id);
+        preparedStatement.execute();
+    }
+
+
+    private void createFunkTilCopy(int id, Connection connection) throws SQLException {
+        String sql = "INSERT INTO FunktionsJournal(problemID, nuVurdering, målVurdering, note)\n" +
+                "SELECT problemID, nuVurdering, målVurdering, note\n" +
+                "FROM FunktionsJournal\n" +
+                "WHERE borgerID = ?\n";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        preparedStatement.execute();
+    }
 
 }

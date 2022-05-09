@@ -68,7 +68,8 @@ public class CitizenTeacherViewController implements Initializable {
     }
 
     public void handleCopyCitizenBtn(ActionEvent actionEvent) {
-
+        Citizen selectedCitizen = citizenTableView.getSelectionModel().getSelectedItem();
+        citizenModel.createCopyCitizen(selectedCitizen);
     }
 
     public void handleRemoveCitizenBtn(ActionEvent actionEvent) {

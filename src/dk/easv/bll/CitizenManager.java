@@ -73,4 +73,7 @@ public class CitizenManager {
     public List<Citizen> getAllTemplates() throws SQLException {
         return facade.getAllTemplates();
     }
+    public void createCopyCitizen(Citizen citizen){
+        facade.createCopyCitizen(citizen);
+    }
 }
