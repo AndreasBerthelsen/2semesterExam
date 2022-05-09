@@ -95,7 +95,7 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#handleGembtn" text="Gem" />
-            <Button mnemonicParsing="false" text="Annuller" />
+            <Button mnemonicParsing="false" onAction="#handleAnullerbtn" text="Annuller" />
          </children>
       </HBox>
    </top>
