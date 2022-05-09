@@ -142,6 +142,10 @@ public class Facade {
         iTemplateDAO.updateCitizen(citizen);
     }
 
+    public void createCopyCitizen(Citizen citizen) {
+        iCitizienDAO.createCopyCitizen(citizen);
+    }
+
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         iCitizienDAO.deleteCitizenFromUser(citizenToBeDeleted, user);
     }

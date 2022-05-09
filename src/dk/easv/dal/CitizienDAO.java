@@ -131,5 +131,55 @@ public class CitizienDAO implements ICitizienDAO {
         return citizensFromUser;
     }
 
+    @Override
+    public void createCopyCitizen(Citizen citizen) {
+        try(Connection connection = dc.getConnection()) {
+            int newID = createCitizenToCopy(citizen, connection);
+            int oldID = citizen.getId();
+            createFunkTilCopy(oldID, connection, newID);
+            createHelbTilCopy(oldID, connection, newID);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    private int createCitizenToCopy(Citizen citizen, Connection connection) throws SQLException {
+        String sql = "INSERT INTO Borger (fName, lName, dato, isTemplate)\n" +
+                "SELECT fName, lName, dato, 0 \n" +
+                "FROM Borger\n" +
+                "WHERE borgerID = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setInt(1, citizen.getId());
+        preparedStatement.execute();
+
+        ResultSet idKey = preparedStatement.getGeneratedKeys();
+        idKey.next();
+        return idKey.getInt(1);
+    }
+
+
+    private void createHelbTilCopy(int oldId,  Connection connection, int newID) throws SQLException {
+        String SQL = "INSERT INTO HelbredsJournal(borgerID, problemID, value, relevans)\n" +
+                "SELECT ?,problemID, [value], relevans\n" +
+                "FROM Helbredsjournal\n" +
+                "WHERE borgerID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+        preparedStatement.setInt(1, newID);
+        preparedStatement.setInt(2, oldId);
+        preparedStatement.execute();
+    }
+
+
+    private void createFunkTilCopy(int oldId, Connection connection, int newID) throws SQLException {
+        String sql = "INSERT INTO FunktionsJournal(borgerID,problemID, nuVurdering, målVurdering, note)\n" +
+                "SELECT ?,problemID, nuVurdering, målVurdering, note\n" +
+                "FROM FunktionsJournal\n" +
+                "WHERE borgerID = ?\n";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, newID);
+        preparedStatement.setInt(2, oldId);
+        preparedStatement.execute();
+    }
 
 }

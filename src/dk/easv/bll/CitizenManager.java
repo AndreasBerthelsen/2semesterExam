@@ -79,6 +79,9 @@ public class CitizenManager {
     public List<Citizen> getAllTemplates() throws SQLException {
         return facade.getAllTemplates();
     }
+    public void createCopyCitizen(Citizen citizen) {
+        facade.createCopyCitizen(citizen);
+    }
 
 
     public List<Citizen> getAllTemplatesOfCitizens() {
@@ -88,6 +91,7 @@ public class CitizenManager {
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         facade.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
+
     public Citizen loadTemplate(Citizen citizen) {
         return facade.loadTemplate(citizen);
 
@@ -96,4 +100,6 @@ public class CitizenManager {
     public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
         facade.updateTemplate(citizen, id);
     }
+
 }
+

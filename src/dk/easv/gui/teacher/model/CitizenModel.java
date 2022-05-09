@@ -96,7 +96,9 @@ public class CitizenModel {
     public ObservableList<Citizen> getObservableTemplates() throws SQLException {
         return FXCollections.observableArrayList(cM.getAllTemplates());
     }
-
+    public void createCopyCitizen(Citizen citizen) {
+        cM.createCopyCitizen(citizen);
+    }
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         cM.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
