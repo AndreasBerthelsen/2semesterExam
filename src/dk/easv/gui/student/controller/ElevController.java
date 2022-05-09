@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,6 +27,7 @@ public class ElevController implements IController, Initializable {
 
     public TableColumn<Citizen,String> firstNameTC;
     public TableColumn<Citizen,String> lastNameTC;
+    public Button exitBtn;
     private User student;
     private CitizenModel cM;
 
@@ -55,5 +57,8 @@ public class ElevController implements IController, Initializable {
         ICitizenSelector controller = loader.getController();
         controller.setCitizen(citizen);
         stage.showAndWait();
+    }
+
+    public void handleExit(ActionEvent actionEvent) {
     }
 }

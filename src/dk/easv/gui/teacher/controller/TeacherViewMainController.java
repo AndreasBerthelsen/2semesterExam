@@ -1,17 +1,22 @@
 package dk.easv.gui.teacher.controller;
 
 import dk.easv.be.User;
+import dk.easv.gui.supercontroller.SuperController;
 import dk.easv.gui.teacher.Interfaces.IController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class TeacherViewMainController implements IController {
+public class TeacherViewMainController extends SuperController implements IController {
     public BorderPane borderpane;
+    @FXML
+    private Button exitBtn;
     private User teacher;
 
     public void handleSkabelonerbtn(ActionEvent actionEvent) throws IOException {
@@ -34,5 +39,10 @@ public class TeacherViewMainController implements IController {
     @Override
     public void setUserInfo(User user) {
         this.teacher = user;
+    }
+
+    public void handleSignOut(ActionEvent actionEvent) throws IOException {
+        closeWindow(exitBtn);
+        openScene("/dk/easv/gui/login/view/loginview.fxml",true, "Log ind som lærer eller elev", false);
     }
 }

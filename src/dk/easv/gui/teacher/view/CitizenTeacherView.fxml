@@ -46,7 +46,6 @@
             <VBox alignment="CENTER" prefHeight="411.0" prefWidth="130.0" spacing="25.0">
                <children>
                   <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleCopyCitizenBtn" text="Kopiér" />
-                  <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveCitizenBtn" text="Fjern" />
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="386.0" prefWidth="280.0">
@@ -64,6 +63,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveCitizenBtn" text="Fjern" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
