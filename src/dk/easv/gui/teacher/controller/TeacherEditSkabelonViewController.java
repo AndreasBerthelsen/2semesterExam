@@ -116,7 +116,7 @@ public class TeacherEditSkabelonViewController extends saveCitizenController imp
                 ScrollPane scrollPane = new ScrollPane();
                 scrollPane.setContent(contentVBox);
 
-                scrollPane.setPrefSize(contentVBox.getPrefWidth() + 20, 700);
+                scrollPane.setPrefSize(gridPane.getPrefWidth(),500);
                 tab.setContent(scrollPane);
             }
             funktionInnerTabPane.getTabs().add(tab);
@@ -287,6 +287,8 @@ public class TeacherEditSkabelonViewController extends saveCitizenController imp
         new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo);
         try {
             cM.updateTemplate(new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo), id);
+            Stage stage = (Stage) fNameInput.getScene().getWindow();
+            stage.close();
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -82,6 +82,7 @@ public class CitizenTeacherViewController implements Initializable {
     public void handleCopyCitizenBtn(ActionEvent actionEvent) {
         Citizen selectedCitizen = tempTableView.getSelectionModel().getSelectedItem();
         citizenModel.createCopyCitizen(selectedCitizen);
+        citizenTableView.setItems(citizenModel.getAllCitizenObservable());
     }
 
     public void handleRemoveCitizenBtn(ActionEvent actionEvent) {
@@ -130,10 +131,17 @@ public class CitizenTeacherViewController implements Initializable {
         }
 
     }
-
-
+    
     public void handleRemoveTemplateFromStudentBtn(ActionEvent actionEvent) {
-        citizenModel.deleteCitizenFromUser(displayTableView.getSelectionModel().getSelectedItem(), studentTableView.getSelectionModel().getSelectedItem());
+        try{
+            User user = studentTableView.getSelectionModel().getSelectedItem();
+            Citizen citizen = displayTableView.getSelectionModel().getSelectedItem();
+            displayTableView.getItems().remove(citizen);
+            citizenModel.deleteCitizenFromUser(citizen,user);
+        }catch (Exception e){
+            error("vælg en elev og borger");
+        }
+
     }
 
     /**

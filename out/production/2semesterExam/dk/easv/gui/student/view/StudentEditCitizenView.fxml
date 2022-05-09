@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.StudentEditCitizenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1283.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.StudentEditCitizenController">
 
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -43,11 +43,11 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Fødselsdato" GridPane.columnIndex="2" />
-                                          <DatePicker fx:id="dateInput" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <DatePicker fx:id="dateInput" disable="true" editable="false" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <Label text="Fornavn" />
                                           <Label text="Efternavn" GridPane.columnIndex="1" />
-                                          <TextField fx:id="fNameInput" GridPane.rowIndex="1" />
-                                          <TextField fx:id="lNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="fNameInput" disable="true" editable="false" GridPane.rowIndex="1" />
+                                          <TextField fx:id="lNameInput" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
@@ -61,7 +61,7 @@
                                     <Insets top="20.0" />
                                  </VBox.margin>
                               </HBox>
-                              <ScrollPane fx:id="genScrollPane" prefHeight="758.0" prefWidth="1114.0">
+                              <ScrollPane fx:id="genScrollPane" prefHeight="500.0" prefWidth="1114.0">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="1112.0" />
                                 </content>

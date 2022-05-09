@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 public class TeacherViewMainController extends SuperController implements IController {
     public BorderPane borderpane;
+    public Label velkommenLabel;
     @FXML
     private Button exitBtn;
     private User teacher;
@@ -39,6 +41,7 @@ public class TeacherViewMainController extends SuperController implements IContr
     @Override
     public void setUserInfo(User user) {
         this.teacher = user;
+        velkommenLabel.setText("Velkommen, " + user.getFirstname()+" "+user.getLastname());
     }
 
     public void handleSignOut(ActionEvent actionEvent) throws IOException {
