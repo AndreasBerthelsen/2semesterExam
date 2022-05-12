@@ -33,12 +33,13 @@ public class TemplateDAO implements ITemplateDAO {
 
 
     private int createCitizenTemplate(Citizen citizen, Connection connection) throws SQLException {
-        String sql = "INSERT INTO Borger (fname, lname, dato, isTemplate) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Borger (fname, lname, dato, isTemplate, description) VALUES (?,?,?,?,?)";
         PreparedStatement psB = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         psB.setString(1, citizen.getFirstname());
         psB.setString(2, citizen.getLastname());
         psB.setDate(3, citizen.getbDate());
         psB.setInt(4, 1);
+        psB.setString(5, citizen.getDescription());
         psB.execute();
 
         ResultSet idKey = psB.getGeneratedKeys();
@@ -141,7 +142,7 @@ public class TemplateDAO implements ITemplateDAO {
         //TODO WORK IN PROGRESS
         List<Citizen> list = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
-            String sql = "SELECT borgerID, fName, lName, dato\n" +
+            String sql = "SELECT borgerID, fName, lName, dato, description\n" +
                     "FROM Borger where isTemplate = 1";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -151,7 +152,8 @@ public class TemplateDAO implements ITemplateDAO {
                 String fName = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
                 Date date = resultSet.getDate("dato");
-                list.add(new Citizen(id, fName, lName, date));
+                String description = resultSet.getString("description");
+                list.add(new Citizen(id, fName, lName, date, description));
             }
         }
         return list;
