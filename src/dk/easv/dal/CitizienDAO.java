@@ -45,7 +45,7 @@ public class CitizienDAO implements ICitizienDAO {
         ArrayList<Citizen> allTemp = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
 
-            String sql = "SELECT borgerID, fName, lName, dato\n" +
+            String sql = "SELECT borgerID, fName, lName, dato, description\n" +
                     "FROM Borger WHERE isTemplate = 1";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -55,7 +55,8 @@ public class CitizienDAO implements ICitizienDAO {
                 String fname = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
                 Date date = resultSet.getDate("dato");
-                allTemp.add(new Citizen(id, fname, lName, date));
+                String description = resultSet.getString("description");
+                allTemp.add(new Citizen(id, fname, lName, date, description));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

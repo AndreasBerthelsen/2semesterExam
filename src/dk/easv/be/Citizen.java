@@ -28,6 +28,7 @@ public class Citizen {
 
     private String firstname;
     private String lastname;
+    private String description;
 
     private java.sql.Date bDate;
 
@@ -36,6 +37,14 @@ public class Citizen {
         this.firstname = firstname;
         this.lastname = lastname;
         this.bDate = bDate;
+    }
+
+    public Citizen(int id, String firstname, String lastname, java.sql.Date bDate, String description) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.bDate = bDate;
+        this.description = description;
     }
 
     public Citizen(String fName, String lName, Date date, Map<String, String> genInfoText, Map<Integer, Integer> currentCombo, Map<Integer, Integer> targetCombo, Map<Integer, String> funkInfo, Map<Integer, Integer> relevansMap, Map<Integer, String> helbredInfo) {
@@ -100,13 +109,18 @@ public class Citizen {
         return helbredInfo;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "Citizen{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", bDate=" + bDate +
+                ", bDate=" + bDate + '\'' +
+                ", description=" + description +
                 '}';
     }
 

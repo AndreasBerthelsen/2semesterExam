@@ -15,12 +15,15 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CitizenTeacherViewController implements Initializable {
 
 
+    @FXML
+    private TextArea descriptionTextArea;
     @FXML
     private TableView<Citizen> tempTableView;
     @FXML
@@ -90,7 +93,7 @@ public class CitizenTeacherViewController implements Initializable {
         alert.setContentText("Er du sikker på du ville slette denne kopi?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             Citizen citizen = citizenTableView.getSelectionModel().getSelectedItem();
             try {
                 citizenModel.deleteCitizen(citizen.getId());
@@ -131,14 +134,14 @@ public class CitizenTeacherViewController implements Initializable {
         }
 
     }
-    
+
     public void handleRemoveTemplateFromStudentBtn(ActionEvent actionEvent) {
-        try{
+        try {
             User user = studentTableView.getSelectionModel().getSelectedItem();
             Citizen citizen = displayTableView.getSelectionModel().getSelectedItem();
             displayTableView.getItems().remove(citizen);
-            citizenModel.deleteCitizenFromUser(citizen,user);
-        }catch (Exception e){
+            citizenModel.deleteCitizenFromUser(citizen, user);
+        } catch (Exception e) {
             error("vælg en elev og borger");
         }
 
@@ -160,8 +163,14 @@ public class CitizenTeacherViewController implements Initializable {
         tempDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         tempDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         displayTableView.setItems(citizenModel.getAllCitizenFromUserObservable(user));
-
     }
+
+    public void setDescription(Citizen citizen) throws SQLException {
+        descriptionTextArea.setText(citizen.getDescription());
+        descriptionTextArea.setWrapText(true);
+    }
+
+
 
     public User selectedUser() {
         return studentTableView.getSelectionModel().getSelectedItem();
@@ -169,5 +178,11 @@ public class CitizenTeacherViewController implements Initializable {
 
     public void handleStudentTableCLicked(MouseEvent mouseEvent) {
         displayTempCitizensFromStudent(selectedUser());
+    }
+
+    public void handleSetDescription(MouseEvent mouseEvent) throws SQLException {
+
+        setDescription(tempTableView.getSelectionModel().getSelectedItem());
+
     }
 }

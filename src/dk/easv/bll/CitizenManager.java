@@ -71,7 +71,6 @@ public class CitizenManager {
         facade.saveTemplate(citizen);
     }
 
-
     public void deleteTemplate(int citizenid) throws SQLException {
         facade.deleteTemplate(citizenid);
     }
