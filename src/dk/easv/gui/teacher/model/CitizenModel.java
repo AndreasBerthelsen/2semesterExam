@@ -2,18 +2,18 @@ package dk.easv.gui.teacher.model;
 
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.Citizen;
-import dk.easv.be.Section;
-import dk.easv.be.User;
+import dk.easv.be.*;
 import dk.easv.bll.CitizenManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CitizenModel {
     CitizenManager cM = new CitizenManager();
@@ -80,8 +80,8 @@ public class CitizenModel {
         return cM.getHealthSections();
     }
 
-    public void saveTemplate(Citizen citizen) throws SQLServerException {
-        cM.saveTemplate(citizen);
+    public void saveTemplate(String fName, String lName, Date date,String description, Map<Integer,GenInfoAnswer> genInfoMap,Map<Integer,FunkChunkAnswer> funkAnswerMap,Map<Integer,HealthChunkAnswer> healthAnswerMap) throws SQLServerException {
+        cM.saveTemplate(fName, lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap);
     }
 
 

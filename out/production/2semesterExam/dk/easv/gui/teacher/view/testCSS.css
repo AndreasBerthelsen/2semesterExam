@@ -1,0 +1,7 @@
+#innerTabPane *.tab-label{
+    -fx-rotate: 90;
+}
+
+.tab {
+    -fx-padding: 5em 0.5em 5em 0.5em;
+}
