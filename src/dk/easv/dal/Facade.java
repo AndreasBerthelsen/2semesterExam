@@ -164,4 +164,8 @@ public class Facade {
     public Citizen loadCitizen(Citizen citizen) {
         return iTemplateDAO.loadTemplate(citizen);
     }
+
+    public void updateLastEdited(Citizen citizen) throws SQLException {
+        iCitizienDAO.updateLastEdited(citizen);
+    }
 }

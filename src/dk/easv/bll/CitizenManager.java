@@ -107,5 +107,9 @@ public class CitizenManager {
     public Citizen loadCitizen(Citizen citizen) {
         return facade.loadCitizen(citizen);
     }
+
+    public void updateLastEdited(Citizen citizen) throws SQLException {
+        facade.updateLastEdited(citizen);
+    }
 }
 

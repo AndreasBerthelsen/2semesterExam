@@ -33,7 +33,7 @@
             <TableView prefHeight="313.0" prefWidth="659.0">
               <columns>
                 <TableColumn prefWidth="330.0" text="Fornavn" />
-                <TableColumn prefWidth="330.0" text="Efternavn" />
+                <TableColumn prefWidth="335.0" text="Efternavn" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -91,7 +91,7 @@
                         <Image url="@../../../Images/Person.png" />
                      </image>
                   </ImageView>
-                  <Label id="TeacherLbl" text="Velkommen lærer">
+                  <Label id="TeacherLbl" text="Velkommen admin">
                      <HBox.margin>
                         <Insets left="25.0" top="10.0" />
                      </HBox.margin>

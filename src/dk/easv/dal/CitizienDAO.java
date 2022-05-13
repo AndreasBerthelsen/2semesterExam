@@ -7,6 +7,7 @@ import dk.easv.dal.interfaces.ICitizienDAO;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +110,7 @@ public class CitizienDAO implements ICitizienDAO {
     public List<Citizen> getAllCitizensFromUser(User user) {
         List<Citizen> citizensFromUser = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
-            String citizenSQL = "SELECT borgerID, fName, lName, dato FROM Borger\n" +
+            String citizenSQL = "SELECT borgerID, fName, lName, dato, lastChanged FROM Borger\n" +
                     "INNER JOIN CitUser ON Borger.borgerID = CitUser.citFK\n" +
                     "WHERE CitUser.userFK = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(citizenSQL);
@@ -120,9 +121,9 @@ public class CitizienDAO implements ICitizienDAO {
                 String fName = rs.getString("fName");
                 String lName = rs.getString("lName");
                 Date dato = rs.getDate("dato");
-                citizensFromUser.add(new Citizen(id, fName, lName, dato));
+                Date lastChanged = rs.getDate("lastChanged");
+                citizensFromUser.add(new Citizen(id, fName, lName, dato, lastChanged));
             }
-
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -130,6 +131,19 @@ public class CitizienDAO implements ICitizienDAO {
 
 
         return citizensFromUser;
+    }
+
+    public void updateLastEdited(Citizen citizen) throws SQLException {
+        java.util.Date date = new java.util.Date();
+        java.sql.Date lastChanged = new java.sql.Date(date.getTime());
+
+        try (Connection connection = dc.getConnection()){
+            String dateSQL = "UPDATE Borger SET lastChanged =? WHERE borgerID =?";
+            PreparedStatement preparedStatement = connection.prepareStatement(dateSQL);
+            preparedStatement.setDate(1, lastChanged);
+            preparedStatement.setInt(2, citizen.getId());
+            preparedStatement.execute();
+        }
     }
 
     @Override
