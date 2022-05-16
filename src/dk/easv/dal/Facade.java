@@ -162,8 +162,8 @@ public class Facade {
     public void updateLastEdited(Citizen citizen) throws SQLException {
         iCitizienDAO.updateLastEdited(citizen);
     }
-    public void saveTemplate(String fName, String lName, Date date, String description,Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap) throws SQLServerException {
-        iTemplateDAO.createTemplate(fName,lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap);
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+        iTemplateDAO.createTemplate(fName,lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
 
     }
 }

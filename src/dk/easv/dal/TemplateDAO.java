@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TemplateDAO implements ITemplateDAO {
     DatabaseConnector dc;
@@ -24,12 +22,13 @@ public class TemplateDAO implements ITemplateDAO {
 
 
     @Override
-    public void createTemplate(String fName, String lName, Date date,String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap) throws SQLServerException {
+    public void createTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
         try (Connection connection = dc.getConnection()) {
             int id = createCitizenTemplate(fName, lName, date,description, connection);
-            createFunktionsJournalTemplate(funkAnswerMap, id, connection);
+            createFunktionsJournalTemplate(funkAnswerMap, id,obsDate, connection);
+
+            createHealthJournalTemplate(healthAnswerMap, id,obsDate, connection);
             /*
-            createHealthJournalTemplate(healthAnswerMap, id, connection);
             createGenInfoTemplate(genInfoMap, id, connection);
              */
         } catch (SQLException throwables) {
@@ -38,7 +37,7 @@ public class TemplateDAO implements ITemplateDAO {
 
     }
 
-//todo desc
+
     private int createCitizenTemplate(String fname, String lName, Date date,String description, Connection connection) throws SQLException {
         String sql = "INSERT INTO Borger (fname, lname, dato, isTemplate,description,lastChanged) VALUES (?,?,?,?,?,?)";
         PreparedStatement psB = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -76,8 +75,10 @@ public class TemplateDAO implements ITemplateDAO {
     }
  */
 
-    private void createFunktionsJournalTemplate(Map<Integer, FunkChunkAnswer> answerMap, int id, Connection connection) throws SQLException {
-        String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote) values(?,?,?,?,?,?,?,?)";
+    private void createFunktionsJournalTemplate(Map<Integer, FunkChunkAnswer> answerMap, int id,Date obsDate, Connection connection) throws SQLException {
+        //todo add date og obs notat
+        String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
+                "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement psF = connection.prepareStatement(sqlF);
         for (int key : answerMap.keySet()) {
             FunkChunkAnswer answer = answerMap.get(key);
@@ -89,6 +90,8 @@ public class TemplateDAO implements ITemplateDAO {
             psF.setInt(6, getIndexFromComboBox(answer.getUdførelseComboBox()));
             psF.setInt(7, getIndexFromComboBox(answer.getBetydningComboBox()));
             psF.setString(8, answer.getCitizenTextArea().getText());
+            psF.setDate(9,obsDate);
+            psF.setString(10,answer.getObsTextArea().getText());
             psF.addBatch();
         }
         psF.executeBatch();
@@ -97,27 +100,25 @@ public class TemplateDAO implements ITemplateDAO {
     private int getIndexFromComboBox(ComboBox comboBox) {
         return comboBox.getSelectionModel().getSelectedIndex();
     }
-/*
-    private void createHealthJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
-        Map<Integer, Integer> healthRelevansMap = citizen.getRelevansMap();
-        //helbred
-        List<Integer> healthMasterKeys = Stream.of(healthInfoMap.keySet(), healthRelevansMap.keySet())
-                .flatMap(Collection::stream)
-                .distinct()
-                .collect(Collectors.toList());
-        String sqlH = "insert into Helbredsjournal(borgerID,problemID,value,relevans) values(?,?,?,?)";
+
+    private void createHealthJournalTemplate(Map<Integer,HealthChunkAnswer> answerMap, int id, Date obsDate,Connection connection) throws SQLException {
+        String sqlH = "insert into Helbredsjournal(borgerID,problemID,technicalNote,relevans,currentEval,expectedCondition,ObservationNote,Date) values(?,?,?,?,?,?,?,?)";
         PreparedStatement psH = connection.prepareStatement(sqlH);
-        for (int key : healthMasterKeys) {
+        for (int key : answerMap.keySet()) {
+            HealthChunkAnswer answer = answerMap.get(key);
             psH.setInt(1, id);
             psH.setInt(2, key);
-            psH.setString(3, healthInfoMap.get(key));
-            psH.setInt(4, healthRelevansMap.get(key));
+            psH.setString(3,answer.getTechnicalTextArea().getText());
+            psH.setInt(4,answer.getSelectedToggleId());
+            psH.setString(5,answer.getCurrentTextarea().getText());
+            psH.setInt(6,getIndexFromComboBox(answer.getExpectedComboBox()));
+            psH.setString(7,answer.getObservationTextArea().getText());
+            psH.setDate(8,Date.valueOf(String.valueOf(obsDate)));
             psH.addBatch();
         }
         psH.executeBatch();
     }
- */
+
     @Override
     public void deleteTemplate(int citizenId) throws SQLException {
         //delete grupper -> journaler x3 -> borger

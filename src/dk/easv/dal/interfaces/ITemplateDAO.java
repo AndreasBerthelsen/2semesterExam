@@ -20,5 +20,5 @@ public interface ITemplateDAO {
 
     void updateTemplate(Citizen citizen, int id) throws SQLServerException;
 
-    void createTemplate(String fName, String lName, Date date,String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap) throws SQLServerException;
+    void createTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException;
 }

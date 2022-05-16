@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TabFactory {
+public class FunktionTabFactory {
     public static Tab buildFunkTab(Section section, Map<Integer, FunkChunkAnswer> answerMap) {
         //tab for hver afdeling
         Tab tab = new Tab(section.getSectionTitle());
@@ -44,16 +44,16 @@ public class TabFactory {
     }
 
     private static VBox buildFunkChunk(int key, Section section, Map<Integer, FunkChunkAnswer> answerMap) {
+        int hGap = 50;
+        int vGap = 10;
         FunkChunkAnswer chunkAnswer = new FunkChunkAnswer(
                 createNiveauComboBox(createImages()),
                 createNiveauComboBox(createImages()),
                 createUdførelseComboBox(),
                 createBetydningComboBox(),
                 createTextArea(),
+                createTextArea(),
                 createTextArea());
-
-        int hGap = 50;
-        int vGap = 10;
 
         VBox chunk = new VBox();
         chunk.setAlignment(Pos.TOP_CENTER);
@@ -64,7 +64,6 @@ public class TabFactory {
 
         gridpane.addRow(0, buildFunkLeftBox(hGap, vGap, chunkAnswer), buildFunkRightBox(hGap, vGap, chunkAnswer));
         gridpane.addRow(1, new Label("Fagligt Notat"), new Label("Borgerens Ønsker og mål"));
-
         gridpane.addRow(2, chunkAnswer.getFagTextArea(), chunkAnswer.getCitizenTextArea());
 
         GridPane.setHalignment(gridpane, HPos.CENTER);
@@ -73,7 +72,9 @@ public class TabFactory {
         gridpane.setVgap(vGap);
 
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
-        chunk.getChildren().addAll(headerLabel, gridpane);
+        Label obsLabel = new Label("Observations Notat");
+        TextArea obsTextArea = chunkAnswer.getObsTextArea();
+        chunk.getChildren().addAll(headerLabel, gridpane,obsLabel,obsTextArea);
 
         answerMap.put(key, chunkAnswer);
         return chunk;
@@ -103,6 +104,7 @@ public class TabFactory {
 
     private static ComboBox<String> createUdførelseComboBox() {
         return new ComboBox<>(FXCollections.observableArrayList(
+                //todo træk list fra db
                 "Udføre selv",
                 "Udfører dele af aktiviteten",
                 "Udfører ikke selv aktiviteten",
@@ -113,6 +115,7 @@ public class TabFactory {
 
     private static ComboBox<String> createBetydningComboBox() {
         return new ComboBox<>(FXCollections.observableArrayList(
+                //todo træk list fra db
                 "Oplever ikke begrænsninger",
                 "Oplever begrænsninger"
         ));
@@ -152,51 +155,10 @@ public class TabFactory {
         return list;
     }
 
-    private ArrayList<RadioButton> createRadioButtons(HashMap<Integer, ToggleGroup> toggleMap, int key) {
-        ArrayList<RadioButton> radioList = new ArrayList<>();
-        ToggleGroup toggleGroup = new ToggleGroup();
-        ArrayList<String> radioNames = new ArrayList<>();
-        //TODO REPLACE STRINGS MED ENUM HOLY SHIT
-        radioNames.add("Aktuel");
-        radioNames.add("Potentiel");
-        radioNames.add("Ikke relevant");
-
-        for (int i = 0; i < 3; i++) {
-            RadioButton radio = new RadioButton(radioNames.get(i));
-            radio.setToggleGroup(toggleGroup);
-            radio.setUserData(radioNames.get(i));
-/*
-            //TODO FIX MED ENUM DET HER ER SHIT måske ændre visable
-            if (Objects.equals(radio.getText(), "Aktuel") || Objects.equals(radio.getText(), "Potentiel")) {
-                radio.setOnAction(event -> {
-                    helbredTextAreaMap.get(key).setDisable(false);
-                });
-            } else {
-                radio.setOnAction(event -> {
-                    helbredTextAreaMap.get(key).setDisable(true);
-                });
-            }
-            radioList.add(radio);
-
- */
-        }
-
-
-        toggleMap.put(key, toggleGroup);
-        return radioList;
-    }
-
     private static TextArea createTextArea() {
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
 
-        return textArea;
-    }
-
-    private TextArea createTextArea(HashMap<Integer, TextArea> textAreaMap, int textAreaKey) {
-        TextArea textArea = new TextArea();
-        textArea.setWrapText(true);
-        textAreaMap.put(textAreaKey, textArea);
         return textArea;
     }
 }
