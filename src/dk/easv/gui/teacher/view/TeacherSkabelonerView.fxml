@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -21,7 +22,7 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView id="skabelonLabel" fx:id="templateTV" prefHeight="675.0" prefWidth="625.0">
+            <TableView id="skabelonLabel" fx:id="templateTV" onMouseClicked="#handleSetDescription" prefHeight="675.0" prefWidth="625.0">
               <columns>
                 <TableColumn fx:id="fNameTC" prefWidth="75.0" text="Fornavn" />
                   <TableColumn fx:id="lNameTC" prefWidth="75.0" text="Efternavn" />
@@ -32,7 +33,10 @@
             </TableView>
             <VBox alignment="CENTER" spacing="20.0">
                <children>
+                  <Label text="Beskrivelse" />
+                  <TextArea id="descriptionTextArea" fx:id="descriptionTextArea" disable="true" prefHeight="200.0" prefWidth="200.0" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleNySkabelonbtn" text="Ny Skabelon" />
+                  <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleKopierSkabelon" text="Kopiér Skabelon" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleEditSkabelonbtn" text="Rediger Skabelon" />
                   <Button id="SkabelonBtn" layoutX="311.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleDeletebtn" text="Slet Skabelon" />
                </children>
