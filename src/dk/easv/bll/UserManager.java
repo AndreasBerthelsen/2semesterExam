@@ -17,10 +17,10 @@ public class UserManager {
         facade = Facade.getInstance();
     }
 
-    public void createUser(String firstName, String lastName, String username, String password, UserType userType) throws SQLException {
+    public void createUser(String firstName, String lastName, String username, String password, UserType userType, int schoolID) throws SQLException {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
-        facade.createUser(firstName, lastName,username, hashedPassword, salt, userType);
+        facade.createUser(firstName, lastName,username, hashedPassword, salt, userType, schoolID);
     }
 
     public List<User> getAllStudents() throws SQLServerException {

@@ -146,6 +146,7 @@ public class CitizienDAO implements ICitizienDAO {
         }
     }
 
+
     @Override
     public void createCopyCitizen(Citizen citizen) {
         try(Connection connection = dc.getConnection()) {
@@ -237,4 +238,12 @@ public class CitizienDAO implements ICitizienDAO {
 
     }
 
+    @Override
+    public void saveCopyCitizen(Citizen citizen) {
+
+    }
+
+    private void saveFunkInfoCopy(java.util.Date oldDate, Connection connection, java.util.Date newDate){
+
+    }
 }

@@ -33,9 +33,9 @@ public class UserDAO implements IUserDAO {
      */
 
     @Override
-    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) {
+    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType, int schoolID) {
         try (Connection connection = dc.getConnection()) {
-            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt, skole) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
@@ -43,6 +43,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(4, hashedPassword);
             preparedStatement.setInt(5, userType.getI());
             preparedStatement.setString(6, salt);
+            preparedStatement.setInt(7, schoolID);
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -65,7 +66,8 @@ public class UserDAO implements IUserDAO {
                 String fName = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
                 String username = resultSet.getString("username");
-                allUsers.add(new User(id, fName, lName, username, userType));
+                int schoolID = resultSet.getInt("schoolID");
+                allUsers.add(new User(id, fName, lName, username, userType, schoolID));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

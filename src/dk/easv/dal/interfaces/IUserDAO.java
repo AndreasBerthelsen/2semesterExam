@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserDAO {
-    void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException;
+    void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType, int schoolID) throws SQLException;
     List<User> getAllUsers(UserType userType) throws SQLServerException;
     void deleteUser(User userToBeDeleted);
     void updateUser(User user);

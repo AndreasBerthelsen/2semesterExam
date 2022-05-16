@@ -7,14 +7,15 @@ public class User {
     private String username;
     private UserType type;
     private int schoolID;
+    private School school;
 
-
-    public User(int id, String firstname, String lastname, String username, UserType type) {
+    public User(int id, String firstname, String lastname, String username, UserType type, int schoolID) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.type = type;
+        this.schoolID = schoolID;
     }
 
     public User(int id, String firstname, String lastname, UserType type) {
@@ -57,7 +58,7 @@ public class User {
     }
 
     public int getSchoolID() {
-        return schoolID;
+        return school.getId();
     }
 
 

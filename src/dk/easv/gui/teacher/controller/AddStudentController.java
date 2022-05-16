@@ -20,6 +20,8 @@ public class AddStudentController extends SuperController {
     @FXML
     private TextField passwordTxtfield;
     @FXML
+    private TextField schoolTxt;
+    @FXML
     private Button saveBtn;
     @FXML
     private Button cancelBtn;
@@ -35,8 +37,9 @@ public class AddStudentController extends SuperController {
         String lastname = getLastName(lNameTxtField);
         String username = getUsername(usernameTxtfield);
         String password = getPassword(passwordTxtfield);
+        int school = getSchool(schoolTxt);
         if (firstname != null && lastname != null && username != null && password != null) {
-            userModel.createStudent(firstname, lastname, username, password);
+            userModel.createStudent(firstname, lastname, username, password, school);
             closeWindow(saveBtn);
         }
     }

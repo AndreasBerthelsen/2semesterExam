@@ -68,8 +68,8 @@ public class Facade {
         return iLoginDAO.loginUser(username, password);
     }
 
-    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType) throws SQLException {
-        iUserDAO.createUser(firstName, lastName, username, hashedPassword, salt, userType);
+    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType, int schoolID) throws SQLException {
+        iUserDAO.createUser(firstName, lastName, username, hashedPassword, salt, userType, schoolID);
     }
 
     public HashMap<Integer, String> getHelbredsTilstande() {

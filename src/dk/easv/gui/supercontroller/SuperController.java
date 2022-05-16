@@ -1,6 +1,7 @@
 package dk.easv.gui.supercontroller;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.gui.teacher.Interfaces.IController;
 import javafx.event.ActionEvent;
@@ -8,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -78,6 +76,16 @@ public abstract class SuperController {
         }
         else{
             errorMessage("Indtast en adgangskode");
+        }
+        return null;
+    }
+
+    public Integer getSchool(TextField textField){
+        if (!textField.getText().isEmpty()){
+            return Integer.parseInt(textField.getText());
+        }
+        else {
+            errorMessage("Indtast gyldig skole ");
         }
         return null;
     }
