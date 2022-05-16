@@ -6,12 +6,21 @@ public class User {
     private String lastname;
     private String username;
     private UserType type;
+    private int schoolID;
+
 
     public User(int id, String firstname, String lastname, String username, UserType type) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
+        this.type = type;
+    }
+
+    public User(int id, String firstname, String lastname, UserType type) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.type = type;
     }
 
@@ -45,6 +54,10 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getSchoolID() {
+        return schoolID;
     }
 
 

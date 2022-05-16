@@ -2,6 +2,7 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
+import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.dal.interfaces.IUserDAO;
@@ -69,6 +70,50 @@ public class UserDAO implements IUserDAO {
             throwables.printStackTrace();
         }
         return allUsers;
+    }
+
+    public List<User> getAllUsersFromSchools(School school, UserType userType) {
+       List<User> allUsers = new ArrayList<>();
+       try(Connection con = dc.getConnection()) {
+           String sql = "SELECT userID, fName, lName\n" +
+                   "From [User] \n" +
+                   "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
+                   "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
+                   "WHERE [User].[skole] = ? AND [User].roleID = ?";
+           PreparedStatement preparedStatement = con.prepareStatement(sql);
+           preparedStatement.setInt(1, school.getId());
+           preparedStatement.setInt(2, userType.getI());
+           ResultSet resultSet = preparedStatement.executeQuery();
+           while (resultSet.next()) {
+               int id = resultSet.getInt("userID");
+               String fName = resultSet.getString("fname");
+               String lName = resultSet.getString("lName");
+               allUsers.add(new User(id, fName, lName, userType));
+           }
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+    return allUsers;
+    }
+
+    @Override
+    public List<School> getAllSchools() throws SQLServerException {
+        List<School> allSchools = new ArrayList<>();
+        try(Connection connection = dc.getConnection()) {
+            String sql ="SELECT Skole.ID, Skole.Navn\n" +
+                    "FROM dbo.Skole\n";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                String navn = resultSet.getString("navn");
+                allSchools.add(new School(id, navn));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allSchools;
     }
 
     @Override

@@ -34,6 +34,7 @@ public class LoginViewController extends SuperController {
                 switch (type) {
                     case TEACHER -> openSceneAsUser(user, "/dk/easv/gui/teacher/view/TeacherViewMain.fxml", "TeacherView", actionEvent);
                     case STUDENT -> openSceneAsUser(user, "/dk/easv/gui/student/view/ElevView.fxml", "StudentView", actionEvent);
+                    case ADMIN -> openSceneAsUser(user, "/dk/easv/gui/admin/view/AdminMainView.fxml", "AdminView", actionEvent);
                 }
             } else {
                 errorMessage("Fejl i brugernavn eller adgangskode");

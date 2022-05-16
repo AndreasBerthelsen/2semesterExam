@@ -164,4 +164,12 @@ public class Facade {
     public Citizen loadCitizen(Citizen citizen) {
         return iTemplateDAO.loadTemplate(citizen);
     }
+
+    public List<User> getAllUsersFromSchools(School school, UserType userType) {
+        return iUserDAO.getAllUsersFromSchools(school,userType);
+    }
+
+    public List<School> getAllSchools() throws SQLServerException {
+        return iUserDAO.getAllSchools();
+    }
 }

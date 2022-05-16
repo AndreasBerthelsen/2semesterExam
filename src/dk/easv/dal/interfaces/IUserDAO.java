@@ -2,6 +2,7 @@ package dk.easv.dal.interfaces;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
+import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 
@@ -16,4 +17,7 @@ public interface IUserDAO {
 
     void updatePassword(User user, String hashPassword, String salt) throws SQLServerException;
 
+    List<User> getAllUsersFromSchools(School school, UserType userType);
+
+    List<School> getAllSchools() throws SQLServerException;
 }
