@@ -4,12 +4,14 @@ import dk.easv.be.FunkChunkAnswer;
 import dk.easv.be.HealthChunkAnswer;
 import dk.easv.be.Section;
 import dk.easv.bll.Util.FunktionTabFactory;
+import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
 import dk.easv.gui.supercontroller.saveCitizenController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
     public TextField lNameInput;
     public TextArea descriptionInput;
     public DatePicker obsDatePicker;
+    public VBox genInfoVBox;
     //todo hent alle info fields med ny thread
     CitizenModel sM = new CitizenModel();
     //funktion
@@ -31,9 +34,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
     private final Map<Integer, FunkChunkAnswer> funkSectionAnswerMap = new LinkedHashMap<>();
 
     //Gen info
-    public javafx.scene.control.ScrollPane genScrollPane;
-    private final HashMap<String, TextArea> genInfoTextAreaMap = new HashMap<>();
-    private final ArrayList<String> genInfoFieldList = sM.getGeneralinfoFields();
+    private final Map<String,TextArea> genInfoAnserMap = new LinkedHashMap<>();
 
     //helbred
     public TabPane helbredsInnerTabPane;
@@ -48,36 +49,21 @@ public class NySkabelonMainController extends saveCitizenController implements I
         obsDatePicker.setValue(LocalDate.now());
         setupFunkTab();
         setupHelbredTab();
-
+        setupGenInfoTab();
     }
 
-    /*
-        private void setupGeneralInfo() {
-            VBox vBox = new VBox();
+    private void setupGenInfoTab() {
+        List<String> fieldList = sM.getGeneralinfoFields();
+            genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContent(fieldList,genInfoAnserMap));
+    }
 
-            for (String field : genInfoFieldList) {
-                Label label = new Label(field);
-                label.getStylesheets().add("dk/easv/CSS/Skabelon.css");
-                TextArea textArea = createTextArea(genInfoTextAreaMap, field);
-                textArea.setId("textArea");
 
-                vBox.getChildren().add(label);
-                vBox.getChildren().add(textArea);
-            }
-            genScrollPane.setId("VBOX");
-            genScrollPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
-            genScrollPane.setContent(vBox);
-            genScrollPane.getStylesheets().add("dk/easv/CSS/Skabelon.css");
-            vBox.setId("VBOX");
-        }
-     */
     private void setupFunkTab() {
         List<Section> funkSectionList = sM.getFunkSections();
 
         for (Section section : funkSectionList) {
             funktionInnerTabPane.getTabs().add(FunktionTabFactory.buildFunkTab(section, funkSectionAnswerMap));
         }
-
     }
 
     private void setupHelbredTab() {
@@ -96,7 +82,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
             String description = descriptionInput.getText().trim();
             java.sql.Date obsDate = Date.valueOf(obsDatePicker.getValue().toString());
 
-            sM.saveTemplate(fName, lName, birthDate,description, null, funkSectionAnswerMap, healthChunkAnswerMap,obsDate);
+            sM.saveTemplate(fName, lName, birthDate,description, genInfoAnserMap, funkSectionAnswerMap, healthChunkAnswerMap,obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
         } catch (Exception e) {

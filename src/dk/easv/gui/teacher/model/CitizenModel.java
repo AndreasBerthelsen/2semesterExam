@@ -6,6 +6,7 @@ import dk.easv.be.*;
 import dk.easv.bll.CitizenManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -80,7 +81,7 @@ public class CitizenModel {
         return cM.getHealthSections();
     }
 
-    public void saveTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
         cM.saveTemplate(fName, lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
     }
 

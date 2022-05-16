@@ -70,27 +70,6 @@
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="333.0">
-                     <children>
-                        <Label id="AddOrEditLabel" text="Skole">
-                           <VBox.margin>
-                              <Insets left="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField id="AddOrEditTxtfield" fx:id="schoolTxtField">
-                           <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </VBox>
-               </children>
-            </HBox>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
                <children>
                   <Button id="AddOrEditBtn" fx:id="saveBtn" alignment="CENTER" mnemonicParsing="false" onAction="#handleSaveBtn" prefHeight="37.0" prefWidth="84.0" text="Gem">
@@ -133,6 +112,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="290.0" spacing="25.0">
                <children>
+                  <ComboBox prefWidth="150.0" />
                   <ComboBox prefWidth="150.0" />
                   <Label id="AddOrEditLabel" text="Angiv adgangskode" />
                   <TextField id="AddOrEditTxtfield" fx:id="passwordTxtFIeld">

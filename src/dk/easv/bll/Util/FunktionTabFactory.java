@@ -15,7 +15,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +73,7 @@ public class FunktionTabFactory {
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
         Label obsLabel = new Label("Observations Notat");
         TextArea obsTextArea = chunkAnswer.getObsTextArea();
-        chunk.getChildren().addAll(headerLabel, gridpane,obsLabel,obsTextArea);
+        chunk.getChildren().addAll(headerLabel, gridpane, obsLabel, obsTextArea);
 
         answerMap.put(key, chunkAnswer);
         return chunk;
@@ -156,8 +155,10 @@ public class FunktionTabFactory {
     }
 
     private static TextArea createTextArea() {
+        int width = 600;
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
+        textArea.setMaxWidth(width);
 
         return textArea;
     }

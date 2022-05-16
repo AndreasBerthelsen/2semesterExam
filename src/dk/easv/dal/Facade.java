@@ -3,6 +3,7 @@ package dk.easv.dal;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.*;
 import dk.easv.dal.interfaces.*;
+import javafx.scene.control.TextArea;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -170,7 +171,7 @@ public class Facade {
     public void updateLastEdited(Citizen citizen) throws SQLException {
         iCitizienDAO.updateLastEdited(citizen);
     }
-    public void saveTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
         iTemplateDAO.createTemplate(fName,lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
     }
 }
