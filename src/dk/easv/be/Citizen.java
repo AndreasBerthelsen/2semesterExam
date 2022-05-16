@@ -32,6 +32,10 @@ public class Citizen {
 
     private java.sql.Date bDate;
 
+    private java.sql.Date lastChanged;
+
+
+
     public Citizen(int id, String firstname, String lastname, java.sql.Date bDate) {
         this.id = id;
         this.firstname = firstname;
@@ -45,6 +49,14 @@ public class Citizen {
         this.lastname = lastname;
         this.bDate = bDate;
         this.description = description;
+    }
+
+    public Citizen(int id, String firstname, String lastname, java.sql.Date bDate, java.sql.Date lastChanged) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.bDate = bDate;
+        this.lastChanged = lastChanged;
     }
 
     public Citizen(String fName, String lName, Date date, Map<String, String> genInfoText, Map<Integer, Integer> currentCombo, Map<Integer, Integer> targetCombo, Map<Integer, String> funkInfo, Map<Integer, Integer> relevansMap, Map<Integer, String> helbredInfo) {
@@ -111,6 +123,10 @@ public class Citizen {
 
     public String getDescription() {
         return description;
+    }
+
+    public Date getLastChanged() {
+        return lastChanged;
     }
 
     @Override

@@ -33,6 +33,8 @@
               <columns>
                 <TableColumn fx:id="fNameStudent" prefWidth="330.0" text="Fornavn" />
                 <TableColumn fx:id="lNameStudent" prefWidth="335.0" text="Efternavn" />
+                <TableColumn prefWidth="330.0" text="Fornavn" />
+                <TableColumn prefWidth="335.0" text="Efternavn" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

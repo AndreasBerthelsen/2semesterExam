@@ -4,15 +4,14 @@ import dk.easv.be.Citizen;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +26,10 @@ public class SkabelonerViewController implements Initializable {
     public TableView<Citizen> templateTV;
     public TableColumn<Citizen, String> lNameTC;
     public TableColumn<Citizen, String> fNameTC;
+    @FXML
+    private Label descriptionLbl;
+    @FXML
+    private TextArea descriptionTextArea;
     private CitizenModel cM;
 
     public SkabelonerViewController() throws IOException {
@@ -99,4 +102,15 @@ public class SkabelonerViewController implements Initializable {
         templateTV.setItems(cM.getObservableTemplates());
     }
 
+    public void handleKopierSkabelon(ActionEvent actionEvent) {
+    }
+
+    public void setDescription(Citizen citizen) throws SQLException {
+        descriptionTextArea.setText(citizen.getDescription());
+        descriptionTextArea.setWrapText(true);
+    }
+
+    public void handleSetDescription(MouseEvent mouseEvent) throws SQLException {
+        setDescription(templateTV.getSelectionModel().getSelectedItem());
+    }
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="borderpane" stylesheets="@../elevView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.ElevController">
+<BorderPane styleClass="borderpane" stylesheets="@../elevView.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.ElevController">
    <center>
       <VBox alignment="TOP_CENTER" spacing="20.0" stylesheets="@../elevView.css" BorderPane.alignment="CENTER">
          <children>
@@ -34,6 +34,7 @@
               <columns>
                 <TableColumn fx:id="firstNameTC" prefWidth="174.0" text="Fornavn" />
                   <TableColumn fx:id="lastNameTC" prefWidth="75.0" text="Efternavn" />
+                  <TableColumn fx:id="lastChangedCol" prefWidth="75.0" text="Senest ændret" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

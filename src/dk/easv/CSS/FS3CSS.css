@@ -93,6 +93,9 @@ Id's til TeacherSkabelonerView
 #skabelonLabel {
     -fx-font-size: 25;
 }
+#descriptionTextArea{
+    -fx-opacity: 1.0;
+}
 
 /**
 CSS til tableviews

@@ -2,6 +2,7 @@ package dk.easv.gui.student.controller;
 
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
+import dk.easv.gui.student.model.StudentModel;
 import dk.easv.gui.supercontroller.SuperController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.Interfaces.IController;
@@ -19,6 +20,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -29,11 +32,14 @@ public class ElevController extends SuperController implements IController, Init
     public TableColumn<Citizen,String> firstNameTC;
     public TableColumn<Citizen,String> lastNameTC;
     public Button exitBtn;
+    public TableColumn<Citizen, Date> lastChangedCol;
     private User student;
     private CitizenModel cM;
+    private StudentModel studentModel;
 
     public ElevController() throws IOException {
         cM = new CitizenModel();
+        studentModel = new StudentModel();
     }
 
     @Override
@@ -47,9 +53,10 @@ public class ElevController extends SuperController implements IController, Init
     public void initialize(URL location, ResourceBundle resources) {
         firstNameTC.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         lastNameTC.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        lastChangedCol.setCellValueFactory(new PropertyValueFactory<>("lastChanged"));
     }
 
-    public void handleInspect(ActionEvent actionEvent) throws IOException {
+    public void handleInspect(ActionEvent actionEvent) throws IOException, SQLException {
         Citizen citizen = tableView.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/student/view/StudentEditCitizenView.fxml")));
         Scene scene = new Scene(loader.load());
@@ -57,6 +64,7 @@ public class ElevController extends SuperController implements IController, Init
         stage.setScene(scene);
         ICitizenSelector controller = loader.getController();
         controller.setCitizen(citizen);
+        studentModel.lastChanged(citizen);
         stage.showAndWait();
     }
 

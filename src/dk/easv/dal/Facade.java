@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Facade {
     private static Facade instance;
@@ -119,9 +120,6 @@ public class Facade {
     }
 
 
-    public void saveTemplate(Citizen citizen) throws SQLServerException {
-        iTemplateDAO.createTemplate(citizen);
-    }
 
     public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
         iUserDAO.updatePassword(user, hashPassword, salt);
@@ -135,11 +133,6 @@ public class Facade {
 
     public List<Citizen> getAllTemplates() throws SQLException {
         return iTemplateDAO.getAllTemplates();
-    }
-
-
-    public void updateCitizen(Citizen citizen) {
-        iTemplateDAO.updateCitizen(citizen);
     }
 
     public void createCopyCitizen(Citizen citizen) {
@@ -165,11 +158,19 @@ public class Facade {
         return iTemplateDAO.loadTemplate(citizen);
     }
 
+
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
         return iUserDAO.getAllUsersFromSchools(school,userType);
     }
 
     public List<School> getAllSchools() throws SQLServerException {
         return iUserDAO.getAllSchools();
+    }
+
+    public void updateLastEdited(Citizen citizen) throws SQLException {
+        iCitizienDAO.updateLastEdited(citizen);
+    }
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+        iTemplateDAO.createTemplate(fName,lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
     }
 }

@@ -1,11 +1,12 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+
 import dk.easv.be.Citizen;
 import dk.easv.be.School;
+
 import dk.easv.be.User;
 import dk.easv.be.UserType;
-import dk.easv.dal.interfaces.IUserDAO;
 import dk.easv.dal.interfaces.IUserDAO;
 
 import java.io.IOException;
@@ -156,8 +157,4 @@ public class UserDAO implements IUserDAO {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

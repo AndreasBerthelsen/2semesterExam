@@ -2,19 +2,18 @@ package dk.easv.bll;
 
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.Citizen;
-import dk.easv.be.User;
+import dk.easv.be.*;
 import dk.easv.dal.CitizienDAO;
-
-import dk.easv.be.Section;
 
 import dk.easv.dal.Facade;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CitizenManager {
     Facade facade;
@@ -66,10 +65,6 @@ public class CitizenManager {
         return facade.getHealthSections();
     }
 
-    //TODO måske flyt til template manager
-    public void saveTemplate(Citizen citizen) throws SQLServerException {
-        facade.saveTemplate(citizen);
-    }
 
     public void deleteTemplate(int citizenid) throws SQLException {
         facade.deleteTemplate(citizenid);
@@ -106,6 +101,15 @@ public class CitizenManager {
 
     public Citizen loadCitizen(Citizen citizen) {
         return facade.loadCitizen(citizen);
+    }
+
+
+    public void updateLastEdited(Citizen citizen) throws SQLException {
+        facade.updateLastEdited(citizen);
+    }
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<Integer, GenInfoAnswer> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+        facade.saveTemplate(fName,lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
+
     }
 }
 
