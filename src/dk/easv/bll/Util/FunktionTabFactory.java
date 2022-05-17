@@ -159,7 +159,6 @@ public class FunktionTabFactory {
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
         textArea.setMaxWidth(width);
-
         return textArea;
     }
 }

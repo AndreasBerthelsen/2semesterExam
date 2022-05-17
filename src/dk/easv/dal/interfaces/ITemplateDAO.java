@@ -1,9 +1,7 @@
 package dk.easv.dal.interfaces;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.Citizen;
-import dk.easv.be.FunkNodeContainer;
-import dk.easv.be.HealthNodeContainer;
+import dk.easv.be.*;
 import javafx.scene.control.TextArea;
 
 import java.sql.Date;
@@ -20,5 +18,5 @@ public interface ITemplateDAO {
 
     void updateTemplate(Citizen citizen, int id) throws SQLServerException;
 
-    void createTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkNodeContainer> funkAnswerMap, Map<Integer, HealthNodeContainer> healthAnswerMap, Date obsDate) throws SQLServerException;
+    void createTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException;
 }
