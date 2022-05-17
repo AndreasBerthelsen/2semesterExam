@@ -2,6 +2,8 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
+import dk.easv.be.FunkResult;
+import dk.easv.be.HealthResult;
 import dk.easv.be.User;
 import dk.easv.dal.interfaces.ICitizienDAO;
 
@@ -10,6 +12,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CitizienDAO implements ICitizienDAO {
     private DatabaseConnector dc;
@@ -146,6 +149,7 @@ public class CitizienDAO implements ICitizienDAO {
         }
     }
 
+
     @Override
     public void createCopyCitizen(Citizen citizen) {
         try(Connection connection = dc.getConnection()) {
@@ -237,4 +241,34 @@ public class CitizienDAO implements ICitizienDAO {
 
     }
 
+
+    @Override
+    public void saveCitizen(Citizen citizen) {
+
+    }
+
+    private void saveFunk(Connection connection, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Citizen citizen) throws SQLException {
+        String sql = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
+                "values(?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        for (int key: funkMap.keySet()){
+            FunkResult funkResult = funkMap.get(key);
+            preparedStatement.setInt(1, citizen.getId());
+            preparedStatement.setInt(2, key);
+            preparedStatement.setInt(3, funkResult.getCurrent());
+            preparedStatement.setInt(4, funkResult.getTarget());
+            preparedStatement.setString(5, funkResult.getTechnical());
+            preparedStatement.setInt(6, funkResult.getExecution());
+            preparedStatement.setInt(7, funkResult.getImportance());
+            preparedStatement.setString(8, funkResult.getCitizenString());
+            preparedStatement.setDate(9, newDate);
+            preparedStatement.setString(10, funkResult.getObservation());
+
+        }
+        preparedStatement.executeBatch();
+    }
+
+    private void saveHelbred(Connection connection, java.sql.Date newDate, Map<Integer, HealthResult> healthMap, Citizen citizen){
+
+    }
 }
