@@ -174,4 +174,7 @@ public class Facade {
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
         iTemplateDAO.createTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
     }
+    public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
+        iCitizienDAO.saveCitizen(citizen, newDate, funkMap, healthMap, genInfoMap);
+    }
 }
