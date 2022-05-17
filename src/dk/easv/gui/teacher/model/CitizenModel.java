@@ -81,7 +81,7 @@ public class CitizenModel {
         return cM.getHealthSections();
     }
 
-    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkNodeContainer> funkAnswerMap, Map<Integer, HealthNodeContainer> healthAnswerMap, Date obsDate) throws SQLServerException {
         cM.saveTemplate(fName, lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
     }
 

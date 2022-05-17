@@ -3,7 +3,6 @@ package dk.easv.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.*;
-import dk.easv.dal.CitizienDAO;
 
 import dk.easv.dal.Facade;
 import javafx.scene.control.TextArea;
@@ -108,7 +107,7 @@ public class CitizenManager {
     public void updateLastEdited(Citizen citizen) throws SQLException {
         facade.updateLastEdited(citizen);
     }
-    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkNodeContainer> funkAnswerMap, Map<Integer, HealthNodeContainer> healthAnswerMap, Date obsDate) throws SQLServerException {
         facade.saveTemplate(fName,lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
 
     }

@@ -2,8 +2,8 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
-import dk.easv.be.FunkChunkAnswer;
-import dk.easv.be.HealthChunkAnswer;
+import dk.easv.be.FunkNodeContainer;
+import dk.easv.be.HealthNodeContainer;
 import dk.easv.dal.interfaces.ITemplateDAO;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -24,7 +24,7 @@ public class TemplateDAO implements ITemplateDAO {
 
 
     @Override
-    public void createTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+    public void createTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkNodeContainer> funkAnswerMap, Map<Integer, HealthNodeContainer> healthAnswerMap, Date obsDate) throws SQLServerException {
         try (Connection connection = dc.getConnection()) {
             int id = createCitizenTemplate(fName, lName, date, description, connection);
             createFunktionsJournalTemplate(funkAnswerMap, id, obsDate, connection);
@@ -74,13 +74,13 @@ public class TemplateDAO implements ITemplateDAO {
         return idKey.getInt(1);
     }
 
-    private void createFunktionsJournalTemplate(Map<Integer, FunkChunkAnswer> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
+    private void createFunktionsJournalTemplate(Map<Integer, FunkNodeContainer> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
         //todo add date og obs notat
         String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement psF = connection.prepareStatement(sqlF);
         for (int key : answerMap.keySet()) {
-            FunkChunkAnswer answer = answerMap.get(key);
+            FunkNodeContainer answer = answerMap.get(key);
             psF.setInt(1, id);
             psF.setInt(2, key);
             psF.setInt(3, getIndexFromComboBox(answer.getCurrentComboBox()));
@@ -100,11 +100,11 @@ public class TemplateDAO implements ITemplateDAO {
         return comboBox.getSelectionModel().getSelectedIndex();
     }
 
-    private void createHealthJournalTemplate(Map<Integer, HealthChunkAnswer> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
+    private void createHealthJournalTemplate(Map<Integer, HealthNodeContainer> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
         String sqlH = "insert into Helbredsjournal(borgerID,problemID,technicalNote,relevans,currentEval,expectedCondition,ObservationNote,Date) values(?,?,?,?,?,?,?,?)";
         PreparedStatement psH = connection.prepareStatement(sqlH);
         for (int key : answerMap.keySet()) {
-            HealthChunkAnswer answer = answerMap.get(key);
+            HealthNodeContainer answer = answerMap.get(key);
             psH.setInt(1, id);
             psH.setInt(2, key);
             psH.setString(3, answer.getTechnicalTextArea().getText());

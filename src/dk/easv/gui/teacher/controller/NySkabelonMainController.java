@@ -1,7 +1,7 @@
 package dk.easv.gui.teacher.controller;
 
-import dk.easv.be.FunkChunkAnswer;
-import dk.easv.be.HealthChunkAnswer;
+import dk.easv.be.FunkNodeContainer;
+import dk.easv.be.HealthNodeContainer;
 import dk.easv.be.Section;
 import dk.easv.bll.Util.FunktionTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
@@ -31,14 +31,14 @@ public class NySkabelonMainController extends saveCitizenController implements I
     CitizenModel sM = new CitizenModel();
     //funktion
     public TabPane funktionInnerTabPane;
-    private final Map<Integer, FunkChunkAnswer> funkSectionAnswerMap = new LinkedHashMap<>();
+    private final Map<Integer, FunkNodeContainer> funkSectionAnswerMap = new LinkedHashMap<>();
 
     //Gen info
     private final Map<String,TextArea> genInfoAnserMap = new LinkedHashMap<>();
 
     //helbred
     public TabPane helbredsInnerTabPane;
-    private final Map<Integer, HealthChunkAnswer> healthChunkAnswerMap = new LinkedHashMap<>();
+    private final Map<Integer, HealthNodeContainer> healthChunkAnswerMap = new LinkedHashMap<>();
 
     public NySkabelonMainController() throws IOException {
     }

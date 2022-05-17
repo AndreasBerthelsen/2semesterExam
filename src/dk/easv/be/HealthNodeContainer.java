@@ -3,7 +3,7 @@ package dk.easv.be;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
-public class HealthChunkAnswer {
+public class HealthNodeContainer {
 
 
     private TextArea technicalTextArea;
@@ -12,7 +12,7 @@ public class HealthChunkAnswer {
     private TextArea observationTextArea;
     private int selectedToggleId;
 
-    public HealthChunkAnswer(TextArea technicalTextArea, TextArea currentTextarea, ComboBox<String> expectedComboBox, TextArea observationTextArea) {
+    public HealthNodeContainer(TextArea technicalTextArea, TextArea currentTextarea, ComboBox<String> expectedComboBox, TextArea observationTextArea) {
         setSelectedToggleId(-1); // default no toggle picked
         this.technicalTextArea = technicalTextArea;
         this.currentTextarea = currentTextarea;
