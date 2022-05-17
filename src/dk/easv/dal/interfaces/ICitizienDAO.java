@@ -2,12 +2,15 @@ package dk.easv.dal.interfaces;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
+import dk.easv.be.FunkResult;
+import dk.easv.be.HealthResult;
 import dk.easv.be.User;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface ICitizienDAO {
     List<Citizen> getAllCitizens();
@@ -22,7 +25,6 @@ public interface ICitizienDAO {
 
     void deleteCitizen(int citizenId) throws SQLException;
     void updateLastEdited(Citizen citizen) throws SQLException;
-    void saveCopyCitizen(Citizen citizen);
 
-    void saveCitizen(Citizen citizen);
+    void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException;
 }

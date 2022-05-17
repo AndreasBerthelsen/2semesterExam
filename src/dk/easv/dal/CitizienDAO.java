@@ -241,18 +241,14 @@ public class CitizienDAO implements ICitizienDAO {
 
     }
 
-
+    //TODO Test om jeg virker
     @Override
-    public void saveCopyCitizen(Citizen citizen) {
-
-    }
-
-    private void saveFunkInfoCopy(java.util.Date oldDate, Connection connection, java.util.Date newDate) {
-    }
-
-    @Override
-    public void saveCitizen(Citizen citizen) {
-
+    public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
+        try (Connection connection = dc.getConnection()){
+            saveFunk(connection, newDate, funkMap, citizen);
+            saveHelbred(connection, newDate, healthMap, citizen);
+            saveGenInfo(connection, genInfoMap, citizen);
+        }
     }
 
     private void saveFunk(Connection connection, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Citizen citizen) throws SQLException {
@@ -276,8 +272,37 @@ public class CitizienDAO implements ICitizienDAO {
         preparedStatement.executeBatch();
     }
 
-    private void saveHelbred(Connection connection, java.sql.Date newDate, Map<Integer, HealthResult> healthMap, Citizen citizen){
+    private void saveHelbred(Connection connection, java.sql.Date newDate, Map<Integer, HealthResult> healthMap, Citizen citizen) throws SQLException {
+        String sql = "insert into Helbredsjournal(borgerID,problemID,technicalNote,relevans,currentEval,expectedCondition,ObservationNote,Date) values(?,?,?,?,?,?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        for (int key: healthMap.keySet()){
+            HealthResult healthResult = healthMap.get(key);
+            preparedStatement.setInt(1, citizen.getId());
+            preparedStatement.setInt(2, key);
+            preparedStatement.setString(3, healthResult.getTechnical());
+            preparedStatement.setInt(4, healthResult.getToggleId());
+            preparedStatement.setString(5, healthResult.getCurrent());
+            preparedStatement.setInt(6, healthResult.getExpectedIndex());
+            preparedStatement.setString(7, healthResult.getObservation());
+            preparedStatement.setDate(8, newDate);
+        }
+        preparedStatement.executeBatch();
+    }
 
-
+    private void saveGenInfo(Connection connection, Map<String, String> genInfoMap, Citizen citizen) throws SQLException {
+        String genFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
+        StringBuilder sb = new StringBuilder();
+        for (String s : genFields.split(",")) {
+            sb.append( s + "=?,");
+        }
+        String genMarks = sb.deleteCharAt(sb.length() - 1).toString();
+        String sql = "UPDATE GenerelInfo SET borgerID=?," + genMarks;
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        int index = 2;
+        preparedStatement.setInt(1, citizen.getId());
+        for (String s : genInfoMap.values()) {
+            preparedStatement.setString(index++, s);
+        }
+        preparedStatement.execute();
     }
 }
