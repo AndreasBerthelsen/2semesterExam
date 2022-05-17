@@ -1,6 +1,6 @@
 package dk.easv.bll.Util;
 
-import dk.easv.be.FunkChunkAnswer;
+import dk.easv.be.FunkNodeContainer;
 import dk.easv.be.Section;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FunktionTabFactory {
-    public static Tab buildFunkTab(Section section, Map<Integer, FunkChunkAnswer> answerMap) {
+    public static Tab buildFunkTab(Section section, Map<Integer, FunkNodeContainer> answerMap) {
         //tab for hver afdeling
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentVBox = new VBox(100);
@@ -42,10 +42,10 @@ public class FunktionTabFactory {
         return tab;
     }
 
-    private static VBox buildFunkChunk(int key, Section section, Map<Integer, FunkChunkAnswer> answerMap) {
+    private static VBox buildFunkChunk(int key, Section section, Map<Integer, FunkNodeContainer> answerMap) {
         int hGap = 50;
         int vGap = 10;
-        FunkChunkAnswer chunkAnswer = new FunkChunkAnswer(
+        FunkNodeContainer chunkAnswer = new FunkNodeContainer(
                 createNiveauComboBox(createImages()),
                 createNiveauComboBox(createImages()),
                 createUdførelseComboBox(),
@@ -79,7 +79,7 @@ public class FunktionTabFactory {
         return chunk;
     }
 
-    private static GridPane buildFunkRightBox(int hGap, int vGap, FunkChunkAnswer chunkAnswer) {
+    private static GridPane buildFunkRightBox(int hGap, int vGap, FunkNodeContainer chunkAnswer) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(hGap);
         gridPane.setVgap(vGap);
@@ -90,7 +90,7 @@ public class FunktionTabFactory {
         return gridPane;
     }
 
-    private static GridPane buildFunkLeftBox(int hGap, int vGap, FunkChunkAnswer chunkAnswer) {
+    private static GridPane buildFunkLeftBox(int hGap, int vGap, FunkNodeContainer chunkAnswer) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(hGap);
         gridPane.setVgap(vGap);
@@ -159,7 +159,6 @@ public class FunktionTabFactory {
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
         textArea.setMaxWidth(width);
-
         return textArea;
     }
 }

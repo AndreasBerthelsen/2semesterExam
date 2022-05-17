@@ -4,18 +4,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 
-public class FunkChunkAnswer {
-    //et obj for hver section - 30ish obj til funk journal
+public class FunkNodeContainer {
 
-    ComboBox<ImageView> currentComboBox;
-    ComboBox<ImageView> targetComboBox;
-    ComboBox<String> udførelseComboBox;
-    ComboBox<String> betydningComboBox;
-    TextArea fagTextArea;
-    TextArea citizenTextArea;
-    TextArea obsTextArea;
+    private ComboBox<ImageView> currentComboBox;
+    private ComboBox<ImageView> targetComboBox;
+    private ComboBox<String> udførelseComboBox;
+    private ComboBox<String> betydningComboBox;
+    private TextArea fagTextArea;
+    private TextArea citizenTextArea;
+    private TextArea obsTextArea;
 
-    public FunkChunkAnswer(ComboBox<ImageView> currentComboBox, ComboBox<ImageView> targetComboBox, ComboBox<String> udførelseComboBox, ComboBox<String> betydningComboBox, TextArea fagTextArea, TextArea citizenTextArea,TextArea obsTextArea) {
+    public FunkNodeContainer(ComboBox<ImageView> currentComboBox, ComboBox<ImageView> targetComboBox, ComboBox<String> udførelseComboBox, ComboBox<String> betydningComboBox, TextArea fagTextArea, TextArea citizenTextArea, TextArea obsTextArea) {
         this.currentComboBox = currentComboBox;
         this.targetComboBox = targetComboBox;
         this.udførelseComboBox = udførelseComboBox;

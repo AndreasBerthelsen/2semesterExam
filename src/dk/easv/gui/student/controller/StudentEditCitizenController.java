@@ -269,29 +269,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        //Gen info
-        HashMap<String, String> genInfoText = saveGenInfo(genInfoTextAreaMap);
-
-        //funktion
-        HashMap<Integer, Integer> currentCombo = saveFunkCurrentCombo(currentComboMap);
-        HashMap<Integer, Integer> targetCombo = saveFunkTargetCombo(targetComboMap);
-        HashMap<Integer, String> funkInfoMap = saveFunkTextArea(funkInfoTextAreaMap);
-
-        //Helbred
-        HashMap<Integer, Integer> relevansMap = saveHealthRelevans(healthToggleMap);
-        HashMap<Integer, String> helbredInfo = saveHealthInfo(helbredTextAreaMap);
-
-        String fname = fNameInput.getText().trim();
-        String lname = lNameInput.getText().trim();
-        java.sql.Date date = Date.valueOf(dateInput.getValue().toString());
-        new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo);
-        try {
-            cM.updateTemplate(new Citizen(fname, lname, date, genInfoText, currentCombo, targetCombo, funkInfoMap, relevansMap, helbredInfo), id);
-            Stage stage = (Stage) fNameInput.getScene().getWindow();
-            stage.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        //rework
     }
 
     public void handleAnnullerbtn(ActionEvent actionEvent) {

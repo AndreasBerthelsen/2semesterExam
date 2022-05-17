@@ -1,9 +1,7 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.Citizen;
-import dk.easv.be.FunkChunkAnswer;
-import dk.easv.be.HealthChunkAnswer;
+import dk.easv.be.*;
 import dk.easv.dal.interfaces.ITemplateDAO;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -24,22 +22,19 @@ public class TemplateDAO implements ITemplateDAO {
 
 
     @Override
-    public void createTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
+    public void createTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) {
         try (Connection connection = dc.getConnection()) {
-            int id = createCitizenTemplate(fName, lName, date, description, connection);
-            createFunktionsJournalTemplate(funkAnswerMap, id, obsDate, connection);
-
-            createHealthJournalTemplate(healthAnswerMap, id, obsDate, connection);
-
-            createGenInfoTemplate(genInfoMap, id, connection);
-
+            int id = createCitizenTemplate(fName, lName, birthDate, description, connection);
+            createFunktionsJournalTemplate(saveFunk, id, obsDate, connection);
+            createHealthJournalTemplate(saveHealth, id, obsDate, connection);
+            createGenInfoTemplate(saveGeninfo, id, connection);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
-    private void createGenInfoTemplate(Map<String, TextArea> genInfoMap, int id, Connection connection) throws SQLException {
+    private void createGenInfoTemplate(Map<String, String> genInfoMap, int id, Connection connection) throws SQLException {
         String geninfoFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
         StringBuilder sb = new StringBuilder();
         for (String s : geninfoFields.split(",")) {
@@ -51,8 +46,8 @@ public class TemplateDAO implements ITemplateDAO {
         PreparedStatement psGen = connection.prepareStatement(genSql);
         int index = 2;
         psGen.setInt(1, id);
-        for (TextArea t : genInfoMap.values()) {
-            psGen.setString(index++, t.getText());
+        for (String s : genInfoMap.values()) {
+            psGen.setString(index++, s);
         }
         psGen.execute();
     }
@@ -74,44 +69,41 @@ public class TemplateDAO implements ITemplateDAO {
         return idKey.getInt(1);
     }
 
-    private void createFunktionsJournalTemplate(Map<Integer, FunkChunkAnswer> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
+    private void createFunktionsJournalTemplate(Map<Integer, FunkResult> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
         //todo add date og obs notat
         String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement psF = connection.prepareStatement(sqlF);
         for (int key : answerMap.keySet()) {
-            FunkChunkAnswer answer = answerMap.get(key);
+            FunkResult answer = answerMap.get(key);
             psF.setInt(1, id);
             psF.setInt(2, key);
-            psF.setInt(3, getIndexFromComboBox(answer.getCurrentComboBox()));
-            psF.setInt(4, getIndexFromComboBox(answer.getTargetComboBox()));
-            psF.setString(5, answer.getFagTextArea().getText());
-            psF.setInt(6, getIndexFromComboBox(answer.getUdførelseComboBox()));
-            psF.setInt(7, getIndexFromComboBox(answer.getBetydningComboBox()));
-            psF.setString(8, answer.getCitizenTextArea().getText());
+            psF.setInt(3, answer.getCurrent());
+            psF.setInt(4, answer.getTarget());
+            psF.setString(5, answer.getTechnical());
+            psF.setInt(6, answer.getExecution());
+            psF.setInt(7, answer.getImportance());
+            psF.setString(8, answer.getCitizenString());
             psF.setDate(9, obsDate);
-            psF.setString(10, answer.getObsTextArea().getText());
+            psF.setString(10, answer.getObservation());
             psF.addBatch();
         }
         psF.executeBatch();
     }
 
-    private int getIndexFromComboBox(ComboBox comboBox) {
-        return comboBox.getSelectionModel().getSelectedIndex();
-    }
 
-    private void createHealthJournalTemplate(Map<Integer, HealthChunkAnswer> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
+    private void createHealthJournalTemplate(Map<Integer, HealthResult> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
         String sqlH = "insert into Helbredsjournal(borgerID,problemID,technicalNote,relevans,currentEval,expectedCondition,ObservationNote,Date) values(?,?,?,?,?,?,?,?)";
         PreparedStatement psH = connection.prepareStatement(sqlH);
         for (int key : answerMap.keySet()) {
-            HealthChunkAnswer answer = answerMap.get(key);
+            HealthResult answer = answerMap.get(key);
             psH.setInt(1, id);
             psH.setInt(2, key);
-            psH.setString(3, answer.getTechnicalTextArea().getText());
-            psH.setInt(4, answer.getSelectedToggleId());
-            psH.setString(5, answer.getCurrentTextarea().getText());
-            psH.setInt(6, getIndexFromComboBox(answer.getExpectedComboBox()));
-            psH.setString(7, answer.getObservationTextArea().getText());
+            psH.setString(3, answer.getTechnical());
+            psH.setInt(4, answer.getToggleId());
+            psH.setString(5, answer.getCurrent());
+            psH.setInt(6, answer.getExpectedIndex());
+            psH.setString(7, answer.getObservation());
             psH.setDate(8, Date.valueOf(String.valueOf(obsDate)));
             psH.addBatch();
         }

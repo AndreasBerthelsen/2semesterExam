@@ -1,10 +1,8 @@
 package dk.easv.bll.Util;
 
-import dk.easv.be.HealthChunkAnswer;
+import dk.easv.be.HealthNodeContainer;
 import dk.easv.be.Section;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -18,7 +16,7 @@ import java.util.*;
 
 public class HealthTabFactory {
 
-    public static Tab buildHealthTab(Section section, Map<Integer, HealthChunkAnswer> answerMap) {
+    public static Tab buildHealthTab(Section section, Map<Integer, HealthNodeContainer> answerMap) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentBox = new VBox(100);
         contentBox.setAlignment(Pos.TOP_CENTER);
@@ -38,9 +36,9 @@ public class HealthTabFactory {
         return tab;
     }
 
-    private static VBox buildHealthChunk(int key, Section section, Map<Integer, HealthChunkAnswer> answerMap) {
+    private static VBox buildHealthChunk(int key, Section section, Map<Integer, HealthNodeContainer> answerMap) {
         int buttonSpacing = 20;
-        HealthChunkAnswer chunkAnswer = new HealthChunkAnswer(
+        HealthNodeContainer chunkAnswer = new HealthNodeContainer(
                 createTextArea(),
                 createTextArea(),
                 createExpectedComboBox(),
@@ -66,7 +64,7 @@ public class HealthTabFactory {
         return chunk;
     }
 
-    private static VBox createExpectedVBox(HealthChunkAnswer chunkAnswer) {
+    private static VBox createExpectedVBox(HealthNodeContainer chunkAnswer) {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.getChildren().addAll(new Label("Forventet niveau"), chunkAnswer.getExpectedComboBox());
@@ -95,7 +93,7 @@ public class HealthTabFactory {
     }
 
 
-    private static List<RadioButton> createRadioButtons(int sectionId,Map<Integer, HealthChunkAnswer> answerMap) {
+    private static List<RadioButton> createRadioButtons(int sectionId,Map<Integer, HealthNodeContainer> answerMap) {
         ArrayList<RadioButton> radioList = new ArrayList<>();
         ToggleGroup toggleGroup = new ToggleGroup();
         Map<Integer,String> nameMap = new LinkedHashMap<>();

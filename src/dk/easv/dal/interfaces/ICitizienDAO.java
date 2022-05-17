@@ -24,4 +24,5 @@ public interface ICitizienDAO {
     void updateLastEdited(Citizen citizen) throws SQLException;
     void saveCopyCitizen(Citizen citizen);
 
+    void saveCitizen(Citizen citizen);
 }

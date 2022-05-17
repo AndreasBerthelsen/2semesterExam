@@ -81,11 +81,6 @@ public class CitizenModel {
         return cM.getHealthSections();
     }
 
-    public void saveTemplate(String fName, String lName, Date date, String description, Map<String, TextArea> genInfoMap, Map<Integer, FunkChunkAnswer> funkAnswerMap, Map<Integer, HealthChunkAnswer> healthAnswerMap, Date obsDate) throws SQLServerException {
-        cM.saveTemplate(fName, lName, date,description,genInfoMap,funkAnswerMap,healthAnswerMap,obsDate);
-    }
-
-
     public void deleteTemplate(int citizenId) throws SQLException {
         cM.deleteTemplate(citizenId);
     }
@@ -117,5 +112,9 @@ public class CitizenModel {
 
     public Citizen loadCitizen(Citizen citizen) {
         return cM.loadCitizen(citizen);
+    }
+
+    public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
+        cM.saveTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
     }
 }

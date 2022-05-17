@@ -1,8 +1,6 @@
 package dk.easv.gui.teacher.controller;
 
-import dk.easv.be.FunkChunkAnswer;
-import dk.easv.be.HealthChunkAnswer;
-import dk.easv.be.Section;
+import dk.easv.be.*;
 import dk.easv.bll.Util.FunktionTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
@@ -31,14 +29,14 @@ public class NySkabelonMainController extends saveCitizenController implements I
     CitizenModel sM = new CitizenModel();
     //funktion
     public TabPane funktionInnerTabPane;
-    private final Map<Integer, FunkChunkAnswer> funkSectionAnswerMap = new LinkedHashMap<>();
+    private final Map<Integer, FunkNodeContainer> funkNodeMap = new LinkedHashMap<>();
 
     //Gen info
-    private final Map<String,TextArea> genInfoAnserMap = new LinkedHashMap<>();
+    private final Map<String,TextArea> genInfoNodeMap = new LinkedHashMap<>();
 
     //helbred
     public TabPane helbredsInnerTabPane;
-    private final Map<Integer, HealthChunkAnswer> healthChunkAnswerMap = new LinkedHashMap<>();
+    private final Map<Integer, HealthNodeContainer> healthNodeMap = new LinkedHashMap<>();
 
     public NySkabelonMainController() throws IOException {
     }
@@ -54,7 +52,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
 
     private void setupGenInfoTab() {
         List<String> fieldList = sM.getGeneralinfoFields();
-            genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContent(fieldList,genInfoAnserMap));
+            genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContent(fieldList, genInfoNodeMap));
     }
 
 
@@ -62,7 +60,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
         List<Section> funkSectionList = sM.getFunkSections();
 
         for (Section section : funkSectionList) {
-            funktionInnerTabPane.getTabs().add(FunktionTabFactory.buildFunkTab(section, funkSectionAnswerMap));
+            funktionInnerTabPane.getTabs().add(FunktionTabFactory.buildFunkTab(section, funkNodeMap));
         }
     }
 
@@ -70,21 +68,25 @@ public class NySkabelonMainController extends saveCitizenController implements I
         List<Section> healthSections = sM.getHealthSections();
 
         for (Section section : healthSections) {
-                  helbredsInnerTabPane.getTabs().add(HealthTabFactory.buildHealthTab(section,healthChunkAnswerMap));
+                  helbredsInnerTabPane.getTabs().add(HealthTabFactory.buildHealthTab(section, healthNodeMap));
         }
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
         try {
+
             String fName = fNameInput.getText().trim();
             String lName = lNameInput.getText().trim();
             java.sql.Date birthDate = Date.valueOf(dateInput.getValue().toString());
             String description = descriptionInput.getText().trim();
             java.sql.Date obsDate = Date.valueOf(obsDatePicker.getValue().toString());
 
-            sM.saveTemplate(fName, lName, birthDate,description, genInfoAnserMap, funkSectionAnswerMap, healthChunkAnswerMap,obsDate);
+
+            sM.saveTemplate(fName, lName, birthDate,description, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap),obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
+
+
         } catch (Exception e) {
             e.printStackTrace(); //todo fix date snak med jens
             System.out.println("error");
@@ -92,6 +94,8 @@ public class NySkabelonMainController extends saveCitizenController implements I
 
 
     }
+
+
 
     public void handleAnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
