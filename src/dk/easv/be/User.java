@@ -7,7 +7,7 @@ public class User {
     private String username;
     private UserType type;
     private int schoolID;
-    private School school;
+
 
     public User(int id, String firstname, String lastname, String username, UserType type, int schoolID) {
         this.id = id;
@@ -58,7 +58,7 @@ public class User {
     }
 
     public int getSchoolID() {
-        return school.getId();
+        return schoolID;
     }
 
 

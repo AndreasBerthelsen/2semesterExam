@@ -1,6 +1,7 @@
 package dk.easv.gui.teacher.controller;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.gui.supercontroller.SuperController;
@@ -29,6 +30,8 @@ public class EditStudentController extends SuperController implements IControlle
     @FXML
     private TextField usernameTxtField;
 
+    private School school;
+
     private UserModel userModel;
 
     User user;
@@ -52,7 +55,8 @@ public class EditStudentController extends SuperController implements IControlle
         String username = getUsername(usernameTxtField);
         String password = getPasswordUpdate(passwordTxtFIeld);
         int id = user.getId();
-        User user = new User(id, firstname, lastname, username, UserType.STUDENT);
+        int schoolid = school.getId();
+        User user = new User(id, firstname, lastname, username, UserType.STUDENT, schoolid);
         if (firstname != null && lastname != null && username != null) {
             userModel.updateUser(user);
             closeWindow(saveBtn);

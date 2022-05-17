@@ -24,6 +24,10 @@ public class UserModel {
         uM.createUser(firstName, lastName, username, password, UserType.STUDENT, schoolID);
     }
 
+    public void createUser(String firstname, String lastName, String username, String password, int schoolID, UserType userType) throws SQLException {
+        uM.createUser(firstname,lastName,username,password,userType,schoolID);
+    }
+
     public void deleteUser(User user) {
         uM.deleteUser(user);
     }

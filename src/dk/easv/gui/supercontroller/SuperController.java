@@ -3,6 +3,7 @@ package dk.easv.gui.supercontroller;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.School;
 import dk.easv.be.User;
+import dk.easv.be.UserType;
 import dk.easv.gui.teacher.Interfaces.IController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -80,12 +81,21 @@ public abstract class SuperController {
         return null;
     }
 
-    public Integer getSchool(TextField textField){
-        if (!textField.getText().isEmpty()){
-            return Integer.parseInt(textField.getText());
+    public Integer getSchoolId(ComboBox<School> comboBox) {
+        if (!(comboBox.getSelectionModel().getSelectedItem() == null)) {
+            return comboBox.getValue().getId();
         }
         else {
-            errorMessage("Indtast gyldig skole ");
+            errorMessage("Vælg venligst en skole");
+        }
+        return null;
+    }
+
+    public UserType getUsertype(ComboBox<UserType> comboBox) {
+        if (!(comboBox.getSelectionModel().getSelectedItem() == null)) {
+            return comboBox.getValue();
+        } else {
+            errorMessage("Vælg venligst en brugertype");
         }
         return null;
     }

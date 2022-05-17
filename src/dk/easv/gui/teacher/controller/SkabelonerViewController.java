@@ -1,7 +1,9 @@
 package dk.easv.gui.teacher.controller;
 
 import dk.easv.be.Citizen;
+import dk.easv.be.User;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
+import dk.easv.gui.teacher.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class SkabelonerViewController implements Initializable {
+public class SkabelonerViewController implements Initializable, IController {
     public TableView<Citizen> templateTV;
     public TableColumn<Citizen, String> lNameTC;
     public TableColumn<Citizen, String> fNameTC;
@@ -112,5 +114,10 @@ public class SkabelonerViewController implements Initializable {
 
     public void handleSetDescription(MouseEvent mouseEvent) throws SQLException {
         setDescription(templateTV.getSelectionModel().getSelectedItem());
+    }
+
+    @Override
+    public void setUserInfo(User user) {
+
     }
 }

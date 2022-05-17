@@ -55,7 +55,7 @@ public class UserDAO implements IUserDAO {
     public List<User> getAllUsers(UserType userType) throws SQLServerException {
         ArrayList<User> allUsers = new ArrayList<>();
         try(Connection connection = dc.getConnection()) {
-            String sql = "SELECT [User].userID, [User].fName, [User].lName, [User].username \n" +
+            String sql = "SELECT [User].userID, [User].fName, [User].lName, [User].username, [User].skole \n" +
                     "FROM [User]\n" +
                     "INNER JOIN [Role] ON [User].roleID = [Role].roleID WHERE [User].roleID = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class UserDAO implements IUserDAO {
                 String fName = resultSet.getString("fName");
                 String lName = resultSet.getString("lName");
                 String username = resultSet.getString("username");
-                int schoolID = resultSet.getInt("schoolID");
+                int schoolID = resultSet.getInt("skole");
                 allUsers.add(new User(id, fName, lName, username, userType, schoolID));
             }
         } catch (SQLException throwables) {

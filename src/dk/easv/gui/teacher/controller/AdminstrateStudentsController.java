@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminstrateStudentsController extends SuperController implements Initializable {
+public class AdminstrateStudentsController extends SuperController implements Initializable, IController {
     @FXML
     private TableView<User> studentTable;
     @FXML
@@ -26,6 +26,7 @@ public class AdminstrateStudentsController extends SuperController implements In
     private TableColumn<User, String> lastnameCol;
 
     private UserModel uM;
+    private User user;
 
     public AdminstrateStudentsController() throws SQLServerException {
         uM = new UserModel();
@@ -44,7 +45,7 @@ public class AdminstrateStudentsController extends SuperController implements In
     }
 
     public void handleAddStudentBtn(ActionEvent actionEvent) throws IOException, SQLServerException {
-        openScene("/dk/easv/gui/teacher/view/AddStudentView.fxml",true, "Tilføj en elev", false);
+        openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/AddStudentView.fxml","Tilføj en elev");
         studentTable.setItems(uM.getObservableStudents());
     }
 
@@ -70,4 +71,8 @@ public class AdminstrateStudentsController extends SuperController implements In
         }
     }
 
+    @Override
+    public void setUserInfo(User user) {
+        this.user = user;
+    }
 }

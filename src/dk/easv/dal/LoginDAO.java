@@ -21,9 +21,9 @@ public class LoginDAO implements ILoginDAO {
 
     public User loginUser(String username, String password) throws SQLException {
         try (Connection connection = dc.getConnection()) {
-            String sql = "SELECT userID , fname, lname, username, type, password\n" +
+            String sql = "SELECT userID , fname, lname, username, type, password, skole\n" +
                     "FROM [User] INNER JOIN [Role] ON [User].RoleID = [Role].roleID\n" +
-                    "WHERE username = ? ";
+                    "INNER JOIN Skole on [User].skole = [Skole].ID WHERE username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -34,9 +34,11 @@ public class LoginDAO implements ILoginDAO {
                 String firstname = resultSet.getString("fname");
                 String lastname = resultSet.getString("lname");
                 String loginName = resultSet.getString("username");
+                int school = resultSet.getInt("skole");
 
                 if (BCrypt.checkpw(password, hashed)) {
-                    return new User(id, firstname, lastname, loginName, type);
+                    System.out.println(school);
+                    return new User(id, firstname, lastname, loginName, type, school);
                 } else {
                     System.out.println("Big bummer");
                 }

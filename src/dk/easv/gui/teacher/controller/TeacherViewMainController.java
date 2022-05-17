@@ -22,19 +22,22 @@ public class TeacherViewMainController extends SuperController implements IContr
     private User teacher;
 
     public void handleSkabelonerbtn(ActionEvent actionEvent) throws IOException {
-        setBorderpaneContent("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml");
+        setBorderpaneContent("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml",teacher);
     }
 
     public void handleBorgererbtn(ActionEvent actionEvent) throws IOException {
-        setBorderpaneContent("/dk/easv/gui/teacher/view/CitizenTeacherView.fxml");
+        setBorderpaneContent("/dk/easv/gui/teacher/view/CitizenTeacherView.fxml",teacher);
     }
 
     public void handleEleverbtn(ActionEvent actionEvent) throws IOException {
-        setBorderpaneContent("/dk/easv/gui/teacher/view/AdminstrateStudents.fxml");
+        setBorderpaneContent("/dk/easv/gui/teacher/view/AdminstrateStudents.fxml",teacher);
     }
 
-    private void setBorderpaneContent(String fxml) throws IOException {
-        Pane pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
+    private void setBorderpaneContent(String fxml, User user) throws IOException {
+        FXMLLoader root = new FXMLLoader(getClass().getResource(fxml));
+        Pane pane = root.load();
+        IController controller = root.getController();
+        controller.setUserInfo(user);
         borderpane.setCenter(pane);
     }
 

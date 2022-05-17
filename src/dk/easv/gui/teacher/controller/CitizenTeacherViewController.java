@@ -3,6 +3,7 @@ package dk.easv.gui.teacher.controller;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
+import dk.easv.gui.teacher.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import dk.easv.gui.teacher.model.UserModel;
 import javafx.collections.ObservableList;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CitizenTeacherViewController implements Initializable {
+public class CitizenTeacherViewController implements Initializable, IController {
 
 
     @FXML
@@ -183,6 +184,11 @@ public class CitizenTeacherViewController implements Initializable {
     public void handleSetDescription(MouseEvent mouseEvent) throws SQLException {
 
         setDescription(tempTableView.getSelectionModel().getSelectedItem());
+
+    }
+
+    @Override
+    public void setUserInfo(User user) {
 
     }
 }
