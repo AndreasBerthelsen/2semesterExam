@@ -53,7 +53,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     //TODO REWORK ALT
     @Override
     public void setCitizen(Citizen citizen) {
-        this.citizen = cM.loadCitizen(citizen);
+
         this.id = citizen.getId();
         fNameInput.setText(citizen.getFirstname());
         lNameInput.setText(citizen.getLastname());

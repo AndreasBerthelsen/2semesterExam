@@ -1,17 +1,15 @@
 package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.*;
+import dk.easv.be.Citizen;
+import dk.easv.be.FunkResult;
+import dk.easv.be.HealthResult;
 import dk.easv.dal.interfaces.ITemplateDAO;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TemplateDAO implements ITemplateDAO {
     DatabaseConnector dc;
@@ -158,6 +156,39 @@ public class TemplateDAO implements ITemplateDAO {
         }
         return list;
     }
+
+    @Override
+    public Map<Integer, HealthResult> loadHealthInfo(int citizenId) {
+        Map<Integer, HealthResult> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "select [problemID]" +
+                    "      ,[technicalNote]" +
+                    "      ,[relevans]" +
+                    "      ,[currentEval]" +
+                    "      ,[expectedCondition]" +
+                    "      ,[observationNote]" +
+                    "from Helbredsjournal where borgerId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, citizenId);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String technical = rs.getString("technicalNote");
+                String observation = rs.getString("observationNote");
+                String current = rs.getString("currentEval");
+                int expectedIndex = rs.getInt("expectedCondition");
+                int toggleId = rs.getInt("relevans");
+                HealthResult info = new HealthResult(toggleId, expectedIndex, current, observation, technical);
+                int problemid = rs.getInt("problemId");
+                resultMap.put(problemid, info);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
+    }
+
 /*
     private Map<Integer, String> loadHealthInfo(int id, Connection connection) throws SQLException {
         Map<Integer, String> map = new LinkedHashMap<>();
@@ -258,44 +289,6 @@ public class TemplateDAO implements ITemplateDAO {
 
  */
 
-    @Override
-    public Citizen loadTemplate(Citizen citizen) {
-        //todo fix
-        /*
-        int id = citizen.getId();
-        try (Connection connection = dc.getConnection()) {
-            //gen info
-            LinkedHashMap<String, String> genInfoText = loadGenInfoFromId(id, connection);
-
-            //funk
-            //todo convert id'er til combobox indexes
-            Map<Integer, Integer> currentCombo = loadCurrentComboFromId(id, connection);
-            Map<Integer, Integer> targetCombo = loadTargetCombo(id, connection);
-            Map<Integer, String> funkInfo = loadFunkInfo(id, connection);
-
-            //health
-            //todo convert id'er til combobox indexes | repalce med enums?
-            Map<Integer, Integer> relevansMap = loadRelevansMap(id, connection);
-
-            Map<Integer, String> helbredInfo = loadHealthInfo(id, connection);
-
-            return new Citizen(
-                    citizen.getFirstname(),
-                    citizen.getLastname(),
-                    citizen.getbDate(),
-                    genInfoText,
-                    currentCombo,
-                    targetCombo,
-                    funkInfo,
-                    relevansMap,
-                    helbredInfo);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-         */
-        return null;
-    }
 
     @Override
     public void updateTemplate(Citizen citizen, int id) throws SQLServerException {

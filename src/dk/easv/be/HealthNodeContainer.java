@@ -32,7 +32,6 @@ public class HealthNodeContainer {
         return expectedComboBox;
     }
 
-
     public TextArea getObservationTextArea() {
         return observationTextArea;
     }
@@ -58,4 +57,21 @@ public class HealthNodeContainer {
     public int getSelectedToggleId() {
         return selectedToggleId;
     }
+
+    public void setTechnicalString(String s){
+        getTechnicalTextArea().setText(s);
+    }
+
+    public void setCurrentString(String s){
+        getCurrentTextarea().setText(s);
+    }
+
+    public void setExpectedIndex(int index){
+        getExpectedComboBox().getSelectionModel().select(index);
+    }
+
+    public void setObservationString(String s){
+        getObservationTextArea().setText(s);
+    }
+
 }

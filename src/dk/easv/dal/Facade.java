@@ -143,10 +143,7 @@ public class Facade {
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         iCitizienDAO.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
-    public Citizen loadTemplate(Citizen citizen) {
-        return iTemplateDAO.loadTemplate(citizen);
 
-    }
 
     public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
         iTemplateDAO.updateTemplate(citizen,id);
@@ -155,9 +152,7 @@ public class Facade {
     public void deleteCitizen(int citizenId) throws SQLException {
         iCitizienDAO.deleteCitizen(citizenId);
     }
-    public Citizen loadCitizen(Citizen citizen) {
-        return iTemplateDAO.loadTemplate(citizen);
-    }
+
 
 
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
@@ -173,5 +168,8 @@ public class Facade {
     }
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
         iTemplateDAO.createTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
+    }
+    public Map<Integer, HealthResult> loadHealthInfo(int citizenId){
+     return iTemplateDAO.loadHealthInfo(citizenId);
     }
 }

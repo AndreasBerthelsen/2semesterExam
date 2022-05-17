@@ -97,10 +97,7 @@ public class CitizenModel {
         cM.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
 
-    public Citizen loadTemplate(Citizen citizen) {
-        return cM.loadTemplate(citizen);
 
-    }
 
     public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
         cM.updateTemplate(citizen, id);
@@ -110,11 +107,12 @@ public class CitizenModel {
         cM.deleteCitizen(citizenId);
     }
 
-    public Citizen loadCitizen(Citizen citizen) {
-        return cM.loadCitizen(citizen);
-    }
 
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
         cM.saveTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfo(int id) {
+        return cM.loadHealthInfo(id);
     }
 }

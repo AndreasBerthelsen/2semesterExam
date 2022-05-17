@@ -86,10 +86,7 @@ public class CitizenManager {
         facade.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
 
-    public Citizen loadTemplate(Citizen citizen) {
-        return facade.loadTemplate(citizen);
 
-    }
 
     public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
         facade.updateTemplate(citizen, id);
@@ -99,9 +96,7 @@ public class CitizenManager {
         facade.deleteCitizen(citizenId);
     }
 
-    public Citizen loadCitizen(Citizen citizen) {
-        return facade.loadCitizen(citizen);
-    }
+
 
 
     public void updateLastEdited(Citizen citizen) throws SQLException {
@@ -110,6 +105,10 @@ public class CitizenManager {
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
         facade.saveTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
 
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfo(int id) {
+        return facade.loadHealthInfo(id);
     }
 }
 
