@@ -40,14 +40,12 @@ public class HealthNodeContainer {
         getCurrentTextarea().setDisable(true);
         getExpectedComboBox().setDisable(true);
         getObservationTextArea().setDisable(true);
-        getTechnicalTextArea().setDisable(true);
     }
 
     public void enableAllNodes() {
         getCurrentTextarea().setDisable(false);
         getExpectedComboBox().setDisable(false);
         getObservationTextArea().setDisable(false);
-        getTechnicalTextArea().setDisable(false);
     }
 
     public void setSelectedToggleId(int toggleId) {

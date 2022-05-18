@@ -1,6 +1,7 @@
 package dk.easv.bll.Util;
 
 import dk.easv.be.FunkNodeContainer;
+import dk.easv.be.FunkResult;
 import dk.easv.be.Section;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FunktionTabFactory {
+    private static List<Image> imgList = createImages();
     public static Tab buildFunkTab(Section section, Map<Integer, FunkNodeContainer> answerMap) {
         //tab for hver afdeling
         Tab tab = new Tab(section.getSectionTitle());
@@ -32,9 +34,16 @@ public class FunktionTabFactory {
 
 
         for (int key : section.getProblemidTitleMap().keySet()) {
-            contentVBox.getChildren().add(buildFunkChunk(key, section, answerMap));
+            FunkNodeContainer container = new FunkNodeContainer(
+                    createNiveauComboBox(imgList),
+                    createNiveauComboBox(imgList),
+                    createUdførelseComboBox(),
+                    createBetydningComboBox(),
+                    createTextArea(),
+                    createTextArea(),
+                    createTextArea());
+            contentVBox.getChildren().add(buildFunkChunk(key, section, answerMap,container));
         }
-
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(contentVBox);
         scrollPane.setFitToWidth(true);
@@ -42,17 +51,9 @@ public class FunktionTabFactory {
         return tab;
     }
 
-    private static VBox buildFunkChunk(int key, Section section, Map<Integer, FunkNodeContainer> answerMap) {
+    private static VBox buildFunkChunk(int key, Section section, Map<Integer, FunkNodeContainer> answerMap,FunkNodeContainer startingContainer) {
         int hGap = 50;
         int vGap = 10;
-        FunkNodeContainer chunkAnswer = new FunkNodeContainer(
-                createNiveauComboBox(createImages()),
-                createNiveauComboBox(createImages()),
-                createUdførelseComboBox(),
-                createBetydningComboBox(),
-                createTextArea(),
-                createTextArea(),
-                createTextArea());
 
         VBox chunk = new VBox();
         chunk.setAlignment(Pos.TOP_CENTER);
@@ -61,9 +62,9 @@ public class FunktionTabFactory {
         gridpane.setAlignment(Pos.CENTER);
 
 
-        gridpane.addRow(0, buildFunkLeftBox(hGap, vGap, chunkAnswer), buildFunkRightBox(hGap, vGap, chunkAnswer));
+        gridpane.addRow(0, buildFunkLeftBox(hGap, vGap, startingContainer), buildFunkRightBox(hGap, vGap, startingContainer));
         gridpane.addRow(1, new Label("Fagligt Notat"), new Label("Borgerens Ønsker og mål"));
-        gridpane.addRow(2, chunkAnswer.getFagTextArea(), chunkAnswer.getCitizenTextArea());
+        gridpane.addRow(2, startingContainer.getFagTextArea(), startingContainer.getCitizenTextArea());
 
         GridPane.setHalignment(gridpane, HPos.CENTER);
         GridPane.setValignment(gridpane, VPos.CENTER);
@@ -72,10 +73,10 @@ public class FunktionTabFactory {
 
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
         Label obsLabel = new Label("Observations Notat");
-        TextArea obsTextArea = chunkAnswer.getObsTextArea();
+        TextArea obsTextArea = startingContainer.getObsTextArea();
         chunk.getChildren().addAll(headerLabel, gridpane, obsLabel, obsTextArea);
 
-        answerMap.put(key, chunkAnswer);
+        answerMap.put(key, startingContainer);
         return chunk;
     }
 
@@ -160,5 +161,10 @@ public class FunktionTabFactory {
         textArea.setWrapText(true);
         textArea.setMaxWidth(width);
         return textArea;
+    }
+
+    public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo) {
+    
+
     }
 }

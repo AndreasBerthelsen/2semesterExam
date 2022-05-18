@@ -48,7 +48,7 @@ public class HealthTabFactory {
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
         HBox buttonHBox = new HBox(buttonSpacing);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
-        buttonHBox.getChildren().addAll(createRadioButtons(key, answerMap,startingContainer.getSelectedToggleId()));
+        buttonHBox.getChildren().addAll(createRadioButtons(key, answerMap, startingContainer));
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
@@ -90,7 +90,7 @@ public class HealthTabFactory {
         return technicalBox;
     }
 
-    private static List<RadioButton> createRadioButtons(int sectionId, Map<Integer, HealthNodeContainer> nodeMap, int selectedId) {
+    private static List<RadioButton> createRadioButtons(int sectionId, Map<Integer, HealthNodeContainer> nodeMap,HealthNodeContainer container) {
         ArrayList<RadioButton> radioList = new ArrayList<>();
         ToggleGroup toggleGroup = new ToggleGroup();
         Map<Integer, String> nameMap = new LinkedHashMap<>();
@@ -101,11 +101,11 @@ public class HealthTabFactory {
         for (int key : nameMap.keySet()) {
             RadioButton radioButton = new RadioButton(nameMap.get(key));
             radioButton.setToggleGroup(toggleGroup);
-            switch (sectionId){
-                case 0 -> radioButton.fire();
-                case 1 -> radioButton.fire();
-                case 2 -> radioButton.fire();
+
+            if(key == container.getSelectedToggleId()){
+                radioButton.fire();
             }
+
             if (key == 3) {
                 radioButton.setOnAction(event -> {
                     nodeMap.get(sectionId).disableAllNodes();
@@ -160,6 +160,10 @@ public class HealthTabFactory {
             startingContainer.setTechnicalString(info.getTechnical());
             startingContainer.setExpectedIndex(info.getExpectedIndex());
             startingContainer.setSelectedToggleId(info.getToggleId());
+
+            if (startingContainer.getSelectedToggleId() == 3){
+                startingContainer.disableAllNodes();
+            }
 
             contentBox.getChildren().add(buildHealthChunk(key, section, healthNodeMap, startingContainer));
         }

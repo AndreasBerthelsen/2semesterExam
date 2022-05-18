@@ -1,6 +1,7 @@
 package dk.easv.gui.teacher.controller;
 
 import dk.easv.be.*;
+import dk.easv.bll.Util.FunktionTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
 import dk.easv.gui.supercontroller.saveCitizenController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
@@ -60,7 +61,12 @@ public class EditSkabelonViewController extends saveCitizenController implements
     }
 
     private void setupFunkTab() {
-
+        Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
+        List<Section> sectionList = cM.getHealthSections();
+        List<Tab> tabList = new ArrayList<>();
+        for (Section section : sectionList){
+            tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section,funkNodeMap,funkInfo));
+        }
     }
 
     private void setupHelbredTab() {
@@ -71,7 +77,6 @@ public class EditSkabelonViewController extends saveCitizenController implements
         for (Section section : sectionList) {
             tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo));
         }
-
         helbredsInnerTabPane.getTabs().addAll(tabList);
     }
 

@@ -189,33 +189,41 @@ public class TemplateDAO implements ITemplateDAO {
         return resultMap;
     }
 
+    @Override
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        Map<Integer, FunkResult> resultMap = new LinkedHashMap<>();
+        try(Connection connection = dc.getConnection()){
+
+            String sql = "Select [problemID]\n" +
+                    "      ,[nuVurdering]\n" +
+                    "      ,[målVurdering]\n" +
+                    "      ,[technicalNote]\n" +
+                    "      ,[execution]\n" +
+                    "      ,[importanceOfExecution]\n" +
+                    "      ,[goalNote]\n" +
+                    "      ,[obsNote] from funktionsjournal where borgerid = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int importance = rs.getInt("importanceOfExecution");
+                String citizenString = rs.getString("goalNote");
+                String technical = rs.getString("TechnicalNote");
+                String observation = rs.getString("obsNote");
+                int execution = rs.getInt("execution");
+                int target = rs.getInt("målVurdering");
+                int current = rs.getInt("nuVurdering");
+
+                int problemId = rs.getInt("problemId");
+                FunkResult funkResult = new FunkResult(importance,citizenString,technical,observation,execution,target, current);
+                resultMap.put(problemId,funkResult);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
+    }
 /*
-    private Map<Integer, String> loadHealthInfo(int id, Connection connection) throws SQLException {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "select [value], problemid from helbredsjournal where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getString("value"));
-        }
-
-        return map;
-    }
-
-    private Map<Integer, Integer> loadRelevansMap(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "SELECT problemid, relevans from Helbredsjournal where borgerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("relevans"));
-        }
-        return map;
-    }
-
     private Map<Integer, String> loadFunkInfo(int id, Connection connection) throws SQLException {
         Map<Integer, String> map = new LinkedHashMap<>();
         String sql = "SELECT problemid, note from FunktionsJournal where borgerID = ?";
@@ -239,8 +247,6 @@ public class TemplateDAO implements ITemplateDAO {
         }
         return map;
     }
-
-
     private Map<Integer, Integer> loadCurrentComboFromId(int id, Connection connection) throws SQLException {
         Map<Integer, Integer> map = new LinkedHashMap<>();
         String sql = "select problemid, fNiveau " +

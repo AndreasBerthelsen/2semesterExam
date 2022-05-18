@@ -110,5 +110,9 @@ public class CitizenManager {
     public Map<Integer, HealthResult> loadHealthInfo(int id) {
         return facade.loadHealthInfo(id);
     }
+
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        return facade.loadFunkInfo(id);
+    }
 }
 

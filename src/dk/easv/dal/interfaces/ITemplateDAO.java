@@ -15,9 +15,11 @@ public interface ITemplateDAO {
 
     List<Citizen> getAllTemplates() throws SQLException;
 
-    Map<Integer,HealthResult> loadHealthInfo(int citizenId);
-
     void updateTemplate(Citizen citizen, int id) throws SQLServerException;
 
     void createTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException;
+
+    Map<Integer,HealthResult> loadHealthInfo(int citizenId);
+
+    Map<Integer, FunkResult> loadFunkInfo(int id);
 }

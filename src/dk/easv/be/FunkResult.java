@@ -22,6 +22,17 @@ public class FunkResult {
         this.current = getIndexFromComboBox(funkNodeContainer.getCurrentComboBox());
 
     }
+
+    public FunkResult(int importance, String citizenString, String technical, String observation, int execution, int target, int current) {
+        this.importance = importance;
+        this.citizenString = citizenString;
+        this.technical = technical;
+        this.observation = observation;
+        this.execution = execution;
+        this.target = target;
+        this.current = current;
+    }
+
     private int getIndexFromComboBox(ComboBox comboBox) {
         return comboBox.getSelectionModel().getSelectedIndex();
     }

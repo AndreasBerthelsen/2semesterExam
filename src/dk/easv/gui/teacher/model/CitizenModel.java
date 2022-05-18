@@ -115,4 +115,8 @@ public class CitizenModel {
     public Map<Integer, HealthResult> loadHealthInfo(int id) {
         return cM.loadHealthInfo(id);
     }
+
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        return cM.loadFunkInfo(id);
+    }
 }

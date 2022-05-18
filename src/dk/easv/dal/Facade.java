@@ -172,4 +172,8 @@ public class Facade {
     public Map<Integer, HealthResult> loadHealthInfo(int citizenId){
      return iTemplateDAO.loadHealthInfo(citizenId);
     }
+
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        return iTemplateDAO.loadFunkInfo(id);
+    }
 }
