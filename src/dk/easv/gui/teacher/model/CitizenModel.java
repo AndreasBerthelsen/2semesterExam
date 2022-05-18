@@ -119,4 +119,8 @@ public class CitizenModel {
     public Map<Integer, FunkResult> loadFunkInfo(int id) {
         return cM.loadFunkInfo(id);
     }
+
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        return cM.loadGenInfo(id,fieldList);
+    }
 }

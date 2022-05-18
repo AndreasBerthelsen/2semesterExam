@@ -114,5 +114,9 @@ public class CitizenManager {
     public Map<Integer, FunkResult> loadFunkInfo(int id) {
         return facade.loadFunkInfo(id);
     }
+
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        return facade.loadGenInfo(id,fieldList);
+    }
 }
 

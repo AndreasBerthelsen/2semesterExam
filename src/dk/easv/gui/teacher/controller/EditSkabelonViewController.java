@@ -2,6 +2,7 @@ package dk.easv.gui.teacher.controller;
 
 import dk.easv.be.*;
 import dk.easv.bll.Util.FunktionTabFactory;
+import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
 import dk.easv.gui.supercontroller.saveCitizenController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
@@ -57,16 +58,19 @@ public class EditSkabelonViewController extends saveCitizenController implements
     }
 
     private void setupGeneralInfo() {
-
+        List<String> fieldList = cM.getGeneralinfoFields();
+        Map<String,String> genInfo = cM.loadGenInfo(citizen.getId(),fieldList);
+        genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContentWithInfo(fieldList,genInfoNodeMap,genInfo));
     }
 
     private void setupFunkTab() {
         Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
-        List<Section> sectionList = cM.getHealthSections();
+        List<Section> sectionList = cM.getFunkSections();
         List<Tab> tabList = new ArrayList<>();
         for (Section section : sectionList){
             tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section,funkNodeMap,funkInfo));
         }
+        funktionInnerTabPane.getTabs().addAll(tabList);
     }
 
     private void setupHelbredTab() {

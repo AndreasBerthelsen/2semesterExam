@@ -164,7 +164,38 @@ public class FunktionTabFactory {
     }
 
     public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo) {
-    
+        Tab tab = new Tab(section.getSectionTitle());
+        VBox contentVBox = new VBox(100);
+        contentVBox.setAlignment(Pos.TOP_CENTER);
+        contentVBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
+        contentVBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        contentVBox.setPadding(new Insets(80, 80, 80, 80));
+        contentVBox.setId("VBOX");
+        for(int key : section.getProblemidTitleMap().keySet()){
+            FunkNodeContainer startingContainer = new FunkNodeContainer(
+                    createNiveauComboBox(imgList),
+                    createNiveauComboBox(imgList),
+                    createUdførelseComboBox(),
+                    createBetydningComboBox(),
+                    createTextArea(),
+                    createTextArea(),
+                    createTextArea());
+            FunkResult info  = funkInfo.get(key);
+            startingContainer.setCitizenString(info.getCitizenString());
+            startingContainer.setTechnicalString(info.getTechnical());
+            startingContainer.setObsString(info.getObservation());
+            startingContainer.setCurrentIndex(info.getCurrent());
+            startingContainer.setExecutionIndex(info.getCurrent());
+            startingContainer.setImportanceIndex(info.getImportance());
+            startingContainer.setTargetIndex(info.getTarget());
+            contentVBox.getChildren().addAll(buildFunkChunk(key,section,funkNodeMap,startingContainer));
+        }
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(contentVBox);
+        scrollPane.setFitToWidth(true);
+        tab.setContent(scrollPane);
+
+        return tab;
     }
 }

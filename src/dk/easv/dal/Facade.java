@@ -176,4 +176,8 @@ public class Facade {
     public Map<Integer, FunkResult> loadFunkInfo(int id) {
         return iTemplateDAO.loadFunkInfo(id);
     }
+
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        return iTemplateDAO.loadGenInfo(id,fieldList);
+    }
 }

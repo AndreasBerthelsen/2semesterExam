@@ -22,4 +22,6 @@ public interface ITemplateDAO {
     Map<Integer,HealthResult> loadHealthInfo(int citizenId);
 
     Map<Integer, FunkResult> loadFunkInfo(int id);
+
+    Map<String, String> loadGenInfo(int id, List<String> fieldList);
 }

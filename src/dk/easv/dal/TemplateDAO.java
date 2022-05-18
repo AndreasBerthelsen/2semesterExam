@@ -192,8 +192,7 @@ public class TemplateDAO implements ITemplateDAO {
     @Override
     public Map<Integer, FunkResult> loadFunkInfo(int id) {
         Map<Integer, FunkResult> resultMap = new LinkedHashMap<>();
-        try(Connection connection = dc.getConnection()){
-
+        try (Connection connection = dc.getConnection()) {
             String sql = "Select [problemID]\n" +
                     "      ,[nuVurdering]\n" +
                     "      ,[målVurdering]\n" +
@@ -203,9 +202,9 @@ public class TemplateDAO implements ITemplateDAO {
                     "      ,[goalNote]\n" +
                     "      ,[obsNote] from funktionsjournal where borgerid = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int importance = rs.getInt("importanceOfExecution");
                 String citizenString = rs.getString("goalNote");
                 String technical = rs.getString("TechnicalNote");
@@ -215,85 +214,33 @@ public class TemplateDAO implements ITemplateDAO {
                 int current = rs.getInt("nuVurdering");
 
                 int problemId = rs.getInt("problemId");
-                FunkResult funkResult = new FunkResult(importance,citizenString,technical,observation,execution,target, current);
-                resultMap.put(problemId,funkResult);
+                FunkResult funkResult = new FunkResult(importance, citizenString, technical, observation, execution, target, current);
+                resultMap.put(problemId, funkResult);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return resultMap;
     }
-/*
-    private Map<Integer, String> loadFunkInfo(int id, Connection connection) throws SQLException {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "SELECT problemid, note from FunktionsJournal where borgerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getString("note"));
-        }
-        return map;
-    }
 
-    private Map<Integer, Integer> loadTargetCombo(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "select problemid, målVurdering from FunktionsJournal inner join targetvurdering on målvurdering = targetid  where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("målVurdering"));
-        }
-        return map;
-    }
-    private Map<Integer, Integer> loadCurrentComboFromId(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "select problemid, fNiveau " +
-                "from FunktionsJournal INNER join Vurdering on vurderingsID = nuVurdering\n" +
-                "where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("fNiveau"));
-        }
-        return map;
-    }
-
-    private LinkedHashMap<String, String> loadGenInfoFromId(int id, Connection connection) throws SQLException {
-        //find coloumns
-        String sql = "select COLUMN_NAME \n" +
-                "from INFORMATION_SCHEMA.COLUMNS \n" +
-                "where TABLE_NAME = N'Generelinfo'";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        //byg sql
-        StringBuilder sb = new StringBuilder();
-        while (rs.next()) {
-            String currentColumn = rs.getString("COLUMN_NAME");
-            if (!currentColumn.toLowerCase().endsWith("id")) {
-                sb.append(currentColumn).append(",");
+    @Override
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        Map<String, String> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String geninfoFields = fieldList.toString().replace(" ", "").replace("[", "").replace("]", "");
+            String sql = "select " + geninfoFields + " from GenerelInfo where borgerId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            for (String fieldName : fieldList){
+                resultMap.put(fieldName,rs.getString(fieldName));
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-        String columnTitles = sb.deleteCharAt(sb.length() - 1).toString();
-        String sql2 = "Select " + columnTitles + " from generelInfo where borgerid = ?";
-        PreparedStatement ps2 = connection.prepareStatement(sql2);
-        ps2.setInt(1, id);
-
-        ResultSet rs2 = ps2.executeQuery();
-        rs2.next();
-        LinkedHashMap<String, String> genInfoMap = new LinkedHashMap<>();
-        for (String column : columnTitles.split(",")) {
-            genInfoMap.put(column, rs2.getString(column));
-        }
-        return genInfoMap;
+        return resultMap;
     }
-
-
- */
 
 
     @Override
