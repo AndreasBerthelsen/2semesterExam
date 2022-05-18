@@ -67,7 +67,6 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     private void createFunktionsJournalTemplate(Map<Integer, FunkResult> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
-        //todo add date og obs notat
         String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement psF = connection.prepareStatement(sqlF);
