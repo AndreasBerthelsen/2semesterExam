@@ -145,9 +145,6 @@ public class Facade {
     }
 
 
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        iTemplateDAO.updateTemplate(citizen,id);
-    }
 
     public void deleteCitizen(int citizenId) throws SQLException {
         iCitizienDAO.deleteCitizen(citizenId);
@@ -179,5 +176,9 @@ public class Facade {
 
     public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
         return iTemplateDAO.loadGenInfo(id,fieldList);
+    }
+
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
+        iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap);
     }
 }

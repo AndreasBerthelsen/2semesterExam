@@ -1,6 +1,5 @@
 package dk.easv.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.FunkResult;
 import dk.easv.be.HealthResult;
@@ -230,11 +229,11 @@ public class TemplateDAO implements ITemplateDAO {
             String geninfoFields = fieldList.toString().replace(" ", "").replace("[", "").replace("]", "");
             String sql = "select " + geninfoFields + " from GenerelInfo where borgerId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            for (String fieldName : fieldList){
-                resultMap.put(fieldName,rs.getString(fieldName));
+            for (String fieldName : fieldList) {
+                resultMap.put(fieldName, rs.getString(fieldName));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -242,10 +241,35 @@ public class TemplateDAO implements ITemplateDAO {
         return resultMap;
     }
 
-
     @Override
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        //todo fix
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
+        try (Connection connection = dc.getConnection()) {
+            int id = updatedCitizen.getId();
+            updateCitizen(updatedCitizen, connection);
+/*
+            updateGenInfo(id, genResultMap, connection);
+            updateFunktion(id, funkResultMap, connection);
+            updateHealth(id, healthResultMapc, connection);
+ */
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    private void updateCitizen(Citizen updatedCitizen, Connection connection) throws SQLException {
+        String sql = "Update Borger set fName =?,lName=?,dato=?,description=? where borgerid = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1,updatedCitizen.getFirstname());
+        ps.setString(2,updatedCitizen.getLastname());
+        ps.setDate(3,updatedCitizen.getbDate());
+        ps.setString(4,updatedCitizen.getDescription());
+        ps.setInt(5,updatedCitizen.getId());
+        ps.execute();
+    }
+
+
+    //todo fix
         /*
         try (Connection connection = dc.getConnection()) {
             updateCitizenTemplate(citizen, id, connection);
@@ -259,7 +283,7 @@ public class TemplateDAO implements ITemplateDAO {
         }
 
          */
-    }
+}
 
 /*
     private void updateHealthJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
@@ -337,4 +361,4 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
  */
-}
+

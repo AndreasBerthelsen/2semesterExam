@@ -7,16 +7,15 @@ import dk.easv.bll.Util.HealthTabFactory;
 import dk.easv.gui.supercontroller.saveCitizenController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -58,34 +57,56 @@ public class EditSkabelonViewController extends saveCitizenController implements
     }
 
     private void setupGeneralInfo() {
+        fNameInput.setText(citizen.getFirstname());
+        lNameInput.setText(citizen.getLastname());
+        dateInput.setValue(citizen.getbDate().toLocalDate());
+        descriptionInput.setText(citizen.getDescription());
+
         List<String> fieldList = cM.getGeneralinfoFields();
-        Map<String,String> genInfo = cM.loadGenInfo(citizen.getId(),fieldList);
-        genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContentWithInfo(fieldList,genInfoNodeMap,genInfo));
+        Map<String, String> genInfo = cM.loadGenInfo(citizen.getId(), fieldList);
+        genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContentWithInfo(fieldList, genInfoNodeMap, genInfo));
     }
 
     private void setupFunkTab() {
-        Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
-        List<Section> sectionList = cM.getFunkSections();
-        List<Tab> tabList = new ArrayList<>();
-        for (Section section : sectionList){
-            tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section,funkNodeMap,funkInfo));
-        }
-        funktionInnerTabPane.getTabs().addAll(tabList);
+        service.submit(() ->{
+            Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
+            List<Section> sectionList = cM.getFunkSections();
+            List<Tab> tabList = new ArrayList<>();
+            for (Section section : sectionList) {
+                tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo));
+            }
+            Platform.runLater(()-> funktionInnerTabPane.getTabs().addAll(tabList));
+        });
     }
 
     private void setupHelbredTab() {
-        Map<Integer, HealthResult> healthInfo = cM.loadHealthInfo(citizen.getId());
-        List<Section> sectionList = cM.getHealthSections();
+        service.submit(()->{
+            Map<Integer, HealthResult> healthInfo = cM.loadHealthInfo(citizen.getId());
+            List<Section> sectionList = cM.getHealthSections();
 
-        List<Tab> tabList = new ArrayList<>();
-        for (Section section : sectionList) {
-            tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo));
-        }
-        helbredsInnerTabPane.getTabs().addAll(tabList);
+            List<Tab> tabList = new ArrayList<>();
+            for (Section section : sectionList) {
+                tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo));
+            }
+            Platform.runLater(()-> helbredsInnerTabPane.getTabs().addAll(tabList));
+        });
+
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        //rework
+        try{
+            String fName = fNameInput.getText().trim();
+            String lName = lNameInput.getText().trim();
+            String description = descriptionInput.getText().trim();
+            Date birthDate = java.sql.Date.valueOf(dateInput.getValue());
+            Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName,birthDate,description);
+            cM.updateTemplate(updatedCitizen,saveGeninfo(genInfoNodeMap),saveFunk(funkNodeMap),saveHealth(healthNodeMap));
+            Stage stage = (Stage) fNameInput.getScene().getWindow();
+            stage.close();
+        }catch (Exception e){
+            System.out.println("udfyld navne birthdate og desc");
+        }
+
     }
 
     public void handleAnullerbtn(ActionEvent actionEvent) {

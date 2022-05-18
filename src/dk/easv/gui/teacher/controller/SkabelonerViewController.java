@@ -81,7 +81,7 @@ public class SkabelonerViewController implements Initializable {
         }
     }
 
-    public void handleEditSkabelonbtn(ActionEvent actionEvent) throws IOException, SQLException {
+    public void handleEditSkabelonbtn(ActionEvent actionEvent) {
         try{
             Citizen citizen = templateTV.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
@@ -91,6 +91,7 @@ public class SkabelonerViewController implements Initializable {
             stage.setScene(new Scene(loader.load()));
             ICitizenSelector controller = loader.getController();
             controller.setCitizen(citizen);
+            stage.setMaximized(true);
             stage.showAndWait();
             templateTV.setItems(cM.getObservableTemplates());
         }

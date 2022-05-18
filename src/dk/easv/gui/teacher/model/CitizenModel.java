@@ -98,11 +98,6 @@ public class CitizenModel {
     }
 
 
-
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        cM.updateTemplate(citizen, id);
-    }
-
     public void deleteCitizen(int citizenId) throws SQLException {
         cM.deleteCitizen(citizenId);
     }
@@ -122,5 +117,9 @@ public class CitizenModel {
 
     public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
         return cM.loadGenInfo(id,fieldList);
+    }
+
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
+     cM.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap);
     }
 }

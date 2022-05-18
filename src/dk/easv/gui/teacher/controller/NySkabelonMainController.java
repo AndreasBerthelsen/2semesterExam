@@ -102,16 +102,11 @@ public class NySkabelonMainController extends saveCitizenController implements I
             sM.saveTemplate(fName, lName, birthDate, description, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
-
-
         } catch (Exception e) {
             e.printStackTrace(); //todo fix date snak med jens
             System.out.println("error");
         }
-
-
     }
-
 
     public void handleAnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
