@@ -247,25 +247,40 @@ public class TemplateDAO implements ITemplateDAO {
             int id = updatedCitizen.getId();
             updateCitizen(updatedCitizen, connection);
             updateGenInfo(id, genResultMap, connection);
-
             updateFunktion(id, funkResultMap, obsDate, connection);
-            /*
-            updateHealth(id, healthResultMapc, obsDate, connection);
- */
+            updateHealth(id, healthResultMap, obsDate, connection);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
     }
 
+    private void updateHealth(int id, Map<Integer, HealthResult> healthResultMap, Date obsDate, Connection connection) throws SQLException {
+        String sql = "UPDATE Helbredsjournal set technicalNote=?,relevans=?,currentEval=?" +
+                ",expectedCondition=?,observationNote=?,[Date]=? where borgerId = ? and problemId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        for (int problemid : healthResultMap.keySet()) {
+            HealthResult result = healthResultMap.get(problemid);
+            ps.setString(1, result.getTechnical());
+            ps.setInt(2, result.getToggleId());
+            ps.setString(3, result.getCurrent());
+            ps.setInt(4, result.getExpectedIndex());
+            ps.setString(5, result.getObservation());
+            ps.setDate(6, obsDate);
+            ps.setInt(7, id);
+            ps.setInt(8, problemid);
+            ps.addBatch();
+        }
+        ps.executeBatch();
+    }
+
     private void updateFunktion(int id, Map<Integer, FunkResult> funkResultMap, Date obsDate, Connection connection) throws SQLException {
         String sql = "UPDATE funktionsJournal set nuVurdering = ?,målVurdering =?,technicalNote=?,execution =?" +
                 ",importanceOfExecution =?,goalNote=?,[date]=?,obsNote =? where borgerId = ? and problemId = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        System.out.println(funkResultMap);
         for (int problemId : funkResultMap.keySet()) {
             FunkResult result = funkResultMap.get(problemId);
-            System.out.println(result);
             ps.setInt(1, result.getCurrent());
             ps.setInt(2, result.getTarget());
             ps.setString(3, result.getTechnical());
@@ -274,8 +289,8 @@ public class TemplateDAO implements ITemplateDAO {
             ps.setString(6, result.getCitizenString());
             ps.setDate(7, obsDate);
             ps.setString(8, result.getObservation());
-            ps.setInt(9,id);
-            ps.setInt(10,problemId);
+            ps.setInt(9, id);
+            ps.setInt(10, problemId);
             ps.addBatch();
         }
         ps.executeBatch();
