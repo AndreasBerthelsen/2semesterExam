@@ -23,5 +23,5 @@ public interface ITemplateDAO {
 
     Map<String, String> loadGenInfo(int id, List<String> fieldList);
 
-    void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap);
+    void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate);
 }

@@ -123,7 +123,7 @@ public class CitizenModel {
         return cM.loadGenInfo(id,fieldList);
     }
 
-    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
-     cM.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap);
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
+     cM.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
     }
 }

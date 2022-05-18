@@ -242,14 +242,15 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     @Override
-    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
         try (Connection connection = dc.getConnection()) {
             int id = updatedCitizen.getId();
             updateCitizen(updatedCitizen, connection);
-/*
             updateGenInfo(id, genResultMap, connection);
-            updateFunktion(id, funkResultMap, connection);
-            updateHealth(id, healthResultMapc, connection);
+
+            updateFunktion(id, funkResultMap, obsDate, connection);
+            /*
+            updateHealth(id, healthResultMapc, obsDate, connection);
  */
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -257,14 +258,53 @@ public class TemplateDAO implements ITemplateDAO {
 
     }
 
+    private void updateFunktion(int id, Map<Integer, FunkResult> funkResultMap, Date obsDate, Connection connection) throws SQLException {
+        String sql = "UPDATE funktionsJournal set nuVurdering = ?,målVurdering =?,technicalNote=?,execution =?" +
+                ",importanceOfExecution =?,goalNote=?,[date]=?,obsNote =? where borgerId = ? and problemId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        System.out.println(funkResultMap);
+        for (int problemId : funkResultMap.keySet()) {
+            FunkResult result = funkResultMap.get(problemId);
+            System.out.println(result);
+            ps.setInt(1, result.getCurrent());
+            ps.setInt(2, result.getTarget());
+            ps.setString(3, result.getTechnical());
+            ps.setInt(4, result.getExecution());
+            ps.setInt(5, result.getImportance());
+            ps.setString(6, result.getCitizenString());
+            ps.setDate(7, obsDate);
+            ps.setString(8, result.getObservation());
+            ps.setInt(9,id);
+            ps.setInt(10,problemId);
+            ps.addBatch();
+        }
+        ps.executeBatch();
+    }
+
+    private void updateGenInfo(int id, Map<String, String> genResultMap, Connection connection) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        for (String key : genResultMap.keySet()) {
+            sb.append(key).append("=?,");
+        }
+        String columns = sb.deleteCharAt(sb.length() - 1).toString();
+        String sql = "Update generelInfo set " + columns + " where borgerId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        int index = 1;
+        for (String column : genResultMap.keySet()) {
+            ps.setString(index++, genResultMap.get(column));
+        }
+        ps.setInt(index, id);
+        ps.execute();
+    }
+
     private void updateCitizen(Citizen updatedCitizen, Connection connection) throws SQLException {
         String sql = "Update Borger set fName =?,lName=?,dato=?,description=? where borgerid = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1,updatedCitizen.getFirstname());
-        ps.setString(2,updatedCitizen.getLastname());
-        ps.setDate(3,updatedCitizen.getbDate());
-        ps.setString(4,updatedCitizen.getDescription());
-        ps.setInt(5,updatedCitizen.getId());
+        ps.setString(1, updatedCitizen.getFirstname());
+        ps.setString(2, updatedCitizen.getLastname());
+        ps.setDate(3, updatedCitizen.getbDate());
+        ps.setString(4, updatedCitizen.getDescription());
+        ps.setInt(5, updatedCitizen.getId());
         ps.execute();
     }
 

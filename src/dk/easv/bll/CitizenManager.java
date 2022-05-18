@@ -112,8 +112,8 @@ public class CitizenManager {
         return facade.loadGenInfo(id,fieldList);
     }
 
-    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
-        facade.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap);
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
+        facade.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
     }
 }
 

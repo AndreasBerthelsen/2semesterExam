@@ -9,17 +9,21 @@ import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.springframework.cglib.core.Local;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EditSkabelonViewController extends saveCitizenController implements ICitizenSelector {
+public class EditSkabelonViewController extends saveCitizenController implements Initializable, ICitizenSelector {
     public TextField fNameInput;
     public DatePicker dateInput;
     public TextField lNameInput;
@@ -48,6 +52,11 @@ public class EditSkabelonViewController extends saveCitizenController implements
     }
 
     @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        obsDatePicker.setValue(LocalDate.now());
+    }
+
+    @Override
     public void setCitizen(Citizen citizen) {
         this.citizen = citizen;
 
@@ -68,19 +77,19 @@ public class EditSkabelonViewController extends saveCitizenController implements
     }
 
     private void setupFunkTab() {
-        service.submit(() ->{
+        service.submit(() -> {
             Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
             List<Section> sectionList = cM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
             for (Section section : sectionList) {
                 tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo));
             }
-            Platform.runLater(()-> funktionInnerTabPane.getTabs().addAll(tabList));
+            Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });
     }
 
     private void setupHelbredTab() {
-        service.submit(()->{
+        service.submit(() -> {
             Map<Integer, HealthResult> healthInfo = cM.loadHealthInfo(citizen.getId());
             List<Section> sectionList = cM.getHealthSections();
 
@@ -88,22 +97,23 @@ public class EditSkabelonViewController extends saveCitizenController implements
             for (Section section : sectionList) {
                 tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo));
             }
-            Platform.runLater(()-> helbredsInnerTabPane.getTabs().addAll(tabList));
+            Platform.runLater(() -> helbredsInnerTabPane.getTabs().addAll(tabList));
         });
 
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        try{
+        try {
             String fName = fNameInput.getText().trim();
             String lName = lNameInput.getText().trim();
             String description = descriptionInput.getText().trim();
-            Date birthDate = java.sql.Date.valueOf(dateInput.getValue());
-            Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName,birthDate,description);
-            cM.updateTemplate(updatedCitizen,saveGeninfo(genInfoNodeMap),saveFunk(funkNodeMap),saveHealth(healthNodeMap));
+            Date birthDate = Date.valueOf(dateInput.getValue());
+            Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName, birthDate, description);
+            Date obsDate = Date.valueOf(obsDatePicker.getValue());
+            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap),obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("udfyld navne birthdate og desc");
         }
 
@@ -113,4 +123,6 @@ public class EditSkabelonViewController extends saveCitizenController implements
         Stage stage = (Stage) fNameInput.getScene().getWindow();
         stage.close();
     }
+
+
 }

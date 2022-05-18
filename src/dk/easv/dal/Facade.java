@@ -186,8 +186,8 @@ public class Facade {
         return iTemplateDAO.loadGenInfo(id,fieldList);
     }
 
-    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
-        iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap);
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
+        iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
 
     }
 }
