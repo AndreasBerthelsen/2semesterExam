@@ -93,6 +93,10 @@ public class CitizenModel {
         cM.createCopyCitizen(citizen);
     }
 
+    public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
+        cM.createCopyCase(citizen, fName, lName);
+    }
+
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         cM.deleteCitizenFromUser(citizenToBeDeleted, user);
     }

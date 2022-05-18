@@ -1,7 +1,9 @@
 package dk.easv.gui.teacher.controller;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
+import dk.easv.gui.supercontroller.SuperController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
@@ -24,7 +26,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class SkabelonerViewController implements Initializable, IController {
+public class SkabelonerViewController extends SuperController implements Initializable, IController {
     public TableView<Citizen> templateTV;
     public TableColumn<Citizen, String> lNameTC;
     public TableColumn<Citizen, String> fNameTC;
@@ -85,11 +87,6 @@ public class SkabelonerViewController implements Initializable, IController {
         }
 
 
-
-
-
-
-
     }
 
     public void handleEditSkabelonbtn(ActionEvent actionEvent) throws IOException, SQLException {
@@ -104,7 +101,10 @@ public class SkabelonerViewController implements Initializable, IController {
         templateTV.setItems(cM.getObservableTemplates());
     }
 
-    public void handleKopierSkabelon(ActionEvent actionEvent) {
+    public void handleKopierSkabelon(ActionEvent actionEvent) throws SQLException, IOException {
+    Citizen selectedCitizen = templateTV.getSelectionModel().getSelectedItem();
+    openNewSceneWithCitizen(selectedCitizen, "/dk/easv/gui/teacher/view/copyChooseName.fxml", "Vælg navn til din nye Skabelon");
+    templateTV.setItems(cM.getObservableTemplates());
     }
 
     public void setDescription(Citizen citizen) throws SQLException {

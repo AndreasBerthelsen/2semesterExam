@@ -140,6 +140,10 @@ public class Facade {
         iCitizienDAO.createCopyCitizen(citizen);
     }
 
+    public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
+        iCitizienDAO.createCopyCase(citizen, fName, lName);
+    }
+
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         iCitizienDAO.deleteCitizenFromUser(citizenToBeDeleted, user);
     }

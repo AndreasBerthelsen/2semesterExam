@@ -76,7 +76,9 @@ public class CitizenManager {
     public void createCopyCitizen(Citizen citizen) {
         facade.createCopyCitizen(citizen);
     }
-
+    public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
+        facade.createCopyCase(citizen, fName, lName);
+    }
 
     public List<Citizen> getAllTemplatesOfCitizens() {
         return facade.getAllTemplatesOfCitizens();
