@@ -32,17 +32,22 @@ public class GenInfoTabFactory {
         contentBox.setPadding(new Insets(40, 80, 80, 80));
         contentBox.setId("VBOX");
         contentBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
-        for (String s : fieldList) {
-            VBox chunk = new VBox();
-            chunk.setAlignment(Pos.TOP_CENTER);
-            TextArea textArea = createTextArea();
-            chunk.getChildren().addAll(createHeaderHBox(s), textArea);
-            contentBox.getChildren().addAll(chunk);
-            answerMap.put(s,textArea);
+        for (String fieldName : fieldList) {
+            createChunk(fieldName,answerMap,contentBox,null);
         }
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
         return scrollPane;
+    }
+
+    private static VBox createChunk(String fieldName, Map<String,TextArea> answerMap,VBox contentBox,String startingText){
+        VBox chunk = new VBox();
+        chunk.setAlignment(Pos.TOP_CENTER);
+        TextArea textArea = createTextArea(startingText);
+        chunk.getChildren().addAll(createHeaderHBox(fieldName), textArea);
+        contentBox.getChildren().addAll(chunk);
+        answerMap.put(fieldName,textArea);
+        return chunk;
     }
 
     private static HBox createHeaderHBox(String headerString) {
@@ -77,9 +82,9 @@ public class GenInfoTabFactory {
         return imageView;
     }
 
-    private static TextArea createTextArea() {
+    private static TextArea createTextArea(String startingText) {
         int width = 600;
-        TextArea textArea = new TextArea();
+        TextArea textArea = new TextArea(startingText);
         textArea.setWrapText(true);
         textArea.setMaxWidth(width);
         return textArea;
@@ -162,5 +167,20 @@ public class GenInfoTabFactory {
                 og omgivelser, der har betydning for
                 borgerens hverdagsliv og funktionsevne.""");
         return q;
+    }
+
+    public static ScrollPane createGenInfoContentWithInfo(List<String> fieldList, Map<String,TextArea> answerMap,Map<String,String> infoMap){
+        VBox contentBox = new VBox(60);
+        contentBox.setAlignment(Pos.TOP_CENTER);
+        contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        contentBox.setPadding(new Insets(40, 80, 80, 80));
+        contentBox.setId("VBOX");
+        contentBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        for (String fieldName : fieldList) {
+            createChunk(fieldName,answerMap,contentBox,infoMap.get(fieldName));
+        }
+        ScrollPane scrollPane = new ScrollPane(contentBox);
+        scrollPane.setFitToWidth(true);
+        return scrollPane;
     }
 }

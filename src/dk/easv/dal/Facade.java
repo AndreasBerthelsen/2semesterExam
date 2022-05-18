@@ -147,21 +147,13 @@ public class Facade {
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         iCitizienDAO.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
-    public Citizen loadTemplate(Citizen citizen) {
-        return iTemplateDAO.loadTemplate(citizen);
 
-    }
 
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        iTemplateDAO.updateTemplate(citizen,id);
-    }
 
     public void deleteCitizen(int citizenId) throws SQLException {
         iCitizienDAO.deleteCitizen(citizenId);
     }
-    public Citizen loadCitizen(Citizen citizen) {
-        return iTemplateDAO.loadTemplate(citizen);
-    }
+
 
 
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
@@ -178,7 +170,24 @@ public class Facade {
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
         iTemplateDAO.createTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
     }
+
     public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
         iCitizienDAO.saveCitizen(citizen, newDate, funkMap, healthMap, genInfoMap);
+    }
+    public Map<Integer, HealthResult> loadHealthInfo(int citizenId){
+     return iTemplateDAO.loadHealthInfo(citizenId);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        return iTemplateDAO.loadFunkInfo(id);
+    }
+
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        return iTemplateDAO.loadGenInfo(id,fieldList);
+    }
+
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
+        iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap);
+
     }
 }

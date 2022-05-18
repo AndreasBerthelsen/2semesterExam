@@ -1,17 +1,14 @@
 package dk.easv.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.*;
+import dk.easv.be.Citizen;
+import dk.easv.be.FunkResult;
+import dk.easv.be.HealthResult;
 import dk.easv.dal.interfaces.ITemplateDAO;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TemplateDAO implements ITemplateDAO {
     DatabaseConnector dc;
@@ -158,148 +155,121 @@ public class TemplateDAO implements ITemplateDAO {
         }
         return list;
     }
-/*
-    private Map<Integer, String> loadHealthInfo(int id, Connection connection) throws SQLException {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "select [value], problemid from helbredsjournal where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getString("value"));
-        }
-
-        return map;
-    }
-
-    private Map<Integer, Integer> loadRelevansMap(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "SELECT problemid, relevans from Helbredsjournal where borgerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("relevans"));
-        }
-        return map;
-    }
-
-    private Map<Integer, String> loadFunkInfo(int id, Connection connection) throws SQLException {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "SELECT problemid, note from FunktionsJournal where borgerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getString("note"));
-        }
-        return map;
-    }
-
-    private Map<Integer, Integer> loadTargetCombo(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "select problemid, målVurdering from FunktionsJournal inner join targetvurdering on målvurdering = targetid  where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("målVurdering"));
-        }
-        return map;
-    }
-
-
-    private Map<Integer, Integer> loadCurrentComboFromId(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "select problemid, fNiveau " +
-                "from FunktionsJournal INNER join Vurdering on vurderingsID = nuVurdering\n" +
-                "where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("fNiveau"));
-        }
-        return map;
-    }
-
-    private LinkedHashMap<String, String> loadGenInfoFromId(int id, Connection connection) throws SQLException {
-        //find coloumns
-        String sql = "select COLUMN_NAME \n" +
-                "from INFORMATION_SCHEMA.COLUMNS \n" +
-                "where TABLE_NAME = N'Generelinfo'";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        //byg sql
-        StringBuilder sb = new StringBuilder();
-        while (rs.next()) {
-            String currentColumn = rs.getString("COLUMN_NAME");
-            if (!currentColumn.toLowerCase().endsWith("id")) {
-                sb.append(currentColumn).append(",");
-            }
-        }
-
-        String columnTitles = sb.deleteCharAt(sb.length() - 1).toString();
-        String sql2 = "Select " + columnTitles + " from generelInfo where borgerid = ?";
-        PreparedStatement ps2 = connection.prepareStatement(sql2);
-        ps2.setInt(1, id);
-
-        ResultSet rs2 = ps2.executeQuery();
-        rs2.next();
-        LinkedHashMap<String, String> genInfoMap = new LinkedHashMap<>();
-        for (String column : columnTitles.split(",")) {
-            genInfoMap.put(column, rs2.getString(column));
-        }
-        return genInfoMap;
-    }
-
-
- */
 
     @Override
-    public Citizen loadTemplate(Citizen citizen) {
-        //todo fix
-        /*
-        int id = citizen.getId();
+    public Map<Integer, HealthResult> loadHealthInfo(int citizenId) {
+        Map<Integer, HealthResult> resultMap = new LinkedHashMap<>();
         try (Connection connection = dc.getConnection()) {
-            //gen info
-            LinkedHashMap<String, String> genInfoText = loadGenInfoFromId(id, connection);
+            String sql = "select [problemID]" +
+                    "      ,[technicalNote]" +
+                    "      ,[relevans]" +
+                    "      ,[currentEval]" +
+                    "      ,[expectedCondition]" +
+                    "      ,[observationNote]" +
+                    "from Helbredsjournal where borgerId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, citizenId);
 
-            //funk
-            //todo convert id'er til combobox indexes
-            Map<Integer, Integer> currentCombo = loadCurrentComboFromId(id, connection);
-            Map<Integer, Integer> targetCombo = loadTargetCombo(id, connection);
-            Map<Integer, String> funkInfo = loadFunkInfo(id, connection);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String technical = rs.getString("technicalNote");
+                String observation = rs.getString("observationNote");
+                String current = rs.getString("currentEval");
+                int expectedIndex = rs.getInt("expectedCondition");
+                int toggleId = rs.getInt("relevans");
+                HealthResult info = new HealthResult(toggleId, expectedIndex, current, observation, technical);
+                int problemid = rs.getInt("problemId");
+                resultMap.put(problemid, info);
+            }
 
-            //health
-            //todo convert id'er til combobox indexes | repalce med enums?
-            Map<Integer, Integer> relevansMap = loadRelevansMap(id, connection);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
+    }
 
-            Map<Integer, String> helbredInfo = loadHealthInfo(id, connection);
+    @Override
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        Map<Integer, FunkResult> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "Select [problemID]\n" +
+                    "      ,[nuVurdering]\n" +
+                    "      ,[målVurdering]\n" +
+                    "      ,[technicalNote]\n" +
+                    "      ,[execution]\n" +
+                    "      ,[importanceOfExecution]\n" +
+                    "      ,[goalNote]\n" +
+                    "      ,[obsNote] from funktionsjournal where borgerid = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int importance = rs.getInt("importanceOfExecution");
+                String citizenString = rs.getString("goalNote");
+                String technical = rs.getString("TechnicalNote");
+                String observation = rs.getString("obsNote");
+                int execution = rs.getInt("execution");
+                int target = rs.getInt("målVurdering");
+                int current = rs.getInt("nuVurdering");
 
-            return new Citizen(
-                    citizen.getFirstname(),
-                    citizen.getLastname(),
-                    citizen.getbDate(),
-                    genInfoText,
-                    currentCombo,
-                    targetCombo,
-                    funkInfo,
-                    relevansMap,
-                    helbredInfo);
+                int problemId = rs.getInt("problemId");
+                FunkResult funkResult = new FunkResult(importance, citizenString, technical, observation, execution, target, current);
+                resultMap.put(problemId, funkResult);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        Map<String, String> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String geninfoFields = fieldList.toString().replace(" ", "").replace("[", "").replace("]", "");
+            String sql = "select " + geninfoFields + " from GenerelInfo where borgerId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            for (String fieldName : fieldList) {
+                resultMap.put(fieldName, rs.getString(fieldName));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    @Override
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap) {
+        try (Connection connection = dc.getConnection()) {
+            int id = updatedCitizen.getId();
+            updateCitizen(updatedCitizen, connection);
+/*
+            updateGenInfo(id, genResultMap, connection);
+            updateFunktion(id, funkResultMap, connection);
+            updateHealth(id, healthResultMapc, connection);
+ */
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-         */
-        return null;
     }
 
-    @Override
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        //todo fix
+    private void updateCitizen(Citizen updatedCitizen, Connection connection) throws SQLException {
+        String sql = "Update Borger set fName =?,lName=?,dato=?,description=? where borgerid = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1,updatedCitizen.getFirstname());
+        ps.setString(2,updatedCitizen.getLastname());
+        ps.setDate(3,updatedCitizen.getbDate());
+        ps.setString(4,updatedCitizen.getDescription());
+        ps.setInt(5,updatedCitizen.getId());
+        ps.execute();
+    }
+
+
+    //todo fix
         /*
         try (Connection connection = dc.getConnection()) {
             updateCitizenTemplate(citizen, id, connection);
@@ -313,7 +283,7 @@ public class TemplateDAO implements ITemplateDAO {
         }
 
          */
-    }
+}
 
 /*
     private void updateHealthJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
@@ -391,4 +361,4 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
  */
-}
+

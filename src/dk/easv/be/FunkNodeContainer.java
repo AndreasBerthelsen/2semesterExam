@@ -56,4 +56,32 @@ public class FunkNodeContainer {
     public TextArea getObsTextArea() {
         return obsTextArea;
     }
+
+    public void setObsString(String s){
+        getObsTextArea().setText(s);
+    }
+
+    public void setCitizenString(String s){
+        getCitizenTextArea().setText(s);
+    }
+
+    public void setTechnicalString(String s){
+        getFagTextArea().setText(s);
+    }
+
+    public void setImportanceIndex(int index){
+        getBetydningComboBox().getSelectionModel().select(index);
+    }
+
+    public void setExecutionIndex(int index){
+        getUdførelseComboBox().getSelectionModel().select(index);
+    }
+
+    public void setCurrentIndex(int index){
+        getCurrentComboBox().getSelectionModel().select(index);
+    }
+
+    public void setTargetIndex(int index){
+        getTargetComboBox().getSelectionModel().select(index);
+    }
 }
