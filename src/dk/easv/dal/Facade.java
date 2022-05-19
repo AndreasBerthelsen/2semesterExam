@@ -7,10 +7,7 @@ import javafx.scene.control.TextArea;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Facade {
     private static Facade instance;
@@ -170,5 +167,9 @@ public class Facade {
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
         iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
 
+    }
+
+    public Collection<String> getLogDates(int id) {
+        return iCitizienDAO.getLogDates(id);
     }
 }

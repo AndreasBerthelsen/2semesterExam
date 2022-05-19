@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -115,5 +116,9 @@ public class CitizenModel {
 
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
         cM.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
+    }
+
+    public ObservableList<String> getObservableLogDates(int id) {
+        return FXCollections.observableArrayList(cM.getLogDates(id));
     }
 }

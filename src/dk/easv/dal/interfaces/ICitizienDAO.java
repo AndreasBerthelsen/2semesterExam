@@ -9,10 +9,14 @@ import dk.easv.be.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 public interface ICitizienDAO {
+     Collection<String> getLogDates(int id);
+
+
     List<Citizen> getAllCitizens();
     List<Citizen> getAllTemplatesOfCitizens();
     void createCitizen(String fName, String lName, Date birthDate);

@@ -4,10 +4,12 @@ package dk.easv.bll;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.*;
 import dk.easv.dal.Facade;
+import org.springframework.cglib.core.Local;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +98,13 @@ public class CitizenManager {
 
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
         facade.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
+    }
+
+    public List<String> getLogDates(int id) {
+        List<String> list = new ArrayList<>();
+        list.add(LocalDate.now().toString() + " I dag");
+        list.addAll(facade.getLogDates(id));
+        return list;
     }
 }
 

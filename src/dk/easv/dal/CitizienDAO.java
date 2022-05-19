@@ -9,8 +9,8 @@ import dk.easv.dal.interfaces.ICitizienDAO;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +20,7 @@ public class CitizienDAO implements ICitizienDAO {
     public CitizienDAO() throws IOException {
         dc = new DatabaseConnector();
     }
+
 
     @Override
     public List<Citizen> getAllCitizens() {
@@ -261,7 +262,7 @@ public class CitizienDAO implements ICitizienDAO {
 
     //TODO gør så den scaler
     private void createGenInfoCopy(int oldId, Connection connection, int newID) throws SQLException {
-        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, borgerID)\n"+
+        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, borgerID)\n" +
                 "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, ? \n"
                 + "FROM Generelinfo \n"
                 + "WHERE borgerID = ?";
@@ -369,5 +370,20 @@ public class CitizienDAO implements ICitizienDAO {
             preparedStatement.setString(index++, s);
         }
         preparedStatement.execute();
+    }
+
+    @Override
+    public Collection<String> getLogDates(int id) {
+        try (Connection connection = dc.getConnection()) {
+            String sql = "";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return null;
     }
 }

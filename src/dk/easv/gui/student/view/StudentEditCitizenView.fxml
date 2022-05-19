@@ -24,7 +24,7 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <Label text="Vælg dato (temp)" />
-                  <ComboBox fx:id="dateSelecterCombo" prefWidth="150.0" />
+                  <ComboBox fx:id="dateSelectorCombo" onAction="#handleDateCombo" prefWidth="150.0" />
                </children>
             </HBox>
             <TabPane cacheShape="false" centerShape="false" tabClosingPolicy="UNAVAILABLE">

@@ -27,12 +27,13 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     public TextField lNameInput;
     public TextArea descriptionInput;
     public VBox genInfoVBox;
-    public ComboBox dateSelecterCombo;
+    public ComboBox<String> dateSelectorCombo;
     private CitizenModel cM;
     private Citizen citizen;
     private int id;
 
 
+    // fill combo -> load journals
 
     public StudentEditCitizenController() throws IOException {
         this.cM = new CitizenModel();
@@ -52,6 +53,11 @@ public class StudentEditCitizenController extends saveCitizenController implemen
         setupHelbredTab();
     }
 
+    private void fillDateSelector(){
+        dateSelectorCombo.setItems(cM.getObservableLogDates(id)); //eksemple [19-05-2022] Idag  -> [09-05-2022] -> [27-04-2022]
+        dateSelectorCombo.getSelectionModel().select(0);
+    }
+    
     private void setupGeneralInfo() {
 
     }
@@ -72,5 +78,8 @@ public class StudentEditCitizenController extends saveCitizenController implemen
 
 
     public void handleAnullerbtn(ActionEvent actionEvent) {
+    }
+
+    public void handleDateCombo(ActionEvent actionEvent) {
     }
 }
