@@ -43,7 +43,6 @@ public class AddStudentController extends SuperController implements IController
         String password = getPassword(passwordTxtfield);
         int schoolId = user.getSchoolID();
         if (firstname != null && lastname != null && username != null && password != null && !userModel.checkUsername(username)) {
-
             userModel.createStudent(firstname, lastname, username, password, schoolId);
             closeWindow(saveBtn);
         }
