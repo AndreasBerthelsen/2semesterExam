@@ -54,9 +54,12 @@ public class AddTeacherOrStudent extends SuperController implements Initializabl
         String password = getPassword(passwordTxtFIeld);
         Integer schoolID = getSchoolId(schoolCombobox);
         UserType userType = getUsertype(usertypeCombobox);
-        if (firstname != null && lastname != null && username != null && password != null &&  userType != null && schoolID != null) {
+        if (firstname != null && lastname != null && username != null && password != null &&  userType != null && schoolID != null && !aM.checkUsername(username)) {
             uM.createUser(firstname, lastname, username, password, schoolID, userType);
             closeWindow(saveBtn);
+        }
+        else {
+            errorMessage("Udfyld venligst alle feltenerne ellers check venligst om brugernavnet er anvendt");
         }
     }
 

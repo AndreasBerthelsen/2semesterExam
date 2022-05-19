@@ -57,12 +57,15 @@ public class EditStudentController extends SuperController implements IControlle
         int id = user.getId();
         int schoolid = school.getId();
         User user = new User(id, firstname, lastname, username, UserType.STUDENT, schoolid);
-        if (firstname != null && lastname != null && username != null) {
+        if (firstname != null && lastname != null && username != null && !userModel.checkUsername(username)) {
             userModel.updateUser(user);
             closeWindow(saveBtn);
         }
         if(password != null){
             userModel.updatePassword(user, password);
+        }
+        else {
+            errorMessage("Check venligst om alle felterne er udfyldt eller om der eksisterer en bruger med samme brugernavn i databasen");
         }
     }
 

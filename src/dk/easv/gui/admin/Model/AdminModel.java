@@ -54,5 +54,7 @@ public class AdminModel {
         return schoolList;
     }
 
-
+    public boolean checkUsername(String username){
+        return uM.checkUsername(username);
+    }
 }

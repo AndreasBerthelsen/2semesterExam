@@ -52,4 +52,7 @@ public class UserModel {
     public void updatePassword(User user, String hashPassword) throws SQLServerException {
         uM.updatePassword(user, hashPassword);
     }
+    public boolean checkUsername(String username){
+        return uM.checkUsername(username);
+    }
 }

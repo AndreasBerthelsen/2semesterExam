@@ -42,10 +42,13 @@ public class AddStudentController extends SuperController implements IController
         String username = getUsername(usernameTxtfield);
         String password = getPassword(passwordTxtfield);
         int schoolId = user.getSchoolID();
-        if (firstname != null && lastname != null && username != null && password != null) {
+        if (firstname != null && lastname != null && username != null && password != null && !userModel.checkUsername(username)) {
 
             userModel.createStudent(firstname, lastname, username, password, schoolId);
             closeWindow(saveBtn);
+        }
+        else {
+            errorMessage("Check venligst om alle felterne er udfyldt eller om der allerede eksisterer en bruger med samme brugernavn i programmet");
         }
     }
 

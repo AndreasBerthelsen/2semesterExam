@@ -23,7 +23,7 @@ public class LoginDAO implements ILoginDAO {
         try (Connection connection = dc.getConnection()) {
             String sql = "SELECT userID , fname, lname, username, type, password, skole\n" +
                     "FROM [User] INNER JOIN [Role] ON [User].RoleID = [Role].roleID\n" +
-                    "INNER JOIN Skole on [User].skole = [Skole].ID WHERE username = ?";
+                    "INNER JOIN Skole on [User].skole = [Skole].ID WHERE username = ? COLLATE Danish_Norwegian_CS_AI_WS";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();

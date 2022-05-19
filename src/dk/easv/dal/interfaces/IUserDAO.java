@@ -20,4 +20,6 @@ public interface IUserDAO {
     List<User> getAllUsersFromSchools(School school, UserType userType);
 
     List<School> getAllSchools() throws SQLServerException;
+
+    boolean checkUsername(String username);
 }

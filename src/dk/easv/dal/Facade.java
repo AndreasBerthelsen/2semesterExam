@@ -171,4 +171,8 @@ public class Facade {
         iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
 
     }
+
+    public boolean checkUsername(String username){
+       return iUserDAO.checkUsername(username);
+    }
 }
