@@ -18,10 +18,11 @@ public class User {
         this.schoolID = schoolID;
     }
 
-    public User(int id, String firstname, String lastname, UserType type) {
+    public User(int id, String firstname, String lastname, String username, UserType type) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.username = username;
         this.type = type;
     }
 

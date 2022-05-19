@@ -78,7 +78,7 @@ public class UserDAO implements IUserDAO {
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
        List<User> allUsers = new ArrayList<>();
        try(Connection con = dc.getConnection()) {
-           String sql = "SELECT userID, fName, lName\n" +
+           String sql = "SELECT userID, fName, lName, username\n" +
                    "From [User] \n" +
                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
                    "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
@@ -91,7 +91,8 @@ public class UserDAO implements IUserDAO {
                int id = resultSet.getInt("userID");
                String fName = resultSet.getString("fname");
                String lName = resultSet.getString("lName");
-               allUsers.add(new User(id, fName, lName, userType));
+               String username = resultSet.getString("username");
+               allUsers.add(new User(id, fName, lName, username, userType));
            }
 
        } catch (SQLException e) {

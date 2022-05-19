@@ -59,7 +59,7 @@ public class CitizenModel {
 
     }
 
-    public void addUserToCitizen(Citizen citizen, User user) {
+    public void addUserToCitizen(int citizen, User user) {
         cM.addUserToCitizen(citizen, user);
     }
 
@@ -79,8 +79,8 @@ public class CitizenModel {
         return FXCollections.observableArrayList(cM.getAllTemplates());
     }
 
-    public void createCopyCitizen(Citizen citizen) {
-        cM.createCopyCitizen(citizen);
+    public int createCopyCitizen(Citizen citizen) {
+        return cM.createCopyCitizen(citizen);
     }
 
     public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
