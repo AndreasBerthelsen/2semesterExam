@@ -44,20 +44,18 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button mnemonicParsing="false" onAction="#handleAddOneCitizenToAllStudents" text="Tildel alle elever en borger ud fra valgt skabelon " />
-                  <Button mnemonicParsing="false" onAction="#handleAddCitizenToStudent" text="Tildel valgt(e) elev(er) en borger ud fra valgte skabelon" />
                   <Label text="Beskrivelse" />
                   <TextArea fx:id="descriptionTextArea" disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="411.0" prefWidth="130.0" spacing="25.0">
+            <VBox alignment="CENTER" prefHeight="378.0" prefWidth="385.0" spacing="25.0">
                <children>
-                  <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveCitizenBtn" text="Fjern" />
-               </children>
-            </VBox>
+                  <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleAddOneCitizenToAllStudents" text="Tildel alle elever en borger ud fra valgt skabelon" />
+                  <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleAddCitizenToStudent" text="Tildel valgt(e) elev(er) en borger fra valgt skabelon" />
+               </children></VBox>
             <VBox alignment="TOP_CENTER" prefHeight="386.0" prefWidth="280.0">
                <children>
-                  <ImageView fx:id="studentTipImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="studentTipImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Images/info.png" />
                      </image>
@@ -86,25 +84,28 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <TableView fx:id="displayTableView" prefHeight="150.0" prefWidth="500.0">
+            <TableView fx:id="displayTableView" prefHeight="150.0" prefWidth="750.0">
               <columns>
-                  <TableColumn prefWidth="75.0" text="Borgere tilknyttet den valgte elev">
+                  <TableColumn fx:id="displayStudentNameCol" maxWidth="7500.0" prefWidth="75.0">
                      <columns>
-                      <TableColumn fx:id="tempDisplayID" maxWidth="251.4667163530994" prefWidth="74.93335062662845" text="ID" />
-                      <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="514.6667022705078" text="Fornavn" />
-                        <TableColumn fx:id="tempDisplayLname" prefWidth="631.2000732421875" text="Efternavn" />
+                      <TableColumn fx:id="tempDisplayID" maxWidth="1500.0" prefWidth="56.79998779296875" text="Borger nummer" />
+                      <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="416.80006408691406" text="Fornavn" />
+                        <TableColumn fx:id="tempDisplayLname" prefWidth="-1.0" text="Efternavn" />
                      </columns>
                   </TableColumn>
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <VBox.margin>
+                  <Insets left="450.0" />
+               </VBox.margin>
             </TableView>
-            <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveTemplateFromStudentBtn" text="Fjern" />
+            <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveCitizenFromStudentBtn" text="Fjern">
+               <VBox.margin>
+                  <Insets left="450.0" />
+               </VBox.margin></Button>
          </children>
-         <padding>
-            <Insets left="200.0" right="200.0" />
-         </padding>
       </VBox>
    </bottom>
 </BorderPane>
