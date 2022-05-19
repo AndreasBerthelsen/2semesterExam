@@ -89,7 +89,16 @@ public class Facade {
         return iCitizienDAO.getAllCitizensFromUser(user);
     }
 
+
     public void addUserToCitizen(Citizen citizen, User user) {
+    }
+
+    public void createCitizen(String fname, String lname, Date birthDay) {
+        iCitizienDAO.createCitizen(fname, lname, birthDay);
+    }
+
+    public void addUserToCitizen(int citizen, User user) {
+
         iCitizienDAO.addUserToCitizen(user, citizen);
     }
 
@@ -102,14 +111,13 @@ public class Facade {
     }
 
 
-
     public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
         iUserDAO.updatePassword(user, hashPassword, salt);
     }
 
 
     public void deleteTemplate(int citizenId) throws SQLException {
-     iTemplateDAO.deleteTemplate(citizenId);
+        iTemplateDAO.deleteTemplate(citizenId);
 
     }
 
@@ -117,8 +125,8 @@ public class Facade {
         return iTemplateDAO.getAllTemplates();
     }
 
-    public void createCopyCitizen(Citizen citizen) {
-        iCitizienDAO.createCopyCitizen(citizen);
+    public int createCopyCitizen(Citizen citizen) {
+        return iCitizienDAO.createCopyCitizen(citizen);
     }
 
     public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
@@ -130,15 +138,13 @@ public class Facade {
     }
 
 
-
     public void deleteCitizen(int citizenId) throws SQLException {
         iCitizienDAO.deleteCitizen(citizenId);
     }
 
 
-
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
-        return iUserDAO.getAllUsersFromSchools(school,userType);
+        return iUserDAO.getAllUsersFromSchools(school, userType);
     }
 
     public List<School> getAllSchools() throws SQLServerException {
@@ -148,15 +154,17 @@ public class Facade {
     public void updateLastEdited(Citizen citizen) throws SQLException {
         iCitizienDAO.updateLastEdited(citizen);
     }
+
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
-        iTemplateDAO.createTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
+        iTemplateDAO.createTemplate(fName, lName, birthDate, description, saveGeninfo, saveFunk, saveHealth, obsDate);
     }
 
     public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
         iCitizienDAO.saveCitizen(citizen, newDate, funkMap, healthMap, genInfoMap);
     }
-    public Map<Integer, HealthResult> loadHealthInfo(int citizenId){
-     return iTemplateDAO.loadHealthInfo(citizenId);
+
+    public Map<Integer, HealthResult> loadHealthInfo(int citizenId) {
+        return iTemplateDAO.loadHealthInfo(citizenId);
     }
 
     public Map<Integer, FunkResult> loadFunkInfo(int id) {
@@ -164,11 +172,11 @@ public class Facade {
     }
 
     public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
-        return iTemplateDAO.loadGenInfo(id,fieldList);
+        return iTemplateDAO.loadGenInfo(id, fieldList);
     }
 
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
-        iTemplateDAO.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
+        iTemplateDAO.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
 
     }
 }
