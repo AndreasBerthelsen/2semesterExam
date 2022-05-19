@@ -55,8 +55,8 @@ public class EditStudentController extends SuperController implements IControlle
         String username = getUsername(usernameTxtField);
         String password = getPasswordUpdate(passwordTxtFIeld);
         int id = user.getId();
-        int schoolid = school.getId();
-        User user = new User(id, firstname, lastname, username, UserType.STUDENT, schoolid);
+        int schoolID = user.getSchoolID();
+        User user = new User(id, firstname, lastname, username, UserType.STUDENT, schoolID);
         if (firstname != null && lastname != null && username != null) {
             userModel.updateUser(user);
             closeWindow(saveBtn);

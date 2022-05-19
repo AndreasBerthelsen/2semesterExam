@@ -33,8 +33,6 @@ public class AddTeacherOrStudent extends SuperController implements Initializabl
     @FXML
     private TextField usernameTxtField;
     @FXML
-    private TextField schoolTxtField;
-    @FXML
     private Button saveBtn;
     @FXML
     private Button cancelBtn;
@@ -61,6 +59,7 @@ public class AddTeacherOrStudent extends SuperController implements Initializabl
     }
 
     public void handleCancelBtn(ActionEvent actionEvent) {
+        closeWindow(cancelBtn);
     }
 
     @Override
