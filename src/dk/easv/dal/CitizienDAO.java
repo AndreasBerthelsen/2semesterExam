@@ -261,8 +261,8 @@ public class CitizienDAO implements ICitizienDAO {
 
     //TODO gør så den scaler
     private void createGenInfoCopy(int oldId, Connection connection, int newID) throws SQLException {
-        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netvaerk, Helbredsoplysninger, Hjaelpemidler, Bolig, borgerID)\n" +
-                "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netvaerk, Helbredsoplysninger, Hjaelpemidler, Bolig, ? \n"
+        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, borgerID)\n"+
+                "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, ? \n"
                 + "FROM Generelinfo \n"
                 + "WHERE borgerID = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
