@@ -19,6 +19,14 @@ public class HealthResult {
         this. technical = getString(healthNodeContainer.getTechnicalTextArea());
     }
 
+    public HealthResult(int toggleId, int expectedIndex, String current, String observation, String technical) {
+        this.toggleId = toggleId;
+        this.expectedIndex = expectedIndex;
+        this.current = current;
+        this.observation = observation;
+        this.technical = technical;
+    }
+
     private int getIndexFromComboBox(ComboBox comboBox) {
         return comboBox.getSelectionModel().getSelectedIndex();
     }

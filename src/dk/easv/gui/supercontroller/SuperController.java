@@ -1,9 +1,11 @@
 package dk.easv.gui.supercontroller;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.be.Citizen;
 import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
+import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.Interfaces.IController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -191,4 +193,18 @@ public abstract class SuperController {
         stage.setResizable(false);
         stage.showAndWait();
     }
-}
+
+    public void openNewSceneWithCitizen(Citizen citizen, String fxmlPath, String Title) throws IOException, SQLServerException {
+        FXMLLoader root = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(root.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        ICitizenSelector controller = root.getController();
+        controller.setCitizen(citizen);
+
+        stage.setTitle(Title);
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.showAndWait();
+    }}

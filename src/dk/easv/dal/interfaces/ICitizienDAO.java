@@ -22,6 +22,7 @@ public interface ICitizienDAO {
     List<Citizen> getAllCitizensFromUser(User user);
 
     void createCopyCitizen(Citizen citizen);
+    void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException;
 
     void deleteCitizen(int citizenId) throws SQLException;
     void updateLastEdited(Citizen citizen) throws SQLException;

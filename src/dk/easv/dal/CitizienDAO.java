@@ -140,7 +140,7 @@ public class CitizienDAO implements ICitizienDAO {
         java.util.Date date = new java.util.Date();
         java.sql.Date lastChanged = new java.sql.Date(date.getTime());
 
-        try (Connection connection = dc.getConnection()){
+        try (Connection connection = dc.getConnection()) {
             String dateSQL = "UPDATE Borger SET lastChanged =? WHERE borgerID =?";
             PreparedStatement preparedStatement = connection.prepareStatement(dateSQL);
             preparedStatement.setDate(1, lastChanged);
@@ -152,7 +152,7 @@ public class CitizienDAO implements ICitizienDAO {
 
     @Override
     public void createCopyCitizen(Citizen citizen) {
-        try(Connection connection = dc.getConnection()) {
+        try (Connection connection = dc.getConnection()) {
             int newID = createCitizenToCopy(citizen, connection);
             int oldID = citizen.getId();
             createFunkTilCopy(oldID, connection, newID);
@@ -162,6 +162,21 @@ public class CitizienDAO implements ICitizienDAO {
             throwables.printStackTrace();
         }
     }
+
+    @Override
+    public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
+        try (Connection connection = dc.getConnection()) {
+            int newID = createCaseToCopy(citizen, connection, fName, lName);
+            int oldID = citizen.getId();
+            createFunkTilCopyCase(oldID, connection, newID);
+            createHelbTilCopyCase(oldID, connection, newID);
+            createGenInfoCopyCase(oldID, connection, newID);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
 
     public void deleteCitizen(int citizenId) throws SQLException {
         try (Connection connection = dc.getConnection()) {
@@ -192,6 +207,22 @@ public class CitizienDAO implements ICitizienDAO {
         }
     }
 
+    private int createCaseToCopy(Citizen citizen, Connection connection, String fName, String lName) throws SQLException {
+        String sql = "INSERT INTO Borger (fName, lName, dato, isTemplate)\n" +
+                "SELECT ?, ?, dato, 1 \n" +
+                "FROM Borger\n" +
+                "WHERE borgerID = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, fName);
+        preparedStatement.setString(2, lName);
+        preparedStatement.setInt(3, citizen.getId());
+        preparedStatement.execute();
+
+        ResultSet idKey = preparedStatement.getGeneratedKeys();
+        idKey.next();
+        return idKey.getInt(1);
+    }
+
     private int createCitizenToCopy(Citizen citizen, Connection connection) throws SQLException {
         String sql = "INSERT INTO Borger (fName, lName, dato, isTemplate)\n" +
                 "SELECT fName, lName, dato, 0 \n" +
@@ -206,7 +237,7 @@ public class CitizienDAO implements ICitizienDAO {
         return idKey.getInt(1);
     }
 
-    private void createHelbTilCopy(int oldId,  Connection connection, int newID) throws SQLException {
+    private void createHelbTilCopy(int oldId, Connection connection, int newID) throws SQLException {
         String SQL = "INSERT INTO HelbredsJournal(borgerID, problemID, value, relevans)\n" +
                 "SELECT ?,problemID, [value], relevans\n" +
                 "FROM Helbredsjournal\n" +
@@ -241,10 +272,44 @@ public class CitizienDAO implements ICitizienDAO {
 
     }
 
+    private void createHelbTilCopyCase(int oldId, Connection connection, int newID) throws SQLException {
+        String SQL = "INSERT INTO HelbredsJournal(borgerID, problemID, technicalNote, relevans, currentEval, expectedCondition, observationNote, [Date])\n" +
+                "SELECT ?, problemID, technicalNote, relevans, currentEval, expectedCondition, observationNote, [Date]\n" +
+                "FROM Helbredsjournal\n" +
+                "WHERE borgerID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+        preparedStatement.setInt(1, newID);
+        preparedStatement.setInt(2, oldId);
+        preparedStatement.execute();
+    }
+
+    private void createFunkTilCopyCase(int oldId, Connection connection, int newID) throws SQLException {
+        String sql = "INSERT INTO FunktionsJournal(borgerID, problemID, nuVurdering, målVurdering, technicalNote, execution, importanceOfexecution, goalNote, [date], obsNote)\n" +
+                "SELECT ?, problemID, nuVurdering, målVurdering, technicalNote, execution, importanceOfexecution, goalNote, [date], obsNote\n" +
+                "FROM FunktionsJournal\n" +
+                "WHERE borgerID = ?\n";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, newID);
+        preparedStatement.setInt(2, oldId);
+        preparedStatement.execute();
+    }
+
+    //TODO gør så den scaler
+    private void createGenInfoCopyCase(int oldId, Connection connection, int newID) throws SQLException {
+        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, borgerID)\n" +
+                "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, ? \n"
+                + "FROM Generelinfo \n"
+                + "WHERE borgerID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, newID);
+        preparedStatement.setInt(2, oldId);
+        preparedStatement.execute();
+    }
+
     //TODO Test om jeg virker
     @Override
     public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
-        try (Connection connection = dc.getConnection()){
+        try (Connection connection = dc.getConnection()) {
             saveFunk(connection, newDate, funkMap, citizen);
             saveHelbred(connection, newDate, healthMap, citizen);
             saveGenInfo(connection, genInfoMap, citizen);
@@ -255,7 +320,7 @@ public class CitizienDAO implements ICitizienDAO {
         String sql = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        for (int key: funkMap.keySet()){
+        for (int key : funkMap.keySet()) {
             FunkResult funkResult = funkMap.get(key);
             preparedStatement.setInt(1, citizen.getId());
             preparedStatement.setInt(2, key);
@@ -275,7 +340,7 @@ public class CitizienDAO implements ICitizienDAO {
     private void saveHelbred(Connection connection, java.sql.Date newDate, Map<Integer, HealthResult> healthMap, Citizen citizen) throws SQLException {
         String sql = "insert into Helbredsjournal(borgerID,problemID,technicalNote,relevans,currentEval,expectedCondition,ObservationNote,Date) values(?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        for (int key: healthMap.keySet()){
+        for (int key : healthMap.keySet()) {
             HealthResult healthResult = healthMap.get(key);
             preparedStatement.setInt(1, citizen.getId());
             preparedStatement.setInt(2, key);
@@ -293,7 +358,7 @@ public class CitizienDAO implements ICitizienDAO {
         String genFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
         StringBuilder sb = new StringBuilder();
         for (String s : genFields.split(",")) {
-            sb.append( s + "=?,");
+            sb.append(s + "=?,");
         }
         String genMarks = sb.deleteCharAt(sb.length() - 1).toString();
         String sql = "UPDATE GenerelInfo SET borgerID=?," + genMarks;

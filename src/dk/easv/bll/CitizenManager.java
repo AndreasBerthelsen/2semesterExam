@@ -76,7 +76,9 @@ public class CitizenManager {
     public void createCopyCitizen(Citizen citizen) {
         facade.createCopyCitizen(citizen);
     }
-
+    public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
+        facade.createCopyCase(citizen, fName, lName);
+    }
 
     public List<Citizen> getAllTemplatesOfCitizens() {
         return facade.getAllTemplatesOfCitizens();
@@ -86,23 +88,9 @@ public class CitizenManager {
         facade.deleteCitizenFromUser(citizenToBeDeleted, user);
     }
 
-    public Citizen loadTemplate(Citizen citizen) {
-        return facade.loadTemplate(citizen);
-
-    }
-
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        facade.updateTemplate(citizen, id);
-    }
-
     public void deleteCitizen(int citizenId) throws SQLException {
         facade.deleteCitizen(citizenId);
     }
-
-    public Citizen loadCitizen(Citizen citizen) {
-        return facade.loadCitizen(citizen);
-    }
-
 
     public void updateLastEdited(Citizen citizen) throws SQLException {
         facade.updateLastEdited(citizen);
@@ -110,6 +98,22 @@ public class CitizenManager {
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
         facade.saveTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
 
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfo(int id) {
+        return facade.loadHealthInfo(id);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        return facade.loadFunkInfo(id);
+    }
+
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        return facade.loadGenInfo(id,fieldList);
+    }
+
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
+        facade.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
     }
 }
 

@@ -1,12 +1,11 @@
 package dk.easv.gui.teacher.controller;
 
-import dk.easv.be.FunkNodeContainer;
-import dk.easv.be.HealthNodeContainer;
-import dk.easv.be.Section;
+import dk.easv.be.*;
 import dk.easv.bll.Util.FunktionTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
 import dk.easv.gui.supercontroller.saveCitizenController;
+import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,27 +13,29 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.springframework.cglib.core.Local;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class NySkabelonMainController extends saveCitizenController implements Initializable {
+public class EditSkabelonViewController extends saveCitizenController implements Initializable, ICitizenSelector {
     public TextField fNameInput;
     public DatePicker dateInput;
     public TextField lNameInput;
     public TextArea descriptionInput;
     public DatePicker obsDatePicker;
     public VBox genInfoVBox;
-    //todo hent alle info fields med ny thread
-    CitizenModel sM = new CitizenModel();
+    private CitizenModel cM;
+    private Citizen citizen;
+    private int id;
     ExecutorService service = Executors.newCachedThreadPool();
+
+
     //funktion
     public TabPane funktionInnerTabPane;
     private final Map<Integer, FunkNodeContainer> funkNodeMap = new LinkedHashMap<>();
@@ -46,45 +47,55 @@ public class NySkabelonMainController extends saveCitizenController implements I
     public TabPane helbredsInnerTabPane;
     private final Map<Integer, HealthNodeContainer> healthNodeMap = new LinkedHashMap<>();
 
-    public NySkabelonMainController() throws IOException {
+    public EditSkabelonViewController() throws IOException {
+        this.cM = new CitizenModel();
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         obsDatePicker.setValue(LocalDate.now());
-        try {
-            setupGenInfoTab();
-            setupFunkTab();
-            setupHelbredTab();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
-    private void setupGenInfoTab() throws ExecutionException, InterruptedException {
-        List<String> fieldList = service.submit((Callable<List<String>>) () -> sM.getGeneralinfoFields()).get();
-        genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContent(fieldList, genInfoNodeMap));
+    @Override
+    public void setCitizen(Citizen citizen) {
+        this.citizen = citizen;
+
+        setupGeneralInfo();
+        setupFunkTab();
+        setupHelbredTab();
     }
 
-    private void setupFunkTab() throws ExecutionException, InterruptedException {
+    private void setupGeneralInfo() {
+        fNameInput.setText(citizen.getFirstname());
+        lNameInput.setText(citizen.getLastname());
+        dateInput.setValue(citizen.getbDate().toLocalDate());
+        descriptionInput.setText(citizen.getDescription());
+
+        List<String> fieldList = cM.getGeneralinfoFields();
+        Map<String, String> genInfo = cM.loadGenInfo(citizen.getId(), fieldList);
+        genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContentWithInfo(fieldList, genInfoNodeMap, genInfo));
+    }
+
+    private void setupFunkTab() {
         service.submit(() -> {
-            List<Section> funkSectionList = sM.getFunkSections();
+            Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
+            List<Section> sectionList = cM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
-            for (Section section : funkSectionList) {
-                tabList.add(FunktionTabFactory.buildFunkTab(section, funkNodeMap));
+            for (Section section : sectionList) {
+                tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo));
             }
             Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });
     }
 
-    private void setupHelbredTab() throws ExecutionException, InterruptedException {
+    private void setupHelbredTab() {
         service.submit(() -> {
-            List<Section> healthSections = sM.getHealthSections();
+            Map<Integer, HealthResult> healthInfo = cM.loadHealthInfo(citizen.getId());
+            List<Section> sectionList = cM.getHealthSections();
 
             List<Tab> tabList = new ArrayList<>();
-            for (Section section : healthSections) {
-                tabList.add(HealthTabFactory.buildHealthTab(section, healthNodeMap));
+            for (Section section : sectionList) {
+                tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo));
             }
             Platform.runLater(() -> helbredsInnerTabPane.getTabs().addAll(tabList));
         });
@@ -95,21 +106,23 @@ public class NySkabelonMainController extends saveCitizenController implements I
         try {
             String fName = fNameInput.getText().trim();
             String lName = lNameInput.getText().trim();
-            java.sql.Date birthDate = Date.valueOf(dateInput.getValue().toString());
             String description = descriptionInput.getText().trim();
-            java.sql.Date obsDate = Date.valueOf(obsDatePicker.getValue().toString());
-
-            sM.saveTemplate(fName, lName, birthDate, description, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
+            Date birthDate = Date.valueOf(dateInput.getValue());
+            Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName, birthDate, description);
+            Date obsDate = Date.valueOf(obsDatePicker.getValue());
+            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap),obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            e.printStackTrace(); //todo fix date snak med jens
-            System.out.println("error");
+            System.out.println("udfyld navne birthdate og desc");
         }
+
     }
 
     public void handleAnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
         stage.close();
     }
+
+
 }

@@ -1,17 +1,14 @@
 package dk.easv.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import dk.easv.be.*;
+import dk.easv.be.Citizen;
+import dk.easv.be.FunkResult;
+import dk.easv.be.HealthResult;
 import dk.easv.dal.interfaces.ITemplateDAO;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TemplateDAO implements ITemplateDAO {
     DatabaseConnector dc;
@@ -70,7 +67,6 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     private void createFunktionsJournalTemplate(Map<Integer, FunkResult> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
-        //todo add date og obs notat
         String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement psF = connection.prepareStatement(sqlF);
@@ -158,237 +154,172 @@ public class TemplateDAO implements ITemplateDAO {
         }
         return list;
     }
-/*
-    private Map<Integer, String> loadHealthInfo(int id, Connection connection) throws SQLException {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "select [value], problemid from helbredsjournal where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
 
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getString("value"));
-        }
+    @Override
+    public Map<Integer, HealthResult> loadHealthInfo(int citizenId) {
+        Map<Integer, HealthResult> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "select [problemID]" +
+                    "      ,[technicalNote]" +
+                    "      ,[relevans]" +
+                    "      ,[currentEval]" +
+                    "      ,[expectedCondition]" +
+                    "      ,[observationNote]" +
+                    "from Helbredsjournal where borgerId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, citizenId);
 
-        return map;
-    }
-
-    private Map<Integer, Integer> loadRelevansMap(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "SELECT problemid, relevans from Helbredsjournal where borgerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("relevans"));
-        }
-        return map;
-    }
-
-    private Map<Integer, String> loadFunkInfo(int id, Connection connection) throws SQLException {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "SELECT problemid, note from FunktionsJournal where borgerID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getString("note"));
-        }
-        return map;
-    }
-
-    private Map<Integer, Integer> loadTargetCombo(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "select problemid, målVurdering from FunktionsJournal inner join targetvurdering on målvurdering = targetid  where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("målVurdering"));
-        }
-        return map;
-    }
-
-
-    private Map<Integer, Integer> loadCurrentComboFromId(int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-        String sql = "select problemid, fNiveau " +
-                "from FunktionsJournal INNER join Vurdering on vurderingsID = nuVurdering\n" +
-                "where borgerid = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            map.put(rs.getInt("problemid"), rs.getInt("fNiveau"));
-        }
-        return map;
-    }
-
-    private LinkedHashMap<String, String> loadGenInfoFromId(int id, Connection connection) throws SQLException {
-        //find coloumns
-        String sql = "select COLUMN_NAME \n" +
-                "from INFORMATION_SCHEMA.COLUMNS \n" +
-                "where TABLE_NAME = N'Generelinfo'";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        //byg sql
-        StringBuilder sb = new StringBuilder();
-        while (rs.next()) {
-            String currentColumn = rs.getString("COLUMN_NAME");
-            if (!currentColumn.toLowerCase().endsWith("id")) {
-                sb.append(currentColumn).append(",");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String technical = rs.getString("technicalNote");
+                String observation = rs.getString("observationNote");
+                String current = rs.getString("currentEval");
+                int expectedIndex = rs.getInt("expectedCondition");
+                int toggleId = rs.getInt("relevans");
+                HealthResult info = new HealthResult(toggleId, expectedIndex, current, observation, technical);
+                int problemid = rs.getInt("problemId");
+                resultMap.put(problemid, info);
             }
-        }
-
-        String columnTitles = sb.deleteCharAt(sb.length() - 1).toString();
-        String sql2 = "Select " + columnTitles + " from generelInfo where borgerid = ?";
-        PreparedStatement ps2 = connection.prepareStatement(sql2);
-        ps2.setInt(1, id);
-
-        ResultSet rs2 = ps2.executeQuery();
-        rs2.next();
-        LinkedHashMap<String, String> genInfoMap = new LinkedHashMap<>();
-        for (String column : columnTitles.split(",")) {
-            genInfoMap.put(column, rs2.getString(column));
-        }
-        return genInfoMap;
-    }
-
-
- */
-
-    @Override
-    public Citizen loadTemplate(Citizen citizen) {
-        //todo fix
-        /*
-        int id = citizen.getId();
-        try (Connection connection = dc.getConnection()) {
-            //gen info
-            LinkedHashMap<String, String> genInfoText = loadGenInfoFromId(id, connection);
-
-            //funk
-            //todo convert id'er til combobox indexes
-            Map<Integer, Integer> currentCombo = loadCurrentComboFromId(id, connection);
-            Map<Integer, Integer> targetCombo = loadTargetCombo(id, connection);
-            Map<Integer, String> funkInfo = loadFunkInfo(id, connection);
-
-            //health
-            //todo convert id'er til combobox indexes | repalce med enums?
-            Map<Integer, Integer> relevansMap = loadRelevansMap(id, connection);
-
-            Map<Integer, String> helbredInfo = loadHealthInfo(id, connection);
-
-            return new Citizen(
-                    citizen.getFirstname(),
-                    citizen.getLastname(),
-                    citizen.getbDate(),
-                    genInfoText,
-                    currentCombo,
-                    targetCombo,
-                    funkInfo,
-                    relevansMap,
-                    helbredInfo);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-         */
-        return null;
-    }
-
-    @Override
-    public void updateTemplate(Citizen citizen, int id) throws SQLServerException {
-        //todo fix
-        /*
-        try (Connection connection = dc.getConnection()) {
-            updateCitizenTemplate(citizen, id, connection);
-            updateFunktionsJournalTemplate(citizen, id, connection);
-            updateGenInfoTemplate(citizen, id, connection);
-            updateHealthJournalTemplate(citizen, id, connection);
-
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-         */
+        return resultMap;
     }
 
-/*
-    private void updateHealthJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        Map<Integer, String> healthInfoMap = citizen.getHelbredInfo();
-        Map<Integer, Integer> healthRelevansMap = citizen.getRelevansMap();
-        //helbred
-        List<Integer> healthMasterKeys = Stream.of(healthInfoMap.keySet(), healthRelevansMap.keySet())
-                .flatMap(Collection::stream)
-                .distinct()
-                .collect(Collectors.toList());
-        String sqlH = "Update Helbredsjournal set value=?,relevans=? where problemid = ? and borgerid =?";
+    @Override
+    public Map<Integer, FunkResult> loadFunkInfo(int id) {
+        Map<Integer, FunkResult> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "Select [problemID]\n" +
+                    "      ,[nuVurdering]\n" +
+                    "      ,[målVurdering]\n" +
+                    "      ,[technicalNote]\n" +
+                    "      ,[execution]\n" +
+                    "      ,[importanceOfExecution]\n" +
+                    "      ,[goalNote]\n" +
+                    "      ,[obsNote] from funktionsjournal where borgerid = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int importance = rs.getInt("importanceOfExecution");
+                String citizenString = rs.getString("goalNote");
+                String technical = rs.getString("TechnicalNote");
+                String observation = rs.getString("obsNote");
+                int execution = rs.getInt("execution");
+                int target = rs.getInt("målVurdering");
+                int current = rs.getInt("nuVurdering");
 
-        PreparedStatement psH = connection.prepareStatement(sqlH);
-        for (int key : healthMasterKeys) {
-            psH.setString(1, healthInfoMap.get(key));
-            psH.setInt(2, healthRelevansMap.get(key));
-            psH.setInt(3, key);
-            psH.setInt(4, id);
-            psH.addBatch();
+                int problemId = rs.getInt("problemId");
+                FunkResult funkResult = new FunkResult(importance, citizenString, technical, observation, execution, target, current);
+                resultMap.put(problemId, funkResult);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        psH.executeBatch();
+        return resultMap;
     }
 
-    private void updateGenInfoTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        Map<String, String> genInfoMap = citizen.getGenInfoText();
+    @Override
+    public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
+        Map<String, String> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String geninfoFields = fieldList.toString().replace(" ", "").replace("[", "").replace("]", "");
+            String sql = "select " + geninfoFields + " from GenerelInfo where borgerId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            for (String fieldName : fieldList) {
+                resultMap.put(fieldName, rs.getString(fieldName));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
+    }
 
-        String geninfoFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
+    @Override
+    public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
+        try (Connection connection = dc.getConnection()) {
+            int id = updatedCitizen.getId();
+            updateCitizen(updatedCitizen, connection);
+            updateGenInfo(id, genResultMap, connection);
+            updateFunktion(id, funkResultMap, obsDate, connection);
+            updateHealth(id, healthResultMap, obsDate, connection);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    private void updateHealth(int id, Map<Integer, HealthResult> healthResultMap, Date obsDate, Connection connection) throws SQLException {
+        String sql = "UPDATE Helbredsjournal set technicalNote=?,relevans=?,currentEval=?" +
+                ",expectedCondition=?,observationNote=?,[Date]=? where borgerId = ? and problemId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        for (int problemid : healthResultMap.keySet()) {
+            HealthResult result = healthResultMap.get(problemid);
+            ps.setString(1, result.getTechnical());
+            ps.setInt(2, result.getToggleId());
+            ps.setString(3, result.getCurrent());
+            ps.setInt(4, result.getExpectedIndex());
+            ps.setString(5, result.getObservation());
+            ps.setDate(6, obsDate);
+            ps.setInt(7, id);
+            ps.setInt(8, problemid);
+            ps.addBatch();
+        }
+        ps.executeBatch();
+    }
+
+    private void updateFunktion(int id, Map<Integer, FunkResult> funkResultMap, Date obsDate, Connection connection) throws SQLException {
+        String sql = "UPDATE funktionsJournal set nuVurdering = ?,målVurdering =?,technicalNote=?,execution =?" +
+                ",importanceOfExecution =?,goalNote=?,[date]=?,obsNote =? where borgerId = ? and problemId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        for (int problemId : funkResultMap.keySet()) {
+            FunkResult result = funkResultMap.get(problemId);
+            ps.setInt(1, result.getCurrent());
+            ps.setInt(2, result.getTarget());
+            ps.setString(3, result.getTechnical());
+            ps.setInt(4, result.getExecution());
+            ps.setInt(5, result.getImportance());
+            ps.setString(6, result.getCitizenString());
+            ps.setDate(7, obsDate);
+            ps.setString(8, result.getObservation());
+            ps.setInt(9, id);
+            ps.setInt(10, problemId);
+            ps.addBatch();
+        }
+        ps.executeBatch();
+    }
+
+    private void updateGenInfo(int id, Map<String, String> genResultMap, Connection connection) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        for (String s : geninfoFields.split(",")) {
-            sb.append(s).append("=?,");
+        for (String key : genResultMap.keySet()) {
+            sb.append(key).append("=?,");
         }
-        String genFieldsAndMarks = sb.deleteCharAt(sb.length() - 1).toString();
-
-        String genSql = "UPDATE Generelinfo set " + genFieldsAndMarks + " where borgerid =" + id;
-        PreparedStatement psGen = connection.prepareStatement(genSql);
+        String columns = sb.deleteCharAt(sb.length() - 1).toString();
+        String sql = "Update generelInfo set " + columns + " where borgerId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
         int index = 1;
-        psGen.setInt(1, id);
-        for (String s : genInfoMap.values()) {
-            psGen.setString(index++, s);
-
+        for (String column : genResultMap.keySet()) {
+            ps.setString(index++, genResultMap.get(column));
         }
-        psGen.execute();
+        ps.setInt(index, id);
+        ps.execute();
     }
 
-    private void updateFunktionsJournalTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        Map<Integer, Integer> funkCurrentCombo = citizen.getCurrentCombo();
-        Map<Integer, Integer> funkTargetCombo = citizen.getTargetCombo();
-        Map<Integer, String> funkInfo = citizen.getFunkInfo();
-        List<Integer> funkMasterKeys = Stream.of(funkCurrentCombo.keySet(), funkTargetCombo.keySet(), funkInfo.keySet())
-                .flatMap(Collection::stream)
-                .distinct()
-                .collect(Collectors.toList());
-
-        String sqlF = "update FunktionsJournal set nuVurdering = ?, målvurdering = ?, note = ? where problemid = ? and borgerId =?";
-        PreparedStatement psF = connection.prepareStatement(sqlF);
-        for (int key : funkMasterKeys) {
-            psF.setInt(1, funkCurrentCombo.get(key));
-            psF.setInt(2, funkTargetCombo.get(key));
-            psF.setString(3, funkInfo.get(key));
-            psF.setInt(4, key);
-            psF.setInt(5, id);
-            psF.addBatch();
-        }
-        psF.executeBatch();
+    private void updateCitizen(Citizen updatedCitizen, Connection connection) throws SQLException {
+        String sql = "Update Borger set fName =?,lName=?,dato=?,description=? where borgerid = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, updatedCitizen.getFirstname());
+        ps.setString(2, updatedCitizen.getLastname());
+        ps.setDate(3, updatedCitizen.getbDate());
+        ps.setString(4, updatedCitizen.getDescription());
+        ps.setInt(5, updatedCitizen.getId());
+        ps.execute();
     }
-
-    private void updateCitizenTemplate(Citizen citizen, int id, Connection connection) throws SQLException {
-        String sql = "update Borger set fname = ?, lname = ?, dato=? where borgerid = ?";
-        PreparedStatement psB = connection.prepareStatement(sql);
-        psB.setString(1, citizen.getFirstname());
-        psB.setString(2, citizen.getLastname());
-        psB.setDate(3, citizen.getbDate());
-        psB.setInt(4, id);
-        psB.execute();
-    }
-
- */
 }
+
