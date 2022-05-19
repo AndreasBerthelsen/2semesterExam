@@ -40,7 +40,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button mnemonicParsing="false" onAction="#handleInspect" prefHeight="49.0" prefWidth="138.0" style="-fx-background-color: 8eff4d;" text="Inspicer">
+            <Button mnemonicParsing="false" onAction="#handleInspect" prefHeight="49.0" prefWidth="138.0" style="-fx-background-color: 8eff4d;" text="Åbn">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
