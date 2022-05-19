@@ -61,7 +61,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField id="AddOrEditTxtfield" fx:id="usernameTxtField">
+                        <TextField id="AddOrEditTxtfield" fx:id="usernameTxt">
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" />
                            </VBox.margin>
@@ -112,7 +112,8 @@
          <children>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="290.0" spacing="25.0">
                <children>
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="usertypeCombobox" prefWidth="150.0" />
+                  <ComboBox fx:id="schoolCombobox" prefWidth="150.0" />
                   <Label id="AddOrEditLabel" text="Angiv ny adgangskode" />
                   <TextField id="AddOrEditTxtfield" fx:id="passwordTxtFIeld">
                      <VBox.margin>

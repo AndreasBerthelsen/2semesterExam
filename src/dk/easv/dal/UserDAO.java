@@ -33,21 +33,21 @@ public class UserDAO implements IUserDAO {
      */
 
     @Override
-    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType, int schoolID) {
-        try (Connection connection = dc.getConnection()) {
-            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt, skole) VALUES (?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, firstName);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setString(3, username);
-            preparedStatement.setString(4, hashedPassword);
-            preparedStatement.setInt(5, userType.getI());
-            preparedStatement.setString(6, salt);
-            preparedStatement.setInt(7, schoolID);
-            preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType, int schoolID) throws SQLException {
+            try (Connection connection = dc.getConnection()) {
+                String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt, skole) VALUES (?,?,?,?,?,?,?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, firstName);
+                preparedStatement.setString(2, lastName);
+                preparedStatement.setString(3, username);
+                preparedStatement.setString(4, hashedPassword);
+                preparedStatement.setInt(5, userType.getI());
+                preparedStatement.setString(6, salt);
+                preparedStatement.setInt(7, schoolID);
+                preparedStatement.execute();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
     }
 
 
@@ -78,7 +78,7 @@ public class UserDAO implements IUserDAO {
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
        List<User> allUsers = new ArrayList<>();
        try(Connection con = dc.getConnection()) {
-           String sql = "SELECT userID, fName, lName\n" +
+           String sql = "SELECT userID, fName, lName, username\n" +
                    "From [User] \n" +
                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
                    "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
@@ -91,7 +91,8 @@ public class UserDAO implements IUserDAO {
                int id = resultSet.getInt("userID");
                String fName = resultSet.getString("fname");
                String lName = resultSet.getString("lName");
-               allUsers.add(new User(id, fName, lName, userType));
+               String username = resultSet.getString("username");
+               allUsers.add(new User(id, fName, lName, username, userType));
            }
 
        } catch (SQLException e) {
@@ -158,5 +159,20 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean checkUsername(String username) {
+        try(Connection connection = dc.getConnection()) {
+            String sql = "SELECT * FROM [User] WHERE username = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

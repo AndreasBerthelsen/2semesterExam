@@ -56,4 +56,8 @@ public class UserManager {
         return facade.getAllSchools();
     }
 
+    public boolean checkUsername(String username){
+        return facade.checkUsername(username);
+    }
+
 }

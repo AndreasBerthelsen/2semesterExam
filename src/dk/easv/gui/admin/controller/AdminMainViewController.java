@@ -40,10 +40,13 @@ public class AdminMainViewController extends SuperController implements Initiali
     private Button exitBtn;
 
     private AdminModel aM;
+    private UserModel uM;
 
+    User user;
 
     public AdminMainViewController() throws SQLServerException {
         aM = new AdminModel();
+        uM = new UserModel();
     }
 
     @Override
@@ -62,14 +65,8 @@ public class AdminMainViewController extends SuperController implements Initiali
         }
     }
 
-    public void handleEditUserBtn(ActionEvent actionEvent) {
-    }
-
     public void handleAddUserBtn(ActionEvent actionEvent) throws IOException {
         openScene("/dk/easv/gui/admin/view/AddTeacherView.fxml",false, "Tilføj en lærer eller elev", false);
-    }
-
-    public void handleDeleteUserBtn(ActionEvent actionEvent) {
     }
 
     public void handleSignOut(ActionEvent actionEvent) throws IOException {
@@ -93,7 +90,37 @@ public class AdminMainViewController extends SuperController implements Initiali
 
     @Override
     public void setUserInfo(User user) {
-        
+        this.user = user;
+    }
+
+    public void handleEditTeacherBtn(ActionEvent actionEvent) {
+    }
+
+    public void handleDeleteTeacherBtn(ActionEvent actionEvent) {
+        if (teacherTable.getSelectionModel().getSelectedItem() == null) {
+            errorMessage("Vælg venligst en lærer, som du vil slette");
+        } else {
+            User teacher = teacherTable.getSelectionModel().getSelectedItem();
+            if (confirmationBox("Er du sikker på, at du vil slette" + " " + teacher.getFirstname() + " " + teacher.getLastname() + "?").get() == ButtonType.YES) {
+                uM.deleteUser(teacher);
+                teacherTable.getItems().remove(teacher);
+            }
+        }
+    }
+
+    public void handleEditStudentBtn(ActionEvent actionEvent) {
+    }
+
+    public void handleDeleteStudentBtn(ActionEvent actionEvent) {
+        if (studentTable.getSelectionModel().getSelectedItem() == null) {
+            errorMessage("Vælg venligst en elev, som du vil slette");
+        } else {
+            User student = studentTable.getSelectionModel().getSelectedItem();
+            if (confirmationBox("Er du sikker på, at du vil slette" + " " + student.getFirstname() + " " + student.getLastname() + "?").get() == ButtonType.YES) {
+                uM.deleteUser(student);
+                studentTable.getItems().remove(student);
+            }
+        }
     }
 }
 

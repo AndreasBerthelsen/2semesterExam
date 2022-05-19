@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.springframework.cglib.core.Local;
 
 import java.io.IOException;
 import java.net.URL;
