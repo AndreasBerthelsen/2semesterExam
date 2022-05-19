@@ -79,7 +79,7 @@
       </HBox>
    </center>
    <bottom>
-      <VBox alignment="CENTER" prefWidth="1129.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -88,9 +88,9 @@
               <columns>
                   <TableColumn fx:id="displayStudentNameCol" maxWidth="7500.0" prefWidth="75.0">
                      <columns>
-                      <TableColumn fx:id="tempDisplayID" maxWidth="1500.0" prefWidth="56.79998779296875" text="Borger nummer" />
-                      <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="416.80006408691406" text="Fornavn" />
-                        <TableColumn fx:id="tempDisplayLname" prefWidth="-1.0" text="Efternavn" />
+                      <TableColumn fx:id="citizenDisplayID" maxWidth="1500.0" prefWidth="56.79998779296875" text="Borger nummer" />
+                      <TableColumn fx:id="citizenDisplayFname" minWidth="0.0" prefWidth="416.80006408691406" text="Fornavn" />
+                        <TableColumn fx:id="citizenDisplayLname" prefWidth="-1.0" text="Efternavn" />
                      </columns>
                   </TableColumn>
               </columns>
@@ -98,14 +98,17 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <VBox.margin>
-                  <Insets left="450.0" />
+                  <Insets />
                </VBox.margin>
             </TableView>
             <Button id="CitizenBtn" mnemonicParsing="false" onAction="#handleRemoveCitizenFromStudentBtn" text="Fjern">
                <VBox.margin>
-                  <Insets left="450.0" />
+                  <Insets />
                </VBox.margin></Button>
          </children>
+         <padding>
+            <Insets bottom="15.0" left="475.0" />
+         </padding>
       </VBox>
    </bottom>
 </BorderPane>

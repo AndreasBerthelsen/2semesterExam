@@ -39,11 +39,11 @@ public class CitizenTeacherViewController extends SuperController implements Ini
     @FXML
     private TableColumn<Citizen, String> tempLnameCol;
     @FXML
-    private TableColumn<Citizen, Integer> tempDisplayID;
+    private TableColumn<Citizen, Integer> citizenDisplayID;
     @FXML
-    private TableColumn<Citizen, String> tempDisplayFname;
+    private TableColumn<Citizen, String> citizenDisplayFname;
     @FXML
-    private TableColumn<Citizen, String> tempDisplayLname;
+    private TableColumn<Citizen, String> citizenDisplayLname;
     @FXML
     private TableColumn<User, String> studentFnameCol;
     @FXML
@@ -116,15 +116,19 @@ public class CitizenTeacherViewController extends SuperController implements Ini
     public void displayCitizensFromStudent(User user) {
         user = selectedUser();
         displayStudentNameCol.setText("Borgere tilknyttet: " + selectedUser().getFirstname() + " " + selectedUser().getLastname());
-        tempDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tempDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        tempDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        citizenDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        citizenDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        citizenDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         displayTableView.setItems(citizenModel.getAllCitizenFromUserObservable(user));
     }
 
     public void setDescription(Citizen citizen) throws SQLException {
+        if (citizen.getDescription() != null){
         descriptionTextArea.setText(citizen.getDescription());
         descriptionTextArea.setWrapText(true);
+        }else{
+            descriptionTextArea.setText(" ");
+        }
     }
 
 
