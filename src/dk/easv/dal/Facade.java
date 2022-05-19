@@ -47,10 +47,6 @@ public class Facade {
     }
 
 
-    public HashMap<Integer, String> getFunktionsTilstande() {
-        return iFunktionsDAO.getFunktionsTilstande();
-    }
-
     public List<Category> getAllTitles() throws SQLServerException {
         return iHealthDAO.getAllTitle();
     }
@@ -58,10 +54,6 @@ public class Facade {
     public List<String> getAllSubTitles(Category category) throws SQLServerException {
         return iHealthDAO.getSubTitles(category);
 
-    }
-
-    public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {
-        return iFunktionsDAO.getFunktionsVandskligheder();
     }
 
     public User loginUser(String username, String password) throws SQLException {
@@ -72,13 +64,6 @@ public class Facade {
         iUserDAO.createUser(firstName, lastName, username, hashedPassword, salt, userType, schoolID);
     }
 
-    public HashMap<Integer, String> getHelbredsTilstande() {
-        return iHealthDAO.getHelbredsTilstande();
-    }
-
-    public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
-        return iHealthDAO.getHelbredsVanskligheder();
-    }
 
     public List<User> getAllUsers(UserType userType) throws SQLServerException {
         return iUserDAO.getAllUsers(userType);
@@ -102,10 +87,6 @@ public class Facade {
 
     public List<Citizen> getAllCitiziensFromUser(User user) {
         return iCitizienDAO.getAllCitizensFromUser(user);
-    }
-
-    public void createCitizen(String fname, String lname, Date birthDay) {
-        iCitizienDAO.createCitizen(fname, lname, birthDay);
     }
 
     public void addUserToCitizen(Citizen citizen, User user) {

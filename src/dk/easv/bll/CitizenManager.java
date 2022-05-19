@@ -3,15 +3,12 @@ package dk.easv.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.*;
-
 import dk.easv.dal.Facade;
-import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,24 +23,6 @@ public class CitizenManager {
     public ArrayList<String> getGeneralinfoFields() {
         return facade.getGeneralinfoFields();
     }
-
-    public HashMap<Integer, String> getFunktionsTilstande() {
-        return facade.getFunktionsTilstande();
-    }
-
-    public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {
-        return facade.getFunktionsVandskligheder();
-    }
-
-
-    public HashMap<Integer, String> getHelbredsTilstande() {
-        return facade.getHelbredsTilstande();
-    }
-
-    public HashMap<Integer, ArrayList<String>> getHelbredVanskligheder() {
-        return facade.getHelbredVanskligheder();
-    }
-
 
     public List<Citizen> getAllCitizen() {
         return facade.getAllCitiziens();
@@ -73,9 +52,11 @@ public class CitizenManager {
     public List<Citizen> getAllTemplates() throws SQLException {
         return facade.getAllTemplates();
     }
+
     public void createCopyCitizen(Citizen citizen) {
         facade.createCopyCitizen(citizen);
     }
+
     public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {
         facade.createCopyCase(citizen, fName, lName);
     }
@@ -95,8 +76,9 @@ public class CitizenManager {
     public void updateLastEdited(Citizen citizen) throws SQLException {
         facade.updateLastEdited(citizen);
     }
+
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
-        facade.saveTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
+        facade.saveTemplate(fName, lName, birthDate, description, saveGeninfo, saveFunk, saveHealth, obsDate);
 
     }
 
@@ -109,11 +91,11 @@ public class CitizenManager {
     }
 
     public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
-        return facade.loadGenInfo(id,fieldList);
+        return facade.loadGenInfo(id, fieldList);
     }
 
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
-        facade.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
+        facade.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
     }
 }
 

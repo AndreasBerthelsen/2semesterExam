@@ -6,13 +6,11 @@ import dk.easv.be.*;
 import dk.easv.bll.CitizenManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,14 +37,6 @@ public class CitizenModel {
 
     public ArrayList<String> getGeneralinfoFields() {
         return cM.getGeneralinfoFields();
-    }
-
-    public HashMap<Integer, String> getFunktionsTilstande() {
-        return cM.getFunktionsTilstande();
-    }
-
-    public HashMap<Integer, ArrayList<String>> getFunktionsVandskligheder() {
-        return cM.getFunktionsVandskligheder();
     }
 
 
@@ -108,7 +98,7 @@ public class CitizenModel {
 
 
     public void saveTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) throws SQLServerException {
-        cM.saveTemplate(fName,lName,birthDate, description, saveGeninfo,  saveFunk, saveHealth,obsDate);
+        cM.saveTemplate(fName, lName, birthDate, description, saveGeninfo, saveFunk, saveHealth, obsDate);
     }
 
     public Map<Integer, HealthResult> loadHealthInfo(int id) {
@@ -120,10 +110,10 @@ public class CitizenModel {
     }
 
     public Map<String, String> loadGenInfo(int id, List<String> fieldList) {
-        return cM.loadGenInfo(id,fieldList);
+        return cM.loadGenInfo(id, fieldList);
     }
 
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
-     cM.updateTemplate(updatedCitizen,genResultMap,funkResultMap,healthResultMap,obsDate);
+        cM.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
     }
 }

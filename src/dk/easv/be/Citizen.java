@@ -11,20 +11,7 @@ import java.util.Map;
 
 public class Citizen {
 
-    //gen id i DAO metode??
     private int id;
-
-    //gen info
-    private Map<String,String> genInfoText;
-
-    //funktion
-    private Map<Integer,Integer> currentCombo;
-    private Map<Integer,Integer> targetCombo;
-    private Map<Integer,String> funkInfo;
-
-    //Helbred
-    private Map<Integer, Integer> relevansMap;
-    private Map<Integer, String> helbredInfo;
 
     private String firstname;
     private String lastname;
@@ -59,17 +46,6 @@ public class Citizen {
         this.lastChanged = lastChanged;
     }
 
-    public Citizen(String fName, String lName, Date date, Map<String, String> genInfoText, Map<Integer, Integer> currentCombo, Map<Integer, Integer> targetCombo, Map<Integer, String> funkInfo, Map<Integer, Integer> relevansMap, Map<Integer, String> helbredInfo) {
-        this.genInfoText = genInfoText;
-        this.currentCombo = currentCombo;
-        this.targetCombo = targetCombo;
-        this.funkInfo = funkInfo;
-        this.relevansMap = relevansMap;
-        this.helbredInfo = helbredInfo;
-        this.firstname = fName;
-        this.lastname = lName;
-        this.bDate = date;
-    }
 
     public int getId() {
         return id;
@@ -95,31 +71,6 @@ public class Citizen {
         return bDate;
     }
 
-
-
-    public Map<String, String> getGenInfoText() {
-        return genInfoText;
-    }
-
-    public Map<Integer, Integer> getCurrentCombo() {
-        return currentCombo;
-    }
-
-    public Map<Integer, Integer> getTargetCombo() {
-        return targetCombo;
-    }
-
-    public Map<Integer, String> getFunkInfo() {
-        return funkInfo;
-    }
-
-    public Map<Integer, Integer> getRelevansMap() {
-        return relevansMap;
-    }
-
-    public Map<Integer, String> getHelbredInfo() {
-        return helbredInfo;
-    }
 
     public String getDescription() {
         return description;
