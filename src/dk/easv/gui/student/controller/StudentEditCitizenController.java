@@ -1,23 +1,16 @@
 package dk.easv.gui.student.controller;
 
 import dk.easv.be.Citizen;
-import dk.easv.be.Section;
 import dk.easv.gui.supercontroller.saveCitizenController;
 import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.*;
+import java.time.LocalDate;
 
 public class StudentEditCitizenController extends saveCitizenController implements ICitizenSelector {
     public TabPane funktionInnerTabPane;
@@ -47,17 +40,17 @@ public class StudentEditCitizenController extends saveCitizenController implemen
         fNameInput.setText(citizen.getFirstname());
         lNameInput.setText(citizen.getLastname());
         dateInput.setValue(citizen.getbDate().toLocalDate());
-
+        fillDateSelector();
         setupGeneralInfo();
         setupFunkTab();
         setupHelbredTab();
     }
 
-    private void fillDateSelector(){
+    private void fillDateSelector() {
         dateSelectorCombo.setItems(cM.getObservableLogDates(id)); //eksemple [19-05-2022] Idag  -> [09-05-2022] -> [27-04-2022]
         dateSelectorCombo.getSelectionModel().select(0);
     }
-    
+
     private void setupGeneralInfo() {
 
     }
@@ -81,5 +74,9 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     }
 
     public void handleDateCombo(ActionEvent actionEvent) {
+        Date date= Date.valueOf(dateSelectorCombo.getSelectionModel().getSelectedItem().substring(0,9));
+
+        System.out.println(dateSelectorCombo.getItems());
+        System.out.println(date);
     }
 }

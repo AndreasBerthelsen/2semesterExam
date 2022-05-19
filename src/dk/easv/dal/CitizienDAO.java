@@ -9,6 +9,7 @@ import dk.easv.dal.interfaces.ICitizienDAO;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -374,16 +375,23 @@ public class CitizienDAO implements ICitizienDAO {
 
     @Override
     public Collection<String> getLogDates(int id) {
+        List<String> list = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
-            String sql = "";
+            String sql = "select DISTINCT [date] from FunktionsJournal where borgerID = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
 
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getDate("date").toString());
+            }
 
+            System.out.println(list);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
-        return null;
+        return list;
     }
 }

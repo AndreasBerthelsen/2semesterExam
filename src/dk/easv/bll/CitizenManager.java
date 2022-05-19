@@ -4,7 +4,6 @@ package dk.easv.bll;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.*;
 import dk.easv.dal.Facade;
-import org.springframework.cglib.core.Local;
 
 import java.io.IOException;
 import java.sql.Date;

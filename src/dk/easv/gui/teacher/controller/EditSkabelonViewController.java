@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.springframework.cglib.core.Local;
 
 import java.io.IOException;
 import java.net.URL;
@@ -110,7 +109,7 @@ public class EditSkabelonViewController extends saveCitizenController implements
             Date birthDate = Date.valueOf(dateInput.getValue());
             Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName, birthDate, description);
             Date obsDate = Date.valueOf(obsDatePicker.getValue());
-            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap),obsDate);
+            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
