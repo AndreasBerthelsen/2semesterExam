@@ -32,7 +32,7 @@ public class CitizenManager {
         return facade.getAllCitiziensFromUser(user);
     }
 
-    public void addUserToCitizen(Citizen citizen, User user) {
+    public void addUserToCitizen(int citizen, User user) {
         facade.addUserToCitizen(citizen, user);
     }
 
@@ -53,8 +53,10 @@ public class CitizenManager {
         return facade.getAllTemplates();
     }
 
-    public void createCopyCitizen(Citizen citizen) {
-        facade.createCopyCitizen(citizen);
+
+
+    public int createCopyCitizen(Citizen citizen) {
+       return facade.createCopyCitizen(citizen);
     }
 
     public void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException {

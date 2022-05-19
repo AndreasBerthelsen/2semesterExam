@@ -104,8 +104,8 @@
               <columns>
                   <TableColumn prefWidth="75.0" text="Borgere tilknyttet den valgte elev">
                      <columns>
-                      <TableColumn fx:id="tempDisplayID" maxWidth="251.4667163530994" prefWidth="74.93335062662845" text="ID" />
-                      <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="514.6667022705078" text="Fornavn" />
+                      <TableColumn fx:id="tempDisplayID" maxWidth="251.4667163530994" prefWidth="52.0" text="ID" />
+                      <TableColumn fx:id="tempDisplayFname" minWidth="0.0" prefWidth="421.5999755859375" text="Fornavn" />
                         <TableColumn fx:id="tempDisplayLname" prefWidth="631.2000732421875" text="Efternavn" />
                      </columns>
                   </TableColumn>

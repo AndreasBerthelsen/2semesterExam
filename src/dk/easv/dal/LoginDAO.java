@@ -37,7 +37,6 @@ public class LoginDAO implements ILoginDAO {
                 int school = resultSet.getInt("skole");
 
                 if (BCrypt.checkpw(password, hashed)) {
-                    System.out.println(school);
                     return new User(id, firstname, lastname, loginName, type, school);
                 } else {
                     System.out.println("Big bummer");

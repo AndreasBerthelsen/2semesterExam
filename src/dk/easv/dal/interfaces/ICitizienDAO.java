@@ -6,7 +6,6 @@ import dk.easv.be.FunkResult;
 import dk.easv.be.HealthResult;
 import dk.easv.be.User;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,12 +15,12 @@ public interface ICitizienDAO {
     List<Citizen> getAllCitizens();
     List<Citizen> getAllTemplatesOfCitizens();
     void createCitizen(String fName, String lName, Date birthDate);
-    void addUserToCitizen(User user, Citizen citizen);
+    void addUserToCitizen(User user, int citizen);
     void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user);
     
     List<Citizen> getAllCitizensFromUser(User user);
 
-    void createCopyCitizen(Citizen citizen);
+    int createCopyCitizen(Citizen citizen);
     void createCopyCase(Citizen citizen, String fName, String lName) throws SQLServerException;
 
     void deleteCitizen(int citizenId) throws SQLException;

@@ -3,6 +3,7 @@ package dk.easv.gui.teacher.controller;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
+import dk.easv.gui.supercontroller.SuperController;
 import dk.easv.gui.teacher.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import dk.easv.gui.teacher.model.UserModel;
@@ -12,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,9 +23,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CitizenTeacherViewController implements Initializable, IController {
+public class CitizenTeacherViewController extends SuperController implements Initializable, IController {
 
 
+    @FXML
+    private ImageView studentTipImageView;
     @FXML
     private TextArea descriptionTextArea;
     @FXML
@@ -38,17 +43,11 @@ public class CitizenTeacherViewController implements Initializable, IController 
     @FXML
     private TableColumn<Citizen, String> tempDisplayLname;
     @FXML
-    private TableColumn<Citizen, String> citizenFnameCol;
-    @FXML
-    private TableColumn<Citizen, String> citizenLnameCol;
-    @FXML
     private TableColumn<User, String> studentFnameCol;
     @FXML
     private TableColumn<User, String> studentLnameCol;
     @FXML
     private TableView<Citizen> displayTableView;
-    @FXML
-    private TableView<Citizen> citizenTableView;
     @FXML
     private TableView<User> studentTableView;
 
@@ -69,72 +68,47 @@ public class CitizenTeacherViewController implements Initializable, IController 
         //sets the list with names of the students
         studentFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         studentLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-        //sets the list with names of the citizens
-        citizenFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        citizenLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-
+        setToolTip();
         try {
             tempTableView.setItems(citizenModel.getAllTemplatesOfCitizensObservable());
             studentTableView.setItems(userModel.getObservableStudents());
-            citizenTableView.setItems(citizenModel.getAllCitizenObservable());
+            studentTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         } catch (SQLServerException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void handleCopyCitizenBtn(ActionEvent actionEvent) {
-        Citizen selectedCitizen = tempTableView.getSelectionModel().getSelectedItem();
-        citizenModel.createCopyCitizen(selectedCitizen);
-        citizenTableView.setItems(citizenModel.getAllCitizenObservable());
+    private void setToolTip(){
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Hold ''Ctrl'' knappen inde på dit tastatur, mens du klikker, for at vælge mere end en elev ad gangen");
+        tooltip.setShowDelay(Duration.seconds(1));
+        tooltip.setWrapText(true);
+        Tooltip.install(studentTipImageView, tooltip);
+        System.out.println("3");
     }
+
 
     public void handleRemoveCitizenBtn(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Er du sikker på du ville slette denne kopi?");
+        /** Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+         alert.setContentText("Er du sikker på du ville slette denne kopi?");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            Citizen citizen = citizenTableView.getSelectionModel().getSelectedItem();
-            try {
-                citizenModel.deleteCitizen(citizen.getId());
-                citizenTableView.getItems().remove(citizen);
-            } catch (Exception e) {
-                //error here
-                e.printStackTrace();
-            }
-        } else {
-            // ... user chose CANCEL or closed the dialog
-        }
+         Optional<ButtonType> result = alert.showAndWait();
+         if (result.get() == ButtonType.OK) {
+         Citizen citizen = citizenTableView.getSelectionModel().getSelectedItem();
+         try {
+         citizenModel.deleteCitizen(citizen.getId());
+         citizenTableView.getItems().remove(citizen);
+         } catch (Exception e) {
+         //error here
+         e.printStackTrace();
+         }
+         } else {
+         // ... user chose CANCEL or closed the dialog
+         }*/
     }
 
-    public void handleAddTemplateToStudentBtn(ActionEvent actionEvent) throws SQLServerException {
-        boolean alreadyHasCitizen = false;
-        Citizen selectedCitizen = citizenTableView.getSelectionModel().getSelectedItem();
-        User selectedUser = studentTableView.getSelectionModel().getSelectedItem();
 
-        if (selectedCitizen != null && selectedUser != null) {
-            ObservableList<Citizen> citizensObservable = citizenModel.getAllCitizenFromUserObservable(selectedUser);
-            for (Citizen citizen : citizensObservable) {
-                if (citizen.getId() == selectedCitizen.getId()) {
-                    alreadyHasCitizen = true;
-                    break;
-                }
-            }
-
-            if (!alreadyHasCitizen) {
-                citizenModel.addUserToCitizen(selectedCitizen, selectedUser);
-                citizensObservable.add(selectedCitizen);
-                displayTableView.getItems().clear();
-                displayTableView.setItems(citizensObservable);
-            } else {
-                //error(selectedCitizen.getfirstname() + " " + selectedCitizen.getlastname() + " er allerede tilføjet " + selectedUser.getFirstname() + " " + selectedUser.getLastname());
-            }
-        } else {
-            error("Vælg en Borger og den studerende, der skal tilknyttes");
-        }
-
-    }
 
     public void handleRemoveTemplateFromStudentBtn(ActionEvent actionEvent) {
         try {
@@ -172,7 +146,6 @@ public class CitizenTeacherViewController implements Initializable, IController 
     }
 
 
-
     public User selectedUser() {
         return studentTableView.getSelectionModel().getSelectedItem();
     }
@@ -190,5 +163,46 @@ public class CitizenTeacherViewController implements Initializable, IController 
     @Override
     public void setUserInfo(User user) {
 
+    }
+
+
+    public void handleAddOneCitizenToAllStudents(ActionEvent actionEvent) throws SQLServerException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Advarsel");
+        alert.setContentText("Vil du gerne give alle elever, deres egen borger ud fra den valgte skabelon?");
+        alert.setHeaderText("Er du sikker?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
+            ObservableList<User> studentList = studentTableView.getItems();
+
+            for (User u : studentList) {
+                int newCitizenID = citizenModel.createCopyCitizen(selectedTemplate);
+                citizenModel.addUserToCitizen(newCitizenID, u);
+            }
+
+        }
+    }
+
+    public void handleAddCitizenToStudent(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Advarsel");
+        alert.setContentText("Vil du gerne give alle valgte elever, deres egen borger ud fra den valgte skabelon?");
+        alert.setHeaderText("Er du sikker?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
+            ObservableList<User> selectedStudents = studentTableView.getSelectionModel().getSelectedItems();
+            int newCitizenID = citizenModel.createCopyCitizen(selectedTemplate);
+
+            for (User u : selectedStudents) {
+                citizenModel.addUserToCitizen(newCitizenID, u);
+            }
+        }
+    }
+
+    public void handleAddTemplateToStudentBtn(ActionEvent actionEvent) {
     }
 }

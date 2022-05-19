@@ -9,7 +9,6 @@ import dk.easv.dal.interfaces.ICitizienDAO;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -84,11 +83,11 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     @Override
-    public void addUserToCitizen(User user, Citizen citizen) {
+    public void addUserToCitizen(User user, int citizen) {
         try (Connection connection = dc.getConnection()) {
             String sql = "INSERT INTO CitUser (citFK, userFK) VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, citizen.getId());
+            preparedStatement.setInt(1, citizen);
             preparedStatement.setInt(2, user.getId());
             preparedStatement.execute();
         } catch (SQLException throwables) {
@@ -151,9 +150,10 @@ public class CitizienDAO implements ICitizienDAO {
 
 
     @Override
-    public void createCopyCitizen(Citizen citizen) {
+    public int createCopyCitizen(Citizen citizen) {
+        int newID=0;
         try (Connection connection = dc.getConnection()) {
-            int newID = createCitizenToCopy(citizen, connection);
+            newID = createCitizenToCopy(citizen, connection);
             int oldID = citizen.getId();
             createFunkTilCopy(oldID, connection, newID);
             createHelbTilCopy(oldID, connection, newID);
@@ -161,6 +161,7 @@ public class CitizienDAO implements ICitizienDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return newID;
     }
 
     @Override
@@ -224,8 +225,8 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     private int createCitizenToCopy(Citizen citizen, Connection connection) throws SQLException {
-        String sql = "INSERT INTO Borger (fName, lName, dato, isTemplate)\n" +
-                "SELECT fName, lName, dato, 0 \n" +
+        String sql = "INSERT INTO Borger (fName, lName, dato, isTemplate, description, lastChanged)\n" +
+                "SELECT fName, lName, dato, 0, description, lastChanged \n" +
                 "FROM Borger\n" +
                 "WHERE borgerID = ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -238,8 +239,8 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     private void createHelbTilCopy(int oldId, Connection connection, int newID) throws SQLException {
-        String SQL = "INSERT INTO HelbredsJournal(borgerID, problemID, value, relevans)\n" +
-                "SELECT ?,problemID, [value], relevans\n" +
+        String SQL = "INSERT INTO HelbredsJournal(borgerID, problemID, technicalNote, relevans, currentEval, expectedCondition, observationNote, [Date])\n" +
+                "SELECT ?, problemID, technicalNote, relevans, currentEval, expectedCondition, observationNote, [Date]\n" +
                 "FROM Helbredsjournal\n" +
                 "WHERE borgerID = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
@@ -249,8 +250,8 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     private void createFunkTilCopy(int oldId, Connection connection, int newID) throws SQLException {
-        String sql = "INSERT INTO FunktionsJournal(borgerID,problemID, nuVurdering, målVurdering, note)\n" +
-                "SELECT ?,problemID, nuVurdering, målVurdering, note\n" +
+        String sql = "INSERT INTO FunktionsJournal(borgerID, problemID, nuVurdering, målVurdering, technicalNote, execution, importanceOfexecution, goalNote, [date], obsNote)\n" +
+                "SELECT ?, problemID, nuVurdering, målVurdering, technicalNote, execution, importanceOfexecution, goalNote, [date], obsNote\n" +
                 "FROM FunktionsJournal\n" +
                 "WHERE borgerID = ?\n";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -261,8 +262,8 @@ public class CitizienDAO implements ICitizienDAO {
 
     //TODO gør så den scaler
     private void createGenInfoCopy(int oldId, Connection connection, int newID) throws SQLException {
-        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, borgerID)\n"+
-                "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Bolig, ? \n"
+        String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, borgerID)\n"+
+                "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, ? \n"
                 + "FROM Generelinfo \n"
                 + "WHERE borgerID = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
