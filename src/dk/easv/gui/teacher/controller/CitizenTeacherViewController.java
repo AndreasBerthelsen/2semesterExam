@@ -70,6 +70,11 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         //sets the list with names of the students
         studentFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         studentLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+
+        citizenDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        citizenDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        citizenDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+
         setToolTip();
         try {
             tempTableView.setItems(citizenModel.getAllTemplatesOfCitizensObservable());
@@ -113,12 +118,8 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         alert.showAndWait();
     }
 
-    public void displayCitizensFromStudent(User user) {
-        user = selectedUser();
-        displayStudentNameCol.setText("Borgere tilknyttet: " + selectedUser().getFirstname() + " " + selectedUser().getLastname());
-        citizenDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        citizenDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        citizenDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+    private void displayCitizensFromStudent(User user) {
+        displayStudentNameCol.setText("Borgere tilknyttet: " + user.getFirstname() + " " + user.getLastname());
         displayTableView.setItems(citizenModel.getAllCitizenFromUserObservable(user));
     }
 
@@ -131,13 +132,11 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         }
     }
 
-
-    public User selectedUser() {
-        return studentTableView.getSelectionModel().getSelectedItem();
-    }
-
     public void handleStudentTableCLicked(MouseEvent mouseEvent) {
-        displayCitizensFromStudent(selectedUser());
+        User selectedUser = studentTableView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null){
+            displayCitizensFromStudent(selectedUser);
+        }
     }
 
     public void handleSetDescription(MouseEvent mouseEvent) throws SQLException {
@@ -164,7 +163,6 @@ public class CitizenTeacherViewController extends SuperController implements Ini
                     int newCitizenID = citizenModel.createCopyCitizen(selectedTemplate);
                     citizenModel.addUserToCitizen(newCitizenID, u);
                 }
-                displayCitizensFromStudent(studentTableView.getSelectionModel().getSelectedItem());
             }
         } else {
             errorMessage("Vælg venligst en skabelon");
@@ -173,14 +171,14 @@ public class CitizenTeacherViewController extends SuperController implements Ini
 
     public void handleAddCitizenToStudent(ActionEvent actionEvent) {
         Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
-        if (selectedTemplate != null) {
+        ObservableList<User> selectedStudents = studentTableView.getSelectionModel().getSelectedItems();
+        if (selectedTemplate != null && !selectedStudents.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Advarsel");
             alert.setContentText("Vil du gerne give alle valgte elever, deres egen borger ud fra den valgte skabelon?");
             alert.setHeaderText("Er du sikker?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                ObservableList<User> selectedStudents = studentTableView.getSelectionModel().getSelectedItems();
                 int newCitizenID = citizenModel.createCopyCitizen(selectedTemplate);
                 for (User u : selectedStudents) {
                     citizenModel.addUserToCitizen(newCitizenID, u);
