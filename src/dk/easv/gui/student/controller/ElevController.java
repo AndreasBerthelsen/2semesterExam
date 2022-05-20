@@ -63,6 +63,7 @@ public class ElevController extends SuperController implements IController, Init
         Stage stage = new Stage();
         stage.setScene(scene);
         ICitizenSelector controller = loader.getController();
+
         controller.setCitizen(citizen);
         studentModel.lastChanged(citizen);
         stage.showAndWait();

@@ -8,10 +8,14 @@ import dk.easv.be.User;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 public interface ICitizienDAO {
+     Collection<Date> getLogDates(int id);
+
+
     List<Citizen> getAllCitizens();
     List<Citizen> getAllTemplatesOfCitizens();
     void createCitizen(String fName, String lName, Date birthDate);
@@ -27,4 +31,8 @@ public interface ICitizienDAO {
     void updateLastEdited(Citizen citizen) throws SQLException;
 
     void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException;
+
+    Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException;
+
+    Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date);
 }

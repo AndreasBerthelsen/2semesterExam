@@ -7,10 +7,7 @@ import javafx.scene.control.TextArea;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Facade {
     private static Facade instance;
@@ -180,11 +177,24 @@ public class Facade {
 
     }
 
+
     public boolean checkUsername(String username){
        return iUserDAO.checkUsername(username);
     }
 
-    public void updateAdminUser(User user){
-         iUserDAO.updateAdminUser(user);
+    public void updateAdminUser(User user) {
+        iUserDAO.updateAdminUser(user);
+    }
+    public Collection<Date> getLogDates(int id) {
+        return iCitizienDAO.getLogDates(id);
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException {
+        return iCitizienDAO.loadHealthInfoFromDate(id,date);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date) {
+        return iCitizienDAO.loadFunkInfoFromDate(id,date);
+
     }
 }

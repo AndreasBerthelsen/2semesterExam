@@ -140,9 +140,10 @@ public class HealthTabFactory {
         return comboBox;
     }
 
-    public static Tab buildTabWithInfo(Section section, Map<Integer, HealthNodeContainer> healthNodeMap, Map<Integer, HealthResult> healthInfo) {
+    public static Tab buildTabWithInfo(Section section, Map<Integer, HealthNodeContainer> healthNodeMap, Map<Integer, HealthResult> healthInfo,boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentBox = new VBox(100);
+        contentBox.setDisable(isDisabled);
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 

@@ -5,9 +5,9 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -23,8 +23,8 @@
          <children>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Label text="Vælg dato (temp)" />
-                  <ComboBox fx:id="dateSelecterCombo" prefWidth="150.0" />
+                  <Label text="Opfølgnings dato: " />
+                  <DatePicker fx:id="newDate" />
                </children>
             </HBox>
             <TabPane cacheShape="false" centerShape="false" tabClosingPolicy="UNAVAILABLE">
@@ -40,7 +40,6 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,13 +47,11 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Fødselsdato" GridPane.columnIndex="2" />
-                                          <DatePicker fx:id="dateInput" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <DatePicker fx:id="dateInput" disable="true" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <Label text="Fornavn" />
                                           <Label text="Efternavn" GridPane.columnIndex="1" />
-                                          <TextField fx:id="fNameInput" GridPane.rowIndex="1" />
-                                          <TextField fx:id="lNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label text="Kort beskrivelse af skabelonen" GridPane.columnIndex="3" />
-                                          <TextArea fx:id="descriptionInput" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextField fx:id="fNameInput" disable="true" GridPane.rowIndex="1" />
+                                          <TextField fx:id="lNameInput" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
@@ -81,6 +78,38 @@
                     <content>
                         <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
                     </content>
+                  </Tab>
+                  <Tab text="Logbogen">
+                     <content>
+                        <VBox>
+                           <children>
+                              <HBox alignment="CENTER" spacing="20.0">
+                                 <children>
+                                    <Label text="Vælg dato (temp)" />
+                                    <ComboBox fx:id="dateSelectorCombo" onAction="#handleDateCombo" prefWidth="150.0" promptText="Vælg gammel dato??" />
+                                    <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </padding>
+                              </HBox>
+                              <TabPane fx:id="logBookTabPane" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab text="Gammel Funktionsevnetilstande">
+                                       <content>
+                                          <TabPane id="innerTabPane" fx:id="logFunkTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                                       </content>
+                                  </Tab>
+                                  <Tab text="Gammel HelbredsTilstande">
+                                       <content>
+                                          <TabPane id="innerTabPane" fx:id="logHealthTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                                       </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children>
+                        </VBox>
+                     </content>
                   </Tab>
               </tabs>
             </TabPane>

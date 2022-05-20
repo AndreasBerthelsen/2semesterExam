@@ -99,5 +99,22 @@ public class CitizenManager {
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
         facade.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
     }
+
+    public List<Date> getLogDates(int id) {
+        return (List<Date>) facade.getLogDates(id);
+
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException {
+        return facade.loadHealthInfoFromDate(id, date);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date) {
+        return facade.loadFunkInfoFromDate(id,date);
+    }
+
+    public void saveCitizen(Citizen citizen, Date date, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Map<String, String> genInfoMap) throws SQLException {
+        facade.saveCitizen(citizen,date,funkResultMap,healthResultMap,genInfoMap);
+    }
 }
 
