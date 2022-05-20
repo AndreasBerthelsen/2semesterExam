@@ -27,4 +27,6 @@ public interface ICitizienDAO {
     void updateLastEdited(Citizen citizen) throws SQLException;
 
     void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException;
+
+
 }

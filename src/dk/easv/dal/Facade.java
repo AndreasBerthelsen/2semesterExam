@@ -184,7 +184,11 @@ public class Facade {
        return iUserDAO.checkUsername(username);
     }
 
-    public void updateAdminUser(User user){
-         iUserDAO.updateAdminUser(user);
+    public void updateAdminUser(User user) {
+        iUserDAO.updateAdminUser(user);
+    }
+
+    public List<User> getAllStudentsFromSchool(int schoolID){
+        return iUserDAO.getAllStudentFromSchool(schoolID);
     }
 }

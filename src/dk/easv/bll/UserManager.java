@@ -1,6 +1,7 @@
 package dk.easv.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import com.sun.source.tree.BreakTree;
 import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
@@ -61,5 +62,10 @@ public class UserManager {
     public boolean checkUsername(String username){
         return facade.checkUsername(username);
     }
+
+    public List<User> getAllStudentFromIndividuelSchool(int schoolID) {
+        return facade.getAllStudentsFromSchool(schoolID);
+    }
+
 
 }

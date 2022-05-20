@@ -34,27 +34,27 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public void createUser(String firstName, String lastName, String username, String hashedPassword, String salt, UserType userType, int schoolID) throws SQLException {
-            try (Connection connection = dc.getConnection()) {
-                String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt, skole) VALUES (?,?,?,?,?,?,?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, firstName);
-                preparedStatement.setString(2, lastName);
-                preparedStatement.setString(3, username);
-                preparedStatement.setString(4, hashedPassword);
-                preparedStatement.setInt(5, userType.getI());
-                preparedStatement.setString(6, salt);
-                preparedStatement.setInt(7, schoolID);
-                preparedStatement.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+        try (Connection connection = dc.getConnection()) {
+            String sql = "INSERT INTO [USER] (fname, lname, username, password, roleID, salt, skole) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, hashedPassword);
+            preparedStatement.setInt(5, userType.getI());
+            preparedStatement.setString(6, salt);
+            preparedStatement.setInt(7, schoolID);
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 
     @Override
     public List<User> getAllUsers(UserType userType) throws SQLServerException {
         ArrayList<User> allUsers = new ArrayList<>();
-        try(Connection connection = dc.getConnection()) {
+        try (Connection connection = dc.getConnection()) {
             String sql = "SELECT [User].userID, [User].fName, [User].lName, [User].username, [User].skole \n" +
                     "FROM [User]\n" +
                     "INNER JOIN [Role] ON [User].roleID = [Role].roleID WHERE [User].roleID = ?";
@@ -76,36 +76,36 @@ public class UserDAO implements IUserDAO {
     }
 
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
-       List<User> allUsers = new ArrayList<>();
-       try(Connection con = dc.getConnection()) {
-           String sql = "SELECT userID, fName, lName, username, skole From [User] \n" +
-                   "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
-                   "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
-                   "WHERE [User].[skole] = ? AND [User].roleID = ?";
-           PreparedStatement preparedStatement = con.prepareStatement(sql);
-           preparedStatement.setInt(1, school.getId());
-           preparedStatement.setInt(2, userType.getI());
-           ResultSet resultSet = preparedStatement.executeQuery();
-           while (resultSet.next()) {
-               int id = resultSet.getInt("userID");
-               String fName = resultSet.getString("fname");
-               String lName = resultSet.getString("lName");
-               String username = resultSet.getString("username");
-               int skoleID = resultSet.getInt("skole");
-               allUsers.add(new User(id, fName, lName, username, userType, skoleID));
-           }
+        List<User> allUsers = new ArrayList<>();
+        try (Connection con = dc.getConnection()) {
+            String sql = "SELECT userID, fName, lName, username, skole From [User] \n" +
+                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
+                    "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
+                    "WHERE [User].[skole] = ? AND [User].roleID = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, school.getId());
+            preparedStatement.setInt(2, userType.getI());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("userID");
+                String fName = resultSet.getString("fname");
+                String lName = resultSet.getString("lName");
+                String username = resultSet.getString("username");
+                int skoleID = resultSet.getInt("skole");
+                allUsers.add(new User(id, fName, lName, username, userType, skoleID));
+            }
 
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-    return allUsers;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allUsers;
     }
 
     @Override
     public List<School> getAllSchools() throws SQLServerException {
         List<School> allSchools = new ArrayList<>();
-        try(Connection connection = dc.getConnection()) {
-            String sql ="SELECT Skole.ID, Skole.Navn\n" +
+        try (Connection connection = dc.getConnection()) {
+            String sql = "SELECT Skole.ID, Skole.Navn\n" +
                     "FROM dbo.Skole\n";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -148,15 +148,14 @@ public class UserDAO implements IUserDAO {
     }
 
 
-
     @Override
     public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
-        try(Connection con = dc.getConnection()) {
+        try (Connection con = dc.getConnection()) {
             String sql = "UPDATE [User] SET password = ?, salt = ? WHERE userID=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, hashPassword);
             preparedStatement.setString(2, salt);
-            preparedStatement.setInt(3,user.getId());
+            preparedStatement.setInt(3, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,15 +163,14 @@ public class UserDAO implements IUserDAO {
     }
 
     public boolean checkUsername(String username) {
-        try(Connection connection = dc.getConnection()) {
+        try (Connection connection = dc.getConnection()) {
             String sql = "SELECT * FROM [User] WHERE username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
-            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 return resultSet.next();
             }
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return false;
@@ -181,9 +179,8 @@ public class UserDAO implements IUserDAO {
     @Override
     public void updateAdminUser(User user) {
         try (Connection connection = dc.getConnection()) {
-            String sql = "UPDATE [User] SET fName = ?, lName = ?, username=?, roleID = ?, skole = ? \n" +
+            String sql = "UPDATE [User] SET fName = ?, lName = ?, username=?, skole = ? \n" +
                     "FROM [User]\n" +
-                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
                     "                    INNER JOIN Skole on [User].[skole] = Skole.ID \n" +
                     "                     WHERE userID=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -191,12 +188,37 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(2, user.getLastname());
             preparedStatement.setString(3, user.getUsername());
             preparedStatement.setInt(4, user.getSchoolID());
-            preparedStatement.setInt(5, user.getType().getI());
-            preparedStatement.setInt(6, user.getId());
+            preparedStatement.setInt(5, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    @Override
+    public List<User> getAllStudentFromSchool(int schoolID) {
+        List<User> usersInSchool = new ArrayList<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "SELECT userID, fName, lName, username\n" +
+                    "From [User]\n" +
+                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
+                    "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
+                    "WHERE [User].[skole] = ? AND [User].roleID = 3";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, schoolID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("userID");
+                String fName = resultSet.getString("fname");
+                String lName = resultSet.getString("lName");
+                String username = resultSet.getString("username");
+                usersInSchool.add(new User(id, fName, lName, username, UserType.STUDENT));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return usersInSchool;
+    }
 }
+
+

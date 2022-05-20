@@ -61,11 +61,11 @@ public class EditStudentController extends SuperController implements IControlle
             userModel.updateUser(user);
             closeWindow(saveBtn);
         }
-        if(password != null){
-            userModel.updatePassword(user, password);
-        }
         else {
             errorMessage("Check venligst om alle felterne er udfyldt eller om der eksisterer en bruger med samme brugernavn");
+        }
+        if(password != null){
+            userModel.updatePassword(user, password);
         }
     }
 
