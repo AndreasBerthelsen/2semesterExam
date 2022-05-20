@@ -128,8 +128,8 @@ public class StudentEditCitizenController extends saveCitizenController implemen
                 }
 
                 Platform.runLater(() -> {
-                    logHealthTabPane.getTabs().addAll(hTabList);
-                    logFunkTabPane.getTabs().addAll(fTabList);
+                    logHealthTabPane.getTabs().setAll(hTabList);
+                    logFunkTabPane.getTabs().setAll(fTabList);
                     logBookTabPane.getSelectionModel().selectLast();
                     logBookTabPane.getSelectionModel().selectFirst();
                 });
@@ -186,7 +186,6 @@ public class StudentEditCitizenController extends saveCitizenController implemen
 
     public void handleDateCombo(ActionEvent actionEvent) {
         Date date = dateSelectorCombo.getSelectionModel().getSelectedItem();
-        System.out.println(date);
         setupOldInfo(date);
     }
 
