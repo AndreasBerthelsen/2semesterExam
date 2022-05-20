@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +69,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     }
 
     private void fillDateSelector() {
-        dateSelectorCombo.setItems(cM.getObservableLogDates(id)); //eksemple [19-05-2022] Idag  -> [09-05-2022] -> [27-04-2022]
+        dateSelectorCombo.setItems(cM.getObservableLogDates(id));
     }
 
     private void setupGeneralInfo() {
@@ -99,11 +100,6 @@ public class StudentEditCitizenController extends saveCitizenController implemen
             }
             Platform.runLater(() -> helbredsInnerTabPane.getTabs().addAll(tabList));
         });
-    }
-
-    private void setUpGammelFunk(Date date) {
-
-
     }
 
     private void setupOldInfo(Date date) {
@@ -142,7 +138,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        /*
+
         Map<Integer,FunkResult> funkResultMap = saveFunk(funkNodeMap);
         Map<Integer,HealthResult> healthResultMap = saveHealth(healthNodeMap);
 
@@ -165,22 +161,22 @@ public class StudentEditCitizenController extends saveCitizenController implemen
         if (validSave){
             try {
                 cM.saveCitizen(citizen,Date.valueOf(newDate.getValue()),funkResultMap,healthResultMap,saveGeninfo(genInfoNodeMap));
+                Stage stage = (Stage) fNameInput.getScene().getWindow();
+                stage.close();
                 System.out.println("save valid");
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
-        
-         */
-
     }
 
 
     public void handleAnullerbtn(ActionEvent actionEvent) {
+        Stage stage = (Stage) fNameInput.getScene().getWindow();
+        stage.close();
     }
 
-    public void handleDateCombo(ActionEvent actionEvent) throws ExecutionException, InterruptedException {
+    public void handleDateCombo(ActionEvent actionEvent) {
         Date date = dateSelectorCombo.getSelectionModel().getSelectedItem();
         setupOldInfo(date);
     }

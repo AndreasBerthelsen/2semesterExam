@@ -317,8 +317,8 @@ public class CitizienDAO implements ICitizienDAO {
     @Override
     public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
         try (Connection connection = dc.getConnection()) {
-            saveFunk(connection, newDate, funkMap, citizen);
-            saveHelbred(connection, newDate, healthMap, citizen);
+           // saveFunk(connection, newDate, funkMap, citizen);
+           // saveHelbred(connection, newDate, healthMap, citizen);
             saveGenInfo(connection, genInfoMap, citizen);
         }
     }
@@ -364,20 +364,19 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     private void saveGenInfo(Connection connection, Map<String, String> genInfoMap, Citizen citizen) throws SQLException {
-        String genFields = genInfoMap.keySet().toString().replace(" ", "").replace("[", "").replace("]", "");
         StringBuilder sb = new StringBuilder();
-        for (String s : genFields.split(",")) {
-            sb.append(s + "=?,");
+        for (String key : genInfoMap.keySet()) {
+            sb.append(key).append("=?,");
         }
-        String genMarks = sb.deleteCharAt(sb.length() - 1).toString();
-        String sql = "UPDATE GenerelInfo SET " + genMarks + " where borgerID=?,";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        int index = 2;
-        preparedStatement.setInt(1, citizen.getId());
-        for (String s : genInfoMap.values()) {
-            preparedStatement.setString(index++, s);
+        String columns = sb.deleteCharAt(sb.length() - 1).toString();
+        String sql = "Update generelInfo set " + columns + " where borgerId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        int index = 1;
+        for (String column : genInfoMap.keySet()) {
+            ps.setString(index++, genInfoMap.get(column));
         }
-        preparedStatement.execute();
+        ps.setInt(index, citizen.getId());
+        ps.execute();
     }
 
     @Override
