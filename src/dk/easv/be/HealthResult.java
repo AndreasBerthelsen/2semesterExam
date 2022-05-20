@@ -65,4 +65,8 @@ public class HealthResult {
                 ", technical='" + technical + '\'' +
                 '}';
     }
+
+    public boolean isValid() {
+        return getToggleId() != -1;
+    }
 }

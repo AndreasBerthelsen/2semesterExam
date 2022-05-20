@@ -116,4 +116,20 @@ public class CitizenModel {
     public void updateTemplate(Citizen updatedCitizen, Map<String, String> genResultMap, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Date obsDate) {
         cM.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
     }
+
+    public ObservableList<Date> getObservableLogDates(int id) {
+        return FXCollections.observableArrayList(cM.getLogDates(id));
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException {
+        return cM.loadHealthInfoFromDate(id,date);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date) {
+        return cM.loadFunkInfoFromDate(id,date);
+    }
+
+    public void saveCitizen(Citizen citizen, Date date, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Map<String, String> genInfoMap) throws SQLException {
+        cM.saveCitizen(citizen,date,funkResultMap,healthResultMap,genInfoMap);
+    }
 }

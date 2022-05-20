@@ -81,7 +81,7 @@ public class EditSkabelonViewController extends saveCitizenController implements
             List<Section> sectionList = cM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
             for (Section section : sectionList) {
-                tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo));
+                tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo,false));
             }
             Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });
@@ -94,11 +94,10 @@ public class EditSkabelonViewController extends saveCitizenController implements
 
             List<Tab> tabList = new ArrayList<>();
             for (Section section : sectionList) {
-                tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo));
+                tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo,false));
             }
             Platform.runLater(() -> helbredsInnerTabPane.getTabs().addAll(tabList));
         });
-
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
@@ -109,7 +108,7 @@ public class EditSkabelonViewController extends saveCitizenController implements
             Date birthDate = Date.valueOf(dateInput.getValue());
             Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName, birthDate, description);
             Date obsDate = Date.valueOf(obsDatePicker.getValue());
-            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap),obsDate);
+            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
