@@ -169,7 +169,15 @@ public class Facade {
 
     }
 
-    public Collection<String> getLogDates(int id) {
+    public Collection<Date> getLogDates(int id) {
         return iCitizienDAO.getLogDates(id);
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException {
+        return iCitizienDAO.loadHealthInfoFromDate(id,date);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date) {
+        return iCitizienDAO.loadFunkInfoFromDate(id,date);
     }
 }

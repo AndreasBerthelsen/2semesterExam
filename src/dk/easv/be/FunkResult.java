@@ -82,4 +82,8 @@ public class FunkResult {
                 ", current=" + current +
                 '}';
     }
+
+    public boolean isValid() {
+        return getCurrent() != -1 && getTarget() != -1 && getImportance() != -1 && getExecution() != -1;
+    }
 }

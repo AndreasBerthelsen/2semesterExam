@@ -8,7 +8,6 @@ import dk.easv.dal.Facade;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -99,11 +98,21 @@ public class CitizenManager {
         facade.updateTemplate(updatedCitizen, genResultMap, funkResultMap, healthResultMap, obsDate);
     }
 
-    public List<String> getLogDates(int id) {
-        List<String> list = new ArrayList<>();
-        list.add(LocalDate.now().toString() + " I dag");
-        list.addAll(facade.getLogDates(id));
-        return list;
+    public List<Date> getLogDates(int id) {
+        return (List<Date>) facade.getLogDates(id);
+
+    }
+
+    public Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException {
+        return facade.loadHealthInfoFromDate(id, date);
+    }
+
+    public Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date) {
+        return facade.loadFunkInfoFromDate(id,date);
+    }
+
+    public void saveCitizen(Citizen citizen, Date date, Map<Integer, FunkResult> funkResultMap, Map<Integer, HealthResult> healthResultMap, Map<String, String> genInfoMap) throws SQLException {
+        facade.saveCitizen(citizen,date,funkResultMap,healthResultMap,genInfoMap);
     }
 }
 

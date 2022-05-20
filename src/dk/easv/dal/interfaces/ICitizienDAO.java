@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ICitizienDAO {
-     Collection<String> getLogDates(int id);
+     Collection<Date> getLogDates(int id);
 
 
     List<Citizen> getAllCitizens();
@@ -32,4 +32,8 @@ public interface ICitizienDAO {
     void updateLastEdited(Citizen citizen) throws SQLException;
 
     void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException;
+
+    Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException;
+
+    Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date);
 }

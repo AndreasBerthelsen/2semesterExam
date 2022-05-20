@@ -8,12 +8,9 @@ import dk.easv.be.User;
 import dk.easv.dal.interfaces.ICitizienDAO;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CitizienDAO implements ICitizienDAO {
     private DatabaseConnector dc;
@@ -318,6 +315,7 @@ public class CitizienDAO implements ICitizienDAO {
         }
     }
 
+
     private void saveFunk(Connection connection, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Citizen citizen) throws SQLException {
         String sql = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
@@ -334,7 +332,7 @@ public class CitizienDAO implements ICitizienDAO {
             preparedStatement.setString(8, funkResult.getCitizenString());
             preparedStatement.setDate(9, newDate);
             preparedStatement.setString(10, funkResult.getObservation());
-
+            preparedStatement.addBatch();
         }
         preparedStatement.executeBatch();
     }
@@ -352,6 +350,7 @@ public class CitizienDAO implements ICitizienDAO {
             preparedStatement.setInt(6, healthResult.getExpectedIndex());
             preparedStatement.setString(7, healthResult.getObservation());
             preparedStatement.setDate(8, newDate);
+            preparedStatement.addBatch();
         }
         preparedStatement.executeBatch();
     }
@@ -363,7 +362,7 @@ public class CitizienDAO implements ICitizienDAO {
             sb.append(s + "=?,");
         }
         String genMarks = sb.deleteCharAt(sb.length() - 1).toString();
-        String sql = "UPDATE GenerelInfo SET borgerID=?," + genMarks;
+        String sql = "UPDATE GenerelInfo SET " + genMarks + " where borgerID=?,";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         int index = 2;
         preparedStatement.setInt(1, citizen.getId());
@@ -374,24 +373,84 @@ public class CitizienDAO implements ICitizienDAO {
     }
 
     @Override
-    public Collection<String> getLogDates(int id) {
-        List<String> list = new ArrayList<>();
+    public Collection<Date> getLogDates(int id) {
+        List<Date> list = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
             String sql = "select DISTINCT [date] from FunktionsJournal where borgerID = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(rs.getDate("date").toString());
+                list.add(rs.getDate("date"));
             }
-
-            System.out.println(list);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
         return list;
+    }
+
+    @Override
+    public Map<Integer, HealthResult> loadHealthInfoFromDate(int id, Date date) throws SQLException {
+        Map<Integer, HealthResult> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "select [problemID]" +
+                    "      ,[technicalNote]" +
+                    "      ,[relevans]" +
+                    "      ,[currentEval]" +
+                    "      ,[expectedCondition]" +
+                    "      ,[observationNote]" +
+                    "from Helbredsjournal where borgerId = ? and date = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setDate(2,date);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String technical = rs.getString("technicalNote");
+                String observation = rs.getString("observationNote");
+                String current = rs.getString("currentEval");
+                int expectedIndex = rs.getInt("expectedCondition");
+                int toggleId = rs.getInt("relevans");
+                HealthResult info = new HealthResult(toggleId, expectedIndex, current, observation, technical);
+                int problemid = rs.getInt("problemId");
+                resultMap.put(problemid, info);
+            }
+            return resultMap;
+        }
+    }
+
+    @Override
+    public Map<Integer, FunkResult> loadFunkInfoFromDate(int id, Date date) {
+        Map<Integer, FunkResult> resultMap = new LinkedHashMap<>();
+        try (Connection connection = dc.getConnection()) {
+            String sql = "Select [problemID]\n" +
+                    "      ,[nuVurdering]\n" +
+                    "      ,[målVurdering]\n" +
+                    "      ,[technicalNote]\n" +
+                    "      ,[execution]\n" +
+                    "      ,[importanceOfExecution]\n" +
+                    "      ,[goalNote]\n" +
+                    "      ,[obsNote] from funktionsjournal where borgerid = ? and Date = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setDate(2,date);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int importance = rs.getInt("importanceOfExecution");
+                String citizenString = rs.getString("goalNote");
+                String technical = rs.getString("TechnicalNote");
+                String observation = rs.getString("obsNote");
+                int execution = rs.getInt("execution");
+                int target = rs.getInt("målVurdering");
+                int current = rs.getInt("nuVurdering");
+
+                int problemId = rs.getInt("problemId");
+                FunkResult funkResult = new FunkResult(importance, citizenString, technical, observation, execution, target, current);
+                resultMap.put(problemId, funkResult);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultMap;
     }
 }

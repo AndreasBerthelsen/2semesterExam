@@ -163,9 +163,10 @@ public class FunktionTabFactory {
         return textArea;
     }
 
-    public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo) {
+    public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo,boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentVBox = new VBox(100);
+        contentVBox.setDisable(isDisabled);
         contentVBox.setAlignment(Pos.TOP_CENTER);
         contentVBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 

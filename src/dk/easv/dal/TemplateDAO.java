@@ -180,7 +180,6 @@ public class TemplateDAO implements ITemplateDAO {
                 int problemid = rs.getInt("problemId");
                 resultMap.put(problemid, info);
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
