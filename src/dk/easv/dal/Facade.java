@@ -183,4 +183,8 @@ public class Facade {
     public boolean checkUsername(String username){
        return iUserDAO.checkUsername(username);
     }
+
+    public void updateAdminUser(User user){
+         iUserDAO.updateAdminUser(user);
+    }
 }

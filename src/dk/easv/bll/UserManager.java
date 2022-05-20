@@ -38,6 +38,8 @@ public class UserManager {
         facade.updateUser(user);
     }
 
+    public void updateAdminUser(User user) {facade.updateAdminUser(user);}
+
     public void updatePassword(User user, String hashPassword) throws SQLServerException {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(hashPassword, salt);

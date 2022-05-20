@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditTeacherOrStudent extends SuperController implements IController {
+public class EditTeacherOrStudent extends SuperController implements IController, Initializable {
     public TextField usernameTxt;
     @FXML
     private ComboBox<School> schoolCombobox;
@@ -32,8 +32,6 @@ public class EditTeacherOrStudent extends SuperController implements IController
     private TextField firstnameTxtField;
     @FXML
     private TextField lastnameTxtField;
-    @FXML
-    private TextField schoolTxtField1;
     @FXML
     private Button cancelBtn;
     @FXML
@@ -57,11 +55,15 @@ public class EditTeacherOrStudent extends SuperController implements IController
         String username = getUsername(usernameTxt);
         String password = getPasswordUpdate(passwordTxtFIeld);
         UserType userType = getUsertype(usertypeCombobox);
-        int id = user.getId();;
-        User user = new User(id, firstname, lastname, username, userType);
-        if (firstname != null && lastname != null && username != null) {
-            userModel.updateUser(user);
+        Integer schoolID = getSchoolId(schoolCombobox);
+        int id = user.getId();
+        User user = new User(id, firstname, lastname, username, userType, schoolID);
+        if (firstname != null && lastname != null && username != null && userType != null) {
+            userModel.updateAdminUser(user);
             closeWindow(saveBtn);
+        }
+        else {
+            errorMessage("Check venligst om alle felterne er udfyldt, eller om der eksisterer anden en bruger med det samme brugernavn");
         }
         if(password != null){
             userModel.updatePassword(user, password);
@@ -80,5 +82,27 @@ public class EditTeacherOrStudent extends SuperController implements IController
         lastnameTxtField.setText(user.getLastname());
         usertypeCombobox.setValue(user.getType());
         usernameTxt.setText(user.getUsername());
+        setCombobox(user);
+    }
+
+    private void setCombobox(User user){
+        for (School school : schoolCombobox.getItems()) {
+            System.out.println(user.getSchoolID());
+            if (user.getSchoolID() == school.getId()){
+                schoolCombobox.getSelectionModel().select(school);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        usertypeCombobox.setItems(FXCollections.observableArrayList(UserType.STUDENT, UserType.TEACHER));
+        try {
+            ObservableList<School> listOfSchools = adminModel.getObservableSchools();
+            schoolCombobox.setItems(listOfSchools);
+        } catch (SQLServerException e) {
+            e.printStackTrace();
+        }
     }
 }

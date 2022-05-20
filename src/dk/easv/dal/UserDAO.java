@@ -78,8 +78,7 @@ public class UserDAO implements IUserDAO {
     public List<User> getAllUsersFromSchools(School school, UserType userType) {
        List<User> allUsers = new ArrayList<>();
        try(Connection con = dc.getConnection()) {
-           String sql = "SELECT userID, fName, lName, username\n" +
-                   "From [User] \n" +
+           String sql = "SELECT userID, fName, lName, username, skole From [User] \n" +
                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
                    "INNER JOIN Skole on [User].[skole] = Skole.ID\n" +
                    "WHERE [User].[skole] = ? AND [User].roleID = ?";
@@ -92,7 +91,8 @@ public class UserDAO implements IUserDAO {
                String fName = resultSet.getString("fname");
                String lName = resultSet.getString("lName");
                String username = resultSet.getString("username");
-               allUsers.add(new User(id, fName, lName, username, userType));
+               int skoleID = resultSet.getInt("skole");
+               allUsers.add(new User(id, fName, lName, username, userType, skoleID));
            }
 
        } catch (SQLException e) {
@@ -147,6 +147,8 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+
+
     @Override
     public void updatePassword(User user, String hashPassword, String salt) throws SQLServerException {
         try(Connection con = dc.getConnection()) {
@@ -175,4 +177,26 @@ public class UserDAO implements IUserDAO {
         }
         return false;
     }
+
+    @Override
+    public void updateAdminUser(User user) {
+        try (Connection connection = dc.getConnection()) {
+            String sql = "UPDATE [User] SET fName = ?, lName = ?, username=?, roleID = ?, skole = ? \n" +
+                    "FROM [User]\n" +
+                    "INNER JOIN [Role] on [User].[roleID] = [Role].roleID\n" +
+                    "                    INNER JOIN Skole on [User].[skole] = Skole.ID \n" +
+                    "                     WHERE userID=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setInt(4, user.getSchoolID());
+            preparedStatement.setInt(5, user.getType().getI());
+            preparedStatement.setInt(6, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }

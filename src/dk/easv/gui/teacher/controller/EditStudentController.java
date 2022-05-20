@@ -65,7 +65,7 @@ public class EditStudentController extends SuperController implements IControlle
             userModel.updatePassword(user, password);
         }
         else {
-            errorMessage("Check venligst om alle felterne er udfyldt eller om der eksisterer en bruger med samme brugernavn i databasen");
+            errorMessage("Check venligst om alle felterne er udfyldt eller om der eksisterer en bruger med samme brugernavn");
         }
     }
 

@@ -93,8 +93,16 @@ public class AdminMainViewController extends SuperController implements Initiali
         this.user = user;
     }
 
-    public void handleEditTeacherBtn(ActionEvent actionEvent) {
+    public void handleEditTeacherBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
+        User teacher = teacherTable.getSelectionModel().getSelectedItem();
+        if (teacher != null) {
+            openNewSceneAsUser2(teacher,"/dk/easv/gui/admin/view/EditTeacherOrStudentView.fxml","Rediger din elev");
+            teacherTable.setItems(aM.getObservableTeachers(selectedSchool()));
+        } else {
+            errorMessage("Vælg den lærer, som du vil redigere");
+        }
     }
+
 
     public void handleDeleteTeacherBtn(ActionEvent actionEvent) {
         if (teacherTable.getSelectionModel().getSelectedItem() == null) {
@@ -108,8 +116,16 @@ public class AdminMainViewController extends SuperController implements Initiali
         }
     }
 
-    public void handleEditStudentBtn(ActionEvent actionEvent) {
+    public void handleEditStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
+        User student = studentTable.getSelectionModel().getSelectedItem();
+        if (student != null) {
+            openNewSceneAsUser2(student,"/dk/easv/gui/admin/view/EditTeacherOrStudentView.fxml","Rediger din elev");
+            studentTable.setItems(aM.getObservableStudents(selectedSchool()));
+        } else {
+            errorMessage("Vælg den elev, som du vil redigere");
+        }
     }
+
 
     public void handleDeleteStudentBtn(ActionEvent actionEvent) {
         if (studentTable.getSelectionModel().getSelectedItem() == null) {

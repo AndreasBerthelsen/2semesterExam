@@ -36,6 +36,8 @@ public class UserModel {
         uM.udpateUser(user);
     }
 
+    public void updateAdminUser(User user) { uM.updateAdminUser(user);}
+
     public void createTeacher(String firstName, String lastName, String username, String password, int schoolID) throws SQLException {
         uM.createUser(firstName, lastName, username, password, UserType.TEACHER, schoolID);
     }

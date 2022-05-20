@@ -22,4 +22,6 @@ public interface IUserDAO {
     List<School> getAllSchools() throws SQLServerException;
 
     boolean checkUsername(String username);
+
+    void updateAdminUser(User user);
 }
