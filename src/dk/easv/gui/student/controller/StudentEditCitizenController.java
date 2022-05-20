@@ -148,25 +148,30 @@ public class StudentEditCitizenController extends saveCitizenController implemen
         boolean validSave = true;
         for(FunkResult result: funkResultMap.values()){
             if (!result.isValid()) {
-                System.out.println("udfyld alle funktions blah");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Du er ikke færdig!");
+                alert.setContentText("Tag stilling til alle funktionsevnetilstande før du gemmer ");
+                alert.showAndWait();
                 validSave = false;
                 break;
             }
         }
         for (HealthResult result : healthResultMap.values()){
             if (!result.isValid()){
-                System.out.println("health udfyls error");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Du er ikke færdig!");
+                alert.setContentText("Tag stilling til alle Helbredstilstande før du kan gemme");
+                alert.showAndWait();
                 validSave = false;
                 break;
             }
         }
-        validSave = true;
+
         if (validSave){
             try {
                 cM.saveCitizen(citizen,Date.valueOf(newDate.getValue()),funkResultMap,healthResultMap,saveGeninfo(genInfoNodeMap));
                 Stage stage = (Stage) fNameInput.getScene().getWindow();
                 stage.close();
-                System.out.println("save valid");
             }catch (Exception e){
                 e.printStackTrace();
             }

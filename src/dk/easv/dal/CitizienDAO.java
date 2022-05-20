@@ -419,7 +419,6 @@ public class CitizienDAO implements ICitizienDAO {
                 int expectedIndex = rs.getInt("expectedCondition");
                 int toggleId = rs.getInt("relevans");
                 HealthResult info = new HealthResult(toggleId, expectedIndex, current, observation, technical);
-                System.out.println(info);
                 int problemid = rs.getInt("problemId");
                 resultMap.put(problemid, info);
             }
