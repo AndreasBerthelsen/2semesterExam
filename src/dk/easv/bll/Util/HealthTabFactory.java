@@ -40,7 +40,7 @@ public class HealthTabFactory {
         return tab;
     }
 
-    private static VBox buildHealthChunk(int key, Section section, Map<Integer, HealthNodeContainer> answerMap, HealthNodeContainer startingContainer) {
+    private static VBox buildHealthChunk(int key, Section section, Map<Integer, HealthNodeContainer> nodeContainerMap, HealthNodeContainer startingContainer) {
         int buttonSpacing = 20;
 
         VBox chunk = new VBox(20);
@@ -48,7 +48,7 @@ public class HealthTabFactory {
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
         HBox buttonHBox = new HBox(buttonSpacing);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
-        buttonHBox.getChildren().addAll(createRadioButtons(key, answerMap, startingContainer));
+        buttonHBox.getChildren().addAll(createRadioButtons(key, nodeContainerMap, startingContainer));
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
@@ -58,7 +58,7 @@ public class HealthTabFactory {
         gridPane.addRow(1, createExpectedVBox(startingContainer), createObservationVBox(startingContainer.getObservationTextArea()));
 
         chunk.getChildren().addAll(headerLabel, buttonHBox, gridPane);
-        answerMap.put(key, startingContainer);
+        nodeContainerMap.put(key, startingContainer);
         return chunk;
     }
 
@@ -140,9 +140,10 @@ public class HealthTabFactory {
         return comboBox;
     }
 
-    public static Tab buildTabWithInfo(Section section, Map<Integer, HealthNodeContainer> healthNodeMap, Map<Integer, HealthResult> healthInfo) {
+    public static Tab buildTabWithInfo(Section section, Map<Integer, HealthNodeContainer> healthNodeMap, Map<Integer, HealthResult> healthInfo,boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentBox = new VBox(100);
+        contentBox.setDisable(isDisabled);
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 

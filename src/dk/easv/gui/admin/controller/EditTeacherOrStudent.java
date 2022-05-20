@@ -25,8 +25,6 @@ public class EditTeacherOrStudent extends SuperController implements IController
     @FXML
     private ComboBox<School> schoolCombobox;
     @FXML
-    private ComboBox<UserType> usertypeCombobox;
-    @FXML
     private TextField passwordTxtFIeld;
     @FXML
     private TextField firstnameTxtField;
@@ -54,9 +52,9 @@ public class EditTeacherOrStudent extends SuperController implements IController
         String lastname = getLastName(lastnameTxtField);
         String username = getUsername(usernameTxt);
         String password = getPasswordUpdate(passwordTxtFIeld);
-        UserType userType = getUsertype(usertypeCombobox);
         Integer schoolID = getSchoolId(schoolCombobox);
         int id = user.getId();
+        UserType userType = user.getType();
         User user = new User(id, firstname, lastname, username, userType, schoolID);
         if (firstname != null && lastname != null && username != null && userType != null) {
             userModel.updateAdminUser(user);
@@ -80,14 +78,12 @@ public class EditTeacherOrStudent extends SuperController implements IController
         this.user = user;
         firstnameTxtField.setText(user.getFirstname());
         lastnameTxtField.setText(user.getLastname());
-        usertypeCombobox.setValue(user.getType());
         usernameTxt.setText(user.getUsername());
         setCombobox(user);
     }
 
     private void setCombobox(User user){
         for (School school : schoolCombobox.getItems()) {
-            System.out.println(user.getSchoolID());
             if (user.getSchoolID() == school.getId()){
                 schoolCombobox.getSelectionModel().select(school);
                 break;
@@ -97,7 +93,6 @@ public class EditTeacherOrStudent extends SuperController implements IController
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        usertypeCombobox.setItems(FXCollections.observableArrayList(UserType.STUDENT, UserType.TEACHER));
         try {
             ObservableList<School> listOfSchools = adminModel.getObservableSchools();
             schoolCombobox.setItems(listOfSchools);

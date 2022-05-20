@@ -24,4 +24,5 @@ public interface IUserDAO {
     boolean checkUsername(String username);
 
     void updateAdminUser(User user);
+    List<User> getAllStudentFromSchool(int schoolID);
 }

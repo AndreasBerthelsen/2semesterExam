@@ -13,10 +13,12 @@ import java.util.List;
 public class UserModel {
     private UserManager uM;
     private ObservableList<User> studentList;
+    private ObservableList<User> getStudentList;
 
     public UserModel() throws SQLServerException {
         uM = new UserManager();
         studentList = FXCollections.observableArrayList();
+        getStudentList = FXCollections.observableArrayList();
         studentList.addAll(getAllStudents());
     }
 
@@ -56,5 +58,15 @@ public class UserModel {
     }
     public boolean checkUsername(String username){
         return uM.checkUsername(username);
+    }
+
+    public ObservableList<User> getAllStudentList(int schoolID) {
+        getStudentList.addAll(getAllStudentsFromIndividualSchool(schoolID));
+        getStudentList.setAll(getAllStudentsFromIndividualSchool(schoolID));
+        return getStudentList;
+    }
+
+    private List<User> getAllStudentsFromIndividualSchool(int schoolID){
+        return uM.getAllStudentFromIndividuelSchool(schoolID);
     }
 }

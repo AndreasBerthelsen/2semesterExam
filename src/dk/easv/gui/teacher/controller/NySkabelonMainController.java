@@ -103,7 +103,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
             Stage stage = (Stage) fNameInput.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            e.printStackTrace(); //todo fix date snak med jens
+            e.printStackTrace();
             System.out.println("error");
         }
     }

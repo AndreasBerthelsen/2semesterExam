@@ -34,19 +34,12 @@ public class AdminstrateStudentsController extends SuperController implements In
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        firstnameCol.setCellValueFactory(new PropertyValueFactory<User, String>("Firstname"));
-        lastnameCol.setCellValueFactory(new PropertyValueFactory<User, String>("Lastname"));
 
-        try {
-            studentTable.setItems(uM.getObservableStudents());
-        } catch (SQLServerException e) {
-            e.printStackTrace();
-        }
     }
 
     public void handleAddStudentBtn(ActionEvent actionEvent) throws IOException, SQLServerException {
         openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/AddStudentView.fxml","Tilføj en elev");
-        studentTable.setItems(uM.getObservableStudents());
+        studentTable.setItems(uM.getAllStudentList(user.getSchoolID()));
     }
 
     public void handleDeleteStudentBtn(ActionEvent actionEvent) {
@@ -62,10 +55,10 @@ public class AdminstrateStudentsController extends SuperController implements In
     }
 
     public void handleUpdateStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
-        User user = studentTable.getSelectionModel().getSelectedItem();
-        if (user != null) {
-            openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev");
-            studentTable.setItems(uM.getObservableStudents());
+        User student = studentTable.getSelectionModel().getSelectedItem();
+        if (student != null) {
+            openNewSceneAsUser2(student,"/dk/easv/gui/teacher/view/EditStudentView.fxml","Rediger din elev");
+            studentTable.setItems(uM.getAllStudentList(user.getSchoolID()));
         } else {
             errorMessage("Vælg den elev, som du vil redigere");
         }
@@ -74,5 +67,8 @@ public class AdminstrateStudentsController extends SuperController implements In
     @Override
     public void setUserInfo(User user) {
         this.user = user;
+        firstnameCol.setCellValueFactory(new PropertyValueFactory<>("Firstname"));
+        lastnameCol.setCellValueFactory(new PropertyValueFactory<>("Lastname"));
+        studentTable.setItems(uM.getAllStudentList(user.getSchoolID()));
     }
 }
