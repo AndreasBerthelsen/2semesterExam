@@ -125,30 +125,13 @@
       </VBox>
    </right>
    <top>
-      <HBox id="darkerPane" alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="991.0" BorderPane.alignment="CENTER">
+      <HBox id="darkerPane" fillHeight="false" prefHeight="80.0" prefWidth="991.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0">
-               <children>
-                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets left="25.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@../../../Images/Person.png" />
-                     </image>
-                  </ImageView>
-                  <Label id="TeacherLbl" text="Velkommen admin">
-                     <HBox.margin>
-                        <Insets left="25.0" top="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="500.0">
+            <HBox prefHeight="80.0" prefWidth="1028.0">
                <children>
                   <Button id="TeacherviewBtn" fx:id="exitBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleSignOut" text="Log ud">
                      <HBox.margin>
-                        <Insets right="25.0" />
+                        <Insets left="50.0" right="25.0" top="10.0" />
                      </HBox.margin>
                      <graphic>
                         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
@@ -158,6 +141,19 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="25.0" top="15.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../../Images/Person.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="TeacherLbl" text="Velkommen admin">
+                     <HBox.margin>
+                        <Insets left="25.0" top="15.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
          </children>
