@@ -65,21 +65,20 @@ public class AdminMainViewController extends SuperController implements Initiali
         }
     }
 
-    public void handleAddUserBtn(ActionEvent actionEvent) throws IOException {
-        openScene("/dk/easv/gui/admin/view/AddTeacherView.fxml",false, "Tilføj en lærer eller elev", false);
+    public void handleAddUserBtn(ActionEvent actionEvent) throws IOException, SQLServerException {
+        openScene("/dk/easv/gui/admin/view/AddTeacherView.fxml",true, "Tilføj en lærer eller elev", false);
+        displayUsers(selectedSchool());
     }
 
     public void handleSignOut(ActionEvent actionEvent) throws IOException {
         closeWindow(exitBtn);
         openScene("/dk/easv/gui/login/view/loginview.fxml",false, "Log ind som lærer, admin eller elev", false);
     }
-
     public void handleComboboxClicked(ActionEvent actionEvent) throws SQLServerException {
         displayUsers(selectedSchool());
     }
 
     public void displayUsers(School school) throws SQLServerException {
-        school = selectedSchool();
         teacherTable.setItems(aM.getObservableTeachers(school));
         studentTable.setItems(aM.getObservableStudents(school));
     }
