@@ -103,6 +103,9 @@ public class StudentEditCitizenController extends saveCitizenController implemen
     }
 
     private void setupOldInfo(Date date) {
+        Map<Integer,FunkNodeContainer> funkDummy = new LinkedHashMap<>();
+        Map<Integer,HealthNodeContainer> healthDummy = new LinkedHashMap<>();
+
         Task<Void> loadInfoFromDate = new Task<>() {
             @Override
             protected Void call() throws SQLException {
@@ -112,7 +115,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
                 List<Section> hSectionList = cM.getHealthSections();
                 List<Tab> hTabList = new ArrayList<>();
                 for (Section section : hSectionList) {
-                    hTabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo, true));
+                    hTabList.add(HealthTabFactory.buildTabWithInfo(section, healthDummy, healthInfo, true));
                     updateProgress(hTabList.size(),fSections.size()+hSectionList.size());
                 }
 
@@ -120,7 +123,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
                 Map<Integer, FunkResult> funkInfo = cM.loadFunkInfoFromDate(citizen.getId(), date);
                 List<Tab> fTabList = new ArrayList<>();
                 for (Section section : fSections) {
-                    fTabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo, true));
+                    fTabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkDummy, funkInfo, true));
                     updateProgress(hTabList.size() + fTabList.size(),fSections.size()+hSectionList.size());
                 }
 
@@ -178,6 +181,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
 
     public void handleDateCombo(ActionEvent actionEvent) {
         Date date = dateSelectorCombo.getSelectionModel().getSelectedItem();
+        System.out.println(date);
         setupOldInfo(date);
     }
 

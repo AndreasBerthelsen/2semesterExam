@@ -317,8 +317,8 @@ public class CitizienDAO implements ICitizienDAO {
     @Override
     public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
         try (Connection connection = dc.getConnection()) {
-           // saveFunk(connection, newDate, funkMap, citizen);
-           // saveHelbred(connection, newDate, healthMap, citizen);
+            saveFunk(connection, newDate, funkMap, citizen);
+            saveHelbred(connection, newDate, healthMap, citizen);
             saveGenInfo(connection, genInfoMap, citizen);
         }
     }
@@ -419,6 +419,7 @@ public class CitizienDAO implements ICitizienDAO {
                 int expectedIndex = rs.getInt("expectedCondition");
                 int toggleId = rs.getInt("relevans");
                 HealthResult info = new HealthResult(toggleId, expectedIndex, current, observation, technical);
+                System.out.println(info);
                 int problemid = rs.getInt("problemId");
                 resultMap.put(problemid, info);
             }
