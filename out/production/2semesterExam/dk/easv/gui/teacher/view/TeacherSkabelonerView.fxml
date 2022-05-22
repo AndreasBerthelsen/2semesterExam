@@ -8,21 +8,14 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.SkabelonerViewController">
-   <top>
-      <Pane id="Vbox" prefHeight="225.0" prefWidth="1150.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label id="TeacherLbl" layoutX="514.0" layoutY="95.0" text="Skabeloner" />
-         </children>
-      </Pane>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1700.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.SkabelonerViewController">
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView id="skabelonLabel" fx:id="templateTV" onMouseClicked="#handleSetDescription" prefHeight="675.0" prefWidth="625.0">
+            <TableView id="skabelonLabel" fx:id="templateTV" onMouseClicked="#handleSetDescription" prefHeight="724.0" prefWidth="956.0">
               <columns>
                 <TableColumn fx:id="fNameTC" prefWidth="75.0" text="Fornavn" />
                   <TableColumn fx:id="lNameTC" prefWidth="75.0" text="Efternavn" />
@@ -31,9 +24,12 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <VBox alignment="CENTER" spacing="20.0">
+            <VBox alignment="CENTER" prefHeight="724.0" prefWidth="338.0" spacing="30.0">
                <children>
-                  <Label text="Beskrivelse" />
+                  <Label text="Beskrivelse">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Label>
                   <TextArea id="descriptionTextArea" fx:id="descriptionTextArea" disable="true" prefHeight="200.0" prefWidth="200.0" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleNySkabelonbtn" text="Ny Skabelon" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleKopierSkabelon" text="Kopiér Skabelon" />
@@ -50,4 +46,11 @@
          </BorderPane.margin>
       </HBox>
    </center>
+   <top>
+      <VBox id="Vbox" alignment="CENTER" prefHeight="226.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="TeacherLbl" text="Skabeloner" />
+         </children>
+      </VBox>
+   </top>
 </BorderPane>
