@@ -199,4 +199,36 @@ Id's til Tilføj / rediger / slet elever
 
 }
 
+/**
+Css til combobox
+ */
+.combo-box {
+    -fx-border-width: 0.5px;
+    -fx-border-color: #ACACAC;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+    -fx-font-size: 16px;
+    -fx-padding: 0px;
+    -fx-font-weight: 700;
+    -fx-font-family: "Lucida Sans";
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
 
+.combo-box:hover {
+    -fx-border-color: #0e180a;
+}
+
+.combo-box .list-view{
+    -fx-border-width: 0.5px;
+    -fx-border-color: #ACACAC;
+    -fx-background-color: white;
+    -fx-padding: 0px;
+    -fx-font-weight: 700;
+}
+
+.combo-box .list-view .list-ce:filled{
+    -fx-text-fill: black;
+    -fx-font-size: 12;
+    -fx-font-weight: 700;
+}

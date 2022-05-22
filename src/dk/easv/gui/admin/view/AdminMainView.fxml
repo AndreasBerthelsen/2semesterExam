@@ -30,7 +30,7 @@
                         <Insets top="25.0" />
                      </VBox.margin>
                   </Button>
-                  <ComboBox fx:id="comboBox" onAction="#handleComboboxClicked" prefWidth="150.0" />
+                  <ComboBox fx:id="comboBox" onAction="#handleComboboxClicked" prefHeight="34.0" prefWidth="225.0" />
                   <TableView fx:id="teacherTable" prefHeight="313.0" prefWidth="100.0" scaleShape="false">
                     <columns>
                         <TableColumn prefWidth="75.0" text="Liste af lærere">

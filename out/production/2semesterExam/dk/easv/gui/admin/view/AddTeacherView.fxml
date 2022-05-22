@@ -112,8 +112,11 @@
          <children>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="290.0" spacing="25.0">
                <children>
-                  <ComboBox fx:id="usertypeCombobox" prefHeight="25.0" prefWidth="164.0" promptText="Vælg lærer eller elev" />
-                  <ComboBox fx:id="schoolCombobox" prefWidth="150.0" promptText="Vælg skole" />
+                  <ComboBox fx:id="usertypeCombobox" prefHeight="34.0" prefWidth="240.0" promptText="Vælg lærer eller elev" />
+                  <ComboBox fx:id="schoolCombobox" prefHeight="34.0" prefWidth="240.0" promptText="Vælg skole">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></ComboBox>
                   <Label id="AddOrEditLabel" text="Angiv adgangskode" />
                   <TextField id="AddOrEditTxtfield" fx:id="passwordTxtFIeld">
                      <VBox.margin>
