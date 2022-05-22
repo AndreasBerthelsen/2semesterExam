@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
 
    <center>
       <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
@@ -28,7 +28,7 @@
             </HBox>
             <TabPane cacheShape="false" centerShape="false" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="General Information">
+                <Tab id="genTab" text="General Information">
                   <content>
                         <VBox id="VBOX" fx:id="genInfoVBox">
                            <children>
@@ -71,14 +71,14 @@
                         </VBox>
                   </content>
                 </Tab>
-                <Tab text="Funktionsevnetilstande">
+                <Tab id="funkTab" text="Funktionsevnetilstande">
                   <content>
-                        <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                        <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                   </content>
                 </Tab>
-                  <Tab text="Helbredstilstande">
+                  <Tab id="healthTab" text="Helbredstilstande">
                     <content>
-                        <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                        <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                     </content>
                   </Tab>
               </tabs>

@@ -198,5 +198,12 @@ Id's til Tilføj / rediger / slet elever
     -fx-alignment: CENTER
 
 }
+#genTab{
+    ;
+}
 
 
+.tab-pane:top *.tab-header-area {
+    -fx-font-size: 30;
+    /*-fx-padding: 5,5,5,5;*/
+}
