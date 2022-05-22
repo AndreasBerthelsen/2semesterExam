@@ -204,23 +204,10 @@ Id's til Tilføj / rediger / slet elever
 }
 
 
-/**
-Css til combobox
- */
-.combo-box {
-    -fx-border-width: 0.5px;
-    -fx-border-color: #ACACAC;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-font-size: 16px;
-    -fx-padding: 0px;
-    -fx-font-weight: 700;
-    -fx-font-family: "Lucida Sans";
-    -fx-alignment: center;
-    -fx-cursor: hand;
+
 /* TabPane ---------*/
 
-#genTab {;
+#genTab {
     -fx-background-color: #55e600;
 }
 
@@ -268,6 +255,21 @@ Css til combobox
     -fx-font-size: 25pt;
 }
 
+/**
+Css til combobox
+ */
+.combo-box {
+    -fx-border-width: 0.5px;
+    -fx-border-color: #ACACAC;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+    -fx-font-size: 16px;
+    -fx-padding: 0px;
+    -fx-font-weight: 700;
+    -fx-font-family: "Lucida Sans";
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
 .combo-box:hover {
     -fx-border-color: #0e180a;
 }
