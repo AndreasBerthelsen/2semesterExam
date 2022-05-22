@@ -71,12 +71,12 @@
                 </Tab>
                 <Tab text="Funktionsevnetilstande">
                   <content>
-                        <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                        <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                   </content>
                 </Tab>
                   <Tab text="Helbredstilstande">
                     <content>
-                        <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                        <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                     </content>
                   </Tab>
                   <Tab text="Logbogen">
@@ -97,12 +97,12 @@
                                 <tabs>
                                   <Tab text="Gammel Funktionsevnetilstande">
                                        <content>
-                                          <TabPane id="innerTabPane" fx:id="logFunkTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                                          <TabPane id="innerTabPane" fx:id="logFunkTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                                        </content>
                                   </Tab>
                                   <Tab text="Gammel HelbredsTilstande">
                                        <content>
-                                          <TabPane id="innerTabPane" fx:id="logHealthTabPane" side="LEFT" stylesheets="@../../teacher/view/testCSS.css" tabClosingPolicy="UNAVAILABLE" />
+                                          <TabPane id="innerTabPane" fx:id="logHealthTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                                        </content>
                                   </Tab>
                                 </tabs>
