@@ -43,7 +43,7 @@ public class EditStudentController extends SuperController implements IControlle
 
     @Override
     public void setUserInfo(User user) {
-        this.user = (User) user;
+        this.user = user;
         firstnameTxtField.setText(user.getFirstname());
         lastnameTxtField.setText(user.getLastname());
         usernameTxtField.setText(user.getUsername());

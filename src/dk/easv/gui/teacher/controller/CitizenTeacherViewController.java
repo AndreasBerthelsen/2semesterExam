@@ -56,6 +56,7 @@ public class CitizenTeacherViewController extends SuperController implements Ini
 
     private UserModel userModel;
     private CitizenModel citizenModel;
+    User user;
 
     public CitizenTeacherViewController() throws SQLServerException, IOException {
         userModel = new UserModel();
@@ -68,22 +69,16 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         tempFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         tempLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         //sets the list with names of the students
-        studentFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        studentLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+
 
         citizenDisplayID.setCellValueFactory(new PropertyValueFactory<>("id"));
         citizenDisplayFname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         citizenDisplayLname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
 
         setToolTip();
-        try {
-            tempTableView.setItems(citizenModel.getAllTemplatesOfCitizensObservable());
-            studentTableView.setItems(userModel.getObservableStudents());
-            studentTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tempTableView.setItems(citizenModel.getAllTemplatesOfCitizensObservable());
 
-        } catch (SQLServerException throwables) {
-            throwables.printStackTrace();
-        }
+
     }
 
     private void setToolTip() {
@@ -145,7 +140,11 @@ public class CitizenTeacherViewController extends SuperController implements Ini
 
     @Override
     public void setUserInfo(User user) {
-
+        this.user = user;
+        studentFnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        studentLnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        studentTableView.setItems(userModel.getAllStudentList(user.getSchoolID()));
+        studentTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
 
