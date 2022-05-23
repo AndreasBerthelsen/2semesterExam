@@ -51,8 +51,8 @@ public class GenInfoTabFactory {
     }
 
     private static HBox createHeaderHBox(String headerString) {
-
         Label headerLabel = new Label(headerString.replaceAll("_"," "));
+        headerLabel.setId("genInfoHeader");
         ImageView infoImage = createInfoImage();
         HBox headerBox = new HBox(5, headerLabel, infoImage);
         headerBox.setAlignment(Pos.CENTER);

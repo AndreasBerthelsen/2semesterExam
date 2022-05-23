@@ -3,5 +3,46 @@
 }
 
 .tab {
+    -fx-font-size: 25;
     -fx-padding: 5em 0.5em 5em 0.5em;
+}
+
+.tab-pane{
+
+    -fx-tab-min-width:120px;
+    -fx-tab-min-height:50px;
+    -fx-tab-max-height:50px;
+}
+
+.tab:selected {
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 15 0;
+}
+
+.tab-pane:focused .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+    -fx-border-radius: 0;
+}
+
+
+
+#funkHeader{
+    -fx-border-width: 0 0 2 0;
+    -fx-font-size: 35;
+    -fx-border-color:  #c6b22f;
+}
+#genInfoHeader{
+    -fx-font-size: 35;
+}
+
+#healthHeader{
+    -fx-font-size: 35;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #65859b;
+}
+
+#funkContentBox{
+
 }

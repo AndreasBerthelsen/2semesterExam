@@ -29,9 +29,9 @@
             </HBox>
             <TabPane cacheShape="false" centerShape="false" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="General Information">
+                <Tab id="genTab" text="General Information">
                   <content>
-                        <VBox id="VBOX" fx:id="genInfoVBox">
+                        <VBox id="VBOX" fx:id="genInfoVBox" stylesheets="@../../teacher/view/InnerTabPane.css">
                            <children>
                               <HBox id="VBOX" alignment="CENTER">
                                  <children>
@@ -69,12 +69,12 @@
                         </VBox>
                   </content>
                 </Tab>
-                <Tab text="Funktionsevnetilstande">
+                <Tab id="funkTab" text="Funktionsevnetilstande">
                   <content>
                         <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                   </content>
                 </Tab>
-                  <Tab text="Helbredstilstande">
+                  <Tab id="healthTab" text="Helbredstilstande">
                     <content>
                         <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                     </content>

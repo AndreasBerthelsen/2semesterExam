@@ -46,6 +46,7 @@ public class HealthTabFactory {
         VBox chunk = new VBox(20);
         chunk.setAlignment(Pos.TOP_CENTER);
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
+        headerLabel.setId("healthHeader");
         HBox buttonHBox = new HBox(buttonSpacing);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
         buttonHBox.getChildren().addAll(createRadioButtons(key, nodeContainerMap, startingContainer));

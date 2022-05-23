@@ -57,6 +57,7 @@ public class FunktionTabFactory {
 
         VBox chunk = new VBox();
         chunk.setAlignment(Pos.TOP_CENTER);
+        chunk.setId("chunkVbox");
 
         GridPane gridpane = new GridPane();
         gridpane.setAlignment(Pos.CENTER);
@@ -72,6 +73,7 @@ public class FunktionTabFactory {
         gridpane.setVgap(vGap);
 
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
+        headerLabel.setId("funkHeader");
         Label obsLabel = new Label("Observations Notat");
         TextArea obsTextArea = startingContainer.getObsTextArea();
         chunk.getChildren().addAll(headerLabel, gridpane, obsLabel, obsTextArea);

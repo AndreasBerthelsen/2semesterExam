@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
 
    <center>
       <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
@@ -30,16 +30,16 @@
               <tabs>
                 <Tab id="genTab" text="General Information">
                   <content>
-                        <VBox id="VBOX" fx:id="genInfoVBox">
+                        <VBox id="VBOX" fx:id="genInfoVBox" stylesheets="@InnerTabPane.css">
                            <children>
                               <HBox id="VBOX" alignment="CENTER">
                                  <children>
-                                    <GridPane hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="768.0">
+                                    <GridPane hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="1138.0">
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -47,13 +47,13 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Fødselsdato" GridPane.columnIndex="2" />
-                                          <DatePicker fx:id="dateInput" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <DatePicker fx:id="dateInput" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <Label text="Fornavn" />
                                           <Label text="Efternavn" GridPane.columnIndex="1" />
                                           <TextField fx:id="fNameInput" GridPane.rowIndex="1" />
                                           <TextField fx:id="lNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label text="Kort beskrivelse af skabelonen" GridPane.columnIndex="3" />
-                                          <TextArea fx:id="descriptionInput" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextArea fx:id="descriptionInput" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                        </children>
                                        <opaqueInsets>
                                           <Insets />
