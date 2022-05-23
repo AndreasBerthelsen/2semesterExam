@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1700.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.AdminstrateStudentsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1299.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.AdminstrateStudentsController">
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="1050.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="175.0" prefWidth="1150.0" spacing="100.0">
                <children>
@@ -19,6 +19,9 @@
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleUpdateStudentBtn" text="Rediger" />
                   <Button id="SkabelonBtn" mnemonicParsing="false" onAction="#handleDeleteStudentBtn" text="Slet" />
                </children>
+               <padding>
+                  <Insets bottom="15.0" top="15.0" />
+               </padding>
             </HBox>
             <TableView fx:id="studentTable" prefHeight="600.0" prefWidth="1150.0">
                <VBox.margin>
@@ -35,12 +38,15 @@
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
             </TableView>
          </children>
       </VBox>
    </center>
    <top>
-      <VBox id="Vbox" alignment="CENTER" prefHeight="226.0" prefWidth="1700.0" BorderPane.alignment="CENTER">
+      <VBox id="Vbox" alignment="CENTER" prefHeight="215.0" prefWidth="1299.0" BorderPane.alignment="CENTER">
          <children>
             <Label id="TeacherLbl" text="Tilføj og rediger en student" />
          </children>
