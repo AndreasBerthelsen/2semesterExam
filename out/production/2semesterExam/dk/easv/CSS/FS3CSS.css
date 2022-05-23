@@ -217,7 +217,6 @@ Id's til Tilføj / rediger / slet elever
 #healthTab {
     -fx-background-color: #65859b;
 }
-
 .tab{
     -fx-font-size: 25;
 }
@@ -235,31 +234,10 @@ Id's til Tilføj / rediger / slet elever
 .tab-pane:focused .tab:selected .focus-indicator {
     -fx-border-color: transparent;
     -fx-border-width: 0;
+    -fx-border-insets: 0;
+    -fx-border-radius: 0;
 }
 
-/*TablPane styling*/
-
-* {
-    -fx-primary: #2A2E37;
-    -fx-secondary: #FFFF8D;
-    -fx-primarytext: #B2B2B2;
-}
-
-
-.tab {
-    -fx-background-color: -fx-primary;
-    -fx-padding: 5 5 5 5;
-}
-
-
-.tab-header-background {
-
-}
-
-.tab-label {
-    -fx-text-fill: -fx-secondary;
-    -fx-font-size: 25pt;
-}
 
 /**
 Css til combobox

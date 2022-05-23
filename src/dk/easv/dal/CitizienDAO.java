@@ -25,7 +25,10 @@ public class CitizienDAO implements ICitizienDAO {
         dc = new DatabaseConnector();
     }
 
-
+    /**
+     * Vælger ID'et, navnet, og ændringsdatoen af alle borgere i databasen
+     * @return Returnerer en liste af alle borgere i vores program
+     */
     @Override
     public List<Citizen> getAllCitizens() {
         ArrayList<Citizen> allCitizen = new ArrayList<>();
@@ -49,6 +52,10 @@ public class CitizienDAO implements ICitizienDAO {
         return allCitizen;
     }
 
+    /**
+     * Vælger borger id'et, navnet, ændringsdato og beskrivelse af borgeren
+     * @return Returnerer en liste af alle borgere i vores program, som er en template
+     */
     @Override
     public List<Citizen> getAllTemplatesOfCitizens() {
         ArrayList<Citizen> allTemp = new ArrayList<>();
@@ -73,6 +80,12 @@ public class CitizienDAO implements ICitizienDAO {
         return allTemp;
     }
 
+    /**
+     * Opretter en ny borger i systemet med alle relevante detajler
+     * @param fName - Fornavnet på borgeren
+     * @param lName - Efternavnet på borgeren
+     * @param birthDate - Fødselsdatoen på borgeren
+     */
     @Override
     public void createCitizen(String fName, String lName, Date birthDate) {
         try (Connection connection = dc.getConnection()) {
@@ -88,6 +101,11 @@ public class CitizienDAO implements ICitizienDAO {
         }
     }
 
+    /**
+     * Tilføjer en student til en borger
+     * @param user - Studenten der bliver tilføjet borgeren
+     * @param citizen - Borgeren der får tilføjet en student
+     */
     @Override
     public void addUserToCitizen(User user, int citizen) {
         try (Connection connection = dc.getConnection()) {
@@ -101,6 +119,11 @@ public class CitizienDAO implements ICitizienDAO {
         }
     }
 
+    /**
+     * Sletter en borger fra en student
+     * @param citizenToBeDeleted - Borgeren der bliver slettet fra studenten
+     * @param user - 
+     */
     @Override
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
         try (Connection connection = dc.getConnection()) {
