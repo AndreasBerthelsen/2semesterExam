@@ -6,7 +6,7 @@
 Id's til LoginView
  */
 
-#login-textfield{
+#login-textfield {
     -fx-background-color: transparent;
     -fx-border-color: black;
     -fx-border-style: solid;
@@ -14,11 +14,11 @@ Id's til LoginView
     -fx-font-size: 20;
 }
 
-#login-label{
-     -fx-font-family: "Lucida Sans";
-     -fx-font-size: 25;
+#login-label {
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 25;
     -fx-text-fill: #065c2d;
- }
+}
 
 #loginbutton {
     -fx-font-size: 15;
@@ -33,7 +33,7 @@ Id's til LoginView
 /**
 Id's til TeacherMainViewController
  */
-#TeacherviewBtn{
+#TeacherviewBtn {
     -fx-text-fill: white;
     -fx-border-width: 0 0 0 0;
     -fx-background-color: transparent;
@@ -41,7 +41,7 @@ Id's til TeacherMainViewController
     -fx-font-family: "Lucida Sans";
 }
 
-#TeacherviewBtn:hover{
+#TeacherviewBtn:hover {
     -fx-background-color: #065c2d;
     -fx-cursor: hand;
 }
@@ -63,7 +63,7 @@ Id's til TeacherMainViewController
 Id's til TeacherSkabelonerView
  */
 
-#SkabelonBtn{
+#SkabelonBtn {
     -fx-font-size: 20;
     -fx-background-color: #55e600;
     -fx-border-color: #55e600;
@@ -71,29 +71,31 @@ Id's til TeacherSkabelonerView
     -fx-background-radius: 90;
 }
 
-#SkabelonBtn:hover{
+#SkabelonBtn:hover {
     -fx-border-color: #48c200;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
 
-#SkabelonBtn:pressed{
+#SkabelonBtn:pressed {
     -fx-background-color: #48c200;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
 
-#menuVBox{
+#menuVBox {
     -fx-background-color: red;
 }
 
-.split-menu-button{
+.split-menu-button {
     -fx-font-size: 25;
 }
+
 #skabelonLabel {
     -fx-font-size: 25;
 }
-#descriptionTextArea{
+
+#descriptionTextArea {
     -fx-opacity: 1.0;
 }
 
@@ -130,7 +132,7 @@ Id's til Tilføj / rediger / slet elever
     -fx-font-size: 18;
 }
 
-#AddOrEditBtn{
+#AddOrEditBtn {
     -fx-font-size: 14;
     -fx-background-color: #55e600;
     -fx-border-color: #55e600;
@@ -138,31 +140,31 @@ Id's til Tilføj / rediger / slet elever
     -fx-background-radius: 90;
 }
 
-#AddOrEditBtn:hover{
+#AddOrEditBtn:hover {
     -fx-border-color: #101a0a;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
 
-#AddOrEditBtn:pressed{
+#AddOrEditBtn:pressed {
     -fx-background-color: #48c200;
     -fx-border-radius: 90;
     -fx-background-radius: 90;
 }
 
-.button{
+.button {
     -fx-font-size: 20;
     -fx-background-color: lightgreen;
     -fx-border-color: lightgreen;
     -fx-border-width: 2px;
 }
 
-.button:hover{
+.button:hover {
     -fx-border-color: limegreen;
     -fx-border-width: 2px;
 }
 
-.button:pressed{
+.button:pressed {
     -fx-background-color: limegreen;
 }
 
@@ -171,19 +173,21 @@ Id's til Tilføj / rediger / slet elever
 .table-view .column-header-background .filler {
     -fx-background-color: derive(white, 0%);
     -fx-stroke: transparent;
-    -fx-size:50;
-    -fx-alignment: CENTER ;
+    -fx-size: 50;
+    -fx-alignment: CENTER;
     -fx-text-alignment: center;
 
 }
+
 .table-row-cell:filled:hover {
 
-    -fx-size:50;
+    -fx-size: 50;
     -fx-alignment: CENTER;
     -fx-text-alignment: center;
 
 
 }
+
 .table-view:row-selection {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -193,10 +197,62 @@ Id's til Tilføj / rediger / slet elever
 
 }
 
-.table-view .table-column{
+.table-view .table-column {
     -fx-text-alignment: center;
     -fx-alignment: CENTER
 
+}
+
+
+
+/* TabPane ---------*/
+
+#genTab {
+    -fx-background-color: #55e600;
+}
+
+#funkTab {
+    -fx-background-color: #c6b22f;
+}
+
+#healthTab {
+    -fx-background-color: #65859b;
+}
+
+.tab:selected {
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 10 0;
+}
+
+.tab-pane:focused .tab:selected .focus-indicator {
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-border-insets: 0;
+    -fx-border-radius: 0;
+}
+
+/*TablPane styling*/
+
+* {
+    -fx-primary: #2A2E37;
+    -fx-secondary: #FFFF8D;
+    -fx-primarytext: #B2B2B2;
+}
+
+
+.tab {
+    -fx-background-color: -fx-primary;
+    -fx-padding: 5 5 5 5;
+}
+
+
+.tab-header-background {
+
+}
+
+.tab-label {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 25pt;
 }
 
 /**
@@ -214,7 +270,6 @@ Css til combobox
     -fx-alignment: center;
     -fx-cursor: hand;
 }
-
 .combo-box:hover {
     -fx-border-color: #0e180a;
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpane" prefHeight="883.0" prefWidth="1215.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.TeacherViewMainController">
+<BorderPane fx:id="borderpane" prefHeight="883.0" prefWidth="1207.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.TeacherViewMainController">
    <left>
       <VBox id="Vbox" layoutX="250.0" prefHeight="1000.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
@@ -100,26 +100,32 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="163.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="122.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/3d%20mand.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="164.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="144.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/Rediger%20taleboks.png" />
                                  </image>
                               </ImageView>
                            </children>
+                           <VBox.margin>
+                              <Insets top="45.0" />
+                           </VBox.margin>
                         </HBox>
                         <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="163.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="122.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/3d%20mand.png" />
                                  </image>
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
                               </ImageView>
-                              <ImageView fitHeight="164.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="144.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/tildel%20elever.png" />
                                  </image>
@@ -128,12 +134,15 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="666.0" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="163.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="122.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/3d%20mand.png" />
                                  </image>
+                                 <HBox.margin>
+                                    <Insets top="15.0" />
+                                 </HBox.margin>
                               </ImageView>
-                              <ImageView fitHeight="164.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="146.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/ElevBoks.png" />
                                  </image>
@@ -142,12 +151,15 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="666.0" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="163.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="122.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/3d%20mand.png" />
                                  </image>
+                                 <HBox.margin>
+                                    <Insets top="15.0" />
+                                 </HBox.margin>
                               </ImageView>
-                              <ImageView fitHeight="164.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="122.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/Sign%20out.png" />
                                  </image>

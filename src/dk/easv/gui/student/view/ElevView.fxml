@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="borderpane" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.ElevController">
+<BorderPane styleClass="borderpane" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.ElevController">
    <center>
       <VBox id="Vbox" alignment="TOP_CENTER" prefHeight="554.0" prefWidth="650.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
@@ -65,9 +65,9 @@
       </VBox>
    </center>
    <top>
-      <HBox id="darkerPane" prefHeight="93.0" prefWidth="674.0" styleClass="hbox" BorderPane.alignment="CENTER">
+      <HBox id="darkerPane" styleClass="hbox" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="73.0" prefWidth="680.0">
+            <HBox>
                <children>
                   <Button id="TeacherviewBtn" fx:id="exitBtn" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#handleExit" text="Log ud">
                      <graphic>
@@ -99,7 +99,7 @@
                         <Font size="36.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="25.0" />
+                        <Insets />
                      </HBox.margin>
                   </Label>
                </children>
