@@ -116,7 +116,7 @@ Id's til Tilføj / rediger / slet elever
  */
 
 #AddOrEditLabel {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-font-family: "Lucida Sans";
     -fx-font-size: 24;
 }
@@ -126,7 +126,7 @@ Id's til Tilføj / rediger / slet elever
     -fx-border-color: white;
     -fx-border-style: solid;
     -fx-border-width: 0 0 1 0;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-font-family: "Lucida Sans";
     -fx-font-size: 18;
 }

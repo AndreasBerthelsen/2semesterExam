@@ -122,7 +122,7 @@ public class CitizienDAO implements ICitizienDAO {
     /**
      * Sletter en borger fra en student
      * @param citizenToBeDeleted - Borgeren der bliver slettet fra studenten
-     * @param user - 
+     * @param user -
      */
     @Override
     public void deleteCitizenFromUser(Citizen citizenToBeDeleted, User user) {
