@@ -66,7 +66,7 @@ public class ElevController extends SuperController implements IController, Init
 
         controller.setCitizen(citizen);
         studentModel.lastChanged(citizen);
-        stage.setFullScreen(true);
+        stage.setMaximized(true);
         stage.showAndWait();
     }
 
