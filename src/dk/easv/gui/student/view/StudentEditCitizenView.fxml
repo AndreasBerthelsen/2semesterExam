@@ -85,7 +85,7 @@
                            <children>
                               <HBox alignment="CENTER" spacing="20.0">
                                  <children>
-                                    <Label text="Vælg dato (temp)" />
+                                    <Label text="Vælg dato" />
                                     <ComboBox fx:id="dateSelectorCombo" onAction="#handleDateCombo" prefWidth="150.0" promptText="Vælg gammel dato??" />
                                     <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
                                  </children>
