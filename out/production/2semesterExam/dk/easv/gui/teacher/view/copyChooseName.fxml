@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -25,4 +26,8 @@
       <Label text="Fornavn" />
       <Label text="Efternavn" GridPane.columnIndex="1" />
    </children>
+   <stylesheets>
+      <URL value="@CitizenCSS.css" />
+      <URL value="@../../../CSS/FS3CSS.css" />
+   </stylesheets>
 </GridPane>

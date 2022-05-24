@@ -48,7 +48,7 @@
                <children>
                   <ImageView fx:id="studentTipImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../Images/info.png" />
+                        <Image url="@../../../Images/information.png" />
                      </image>
                   </ImageView>
                   <TableView fx:id="studentTableView" onMouseClicked="#handleStudentTableCLicked" prefHeight="300.0" prefWidth="315.0">
