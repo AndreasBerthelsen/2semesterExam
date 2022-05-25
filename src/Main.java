@@ -6,10 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -19,7 +16,7 @@ public class Main extends Application {
         IUserDAO iUserDAO = new UserDAO();
         ICitizienDAO iCitizienDAO = new CitizienDAO();
         IGenInfoDAO iGenInfoDAO = new GenInfoDAO();
-        IFunktionsDAO iFunktionsDAO = new FunktionsDAO();
+        IFuncDAO iFunktionsDAO = new FunctionDAO();
         IHealthDAO iHealthDAO = new HealthDAO();
         ITemplateDAO iTemplateDAO = new TemplateDAO();
 

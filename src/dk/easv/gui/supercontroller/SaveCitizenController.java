@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class saveCitizenController {
+public abstract class SaveCitizenController {
     protected Map<Integer, HealthResult> saveHealth(Map<Integer, HealthNodeContainer> healthNodeMap) {
         Map<Integer, HealthResult> resultMap = new LinkedHashMap<>();
         for (int id : healthNodeMap.keySet()) {

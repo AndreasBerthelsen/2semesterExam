@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="borderpane" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.ElevController">
+<BorderPane styleClass="borderpane" stylesheets="@../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.StudentController">
    <center>
       <VBox id="Vbox" alignment="TOP_CENTER" prefHeight="554.0" prefWidth="650.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>

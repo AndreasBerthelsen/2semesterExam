@@ -4,8 +4,8 @@ import dk.easv.be.Citizen;
 import dk.easv.be.User;
 import dk.easv.gui.student.model.StudentModel;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.ICitizenSelector;
+import dk.easv.gui.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ElevController extends SuperController implements IController, Initializable {
+public class StudentController extends SuperController implements IController, Initializable {
     public Label nameLabel;
     public TableView<Citizen> tableView;
 
@@ -37,7 +37,7 @@ public class ElevController extends SuperController implements IController, Init
     private CitizenModel cM;
     private StudentModel studentModel;
 
-    public ElevController() throws IOException {
+    public StudentController() throws IOException {
         cM = new CitizenModel();
         studentModel = new StudentModel();
     }

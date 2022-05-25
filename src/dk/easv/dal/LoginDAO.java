@@ -12,10 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginDAO implements ILoginDAO {
-    private DatabaseConnector dc;
+    private DBConnector dc;
 
     public LoginDAO() throws IOException {
-        dc = new DatabaseConnector();
+        dc = new DBConnector();
     }
 
     public User loginUser(String username, String password) throws SQLException {

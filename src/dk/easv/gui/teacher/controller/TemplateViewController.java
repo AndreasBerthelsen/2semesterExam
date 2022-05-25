@@ -1,11 +1,10 @@
 package dk.easv.gui.teacher.controller;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Citizen;
 import dk.easv.be.User;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.ICitizenSelector;
+import dk.easv.gui.Interfaces.IController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,7 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class SkabelonerViewController extends SuperController implements Initializable, IController {
+public class TemplateViewController extends SuperController implements Initializable, IController {
     public TableView<Citizen> templateTV;
     public TableColumn<Citizen, String> lNameTC;
     public TableColumn<Citizen, String> fNameTC;
@@ -34,7 +33,7 @@ public class SkabelonerViewController extends SuperController implements Initial
     private TextArea descriptionTextArea;
     private CitizenModel cM;
 
-    public SkabelonerViewController() throws IOException {
+    public TemplateViewController() throws IOException {
         cM = new CitizenModel();
     }
 
@@ -54,8 +53,8 @@ public class SkabelonerViewController extends SuperController implements Initial
     }
 
     public void handleNySkabelonbtn(ActionEvent actionEvent) throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
-        loader.setController(new NySkabelonMainController());
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TemplateMain.fxml")));
+        loader.setController(new NewTemplateController());
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         stage.setTitle("Ny Skabelon");
@@ -89,7 +88,7 @@ public class SkabelonerViewController extends SuperController implements Initial
     public void handleEditSkabelonbtn(ActionEvent actionEvent) {
         try{
             Citizen citizen = templateTV.getSelectionModel().getSelectedItem();
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/NySkabelonMain.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/teacher/view/TemplateMain.fxml")));
             loader.setController(new EditSkabelonViewController());
 
             Stage stage = new Stage();
@@ -108,7 +107,7 @@ public class SkabelonerViewController extends SuperController implements Initial
 
     public void handleKopierSkabelon(ActionEvent actionEvent) throws SQLException, IOException {
     Citizen selectedCitizen = templateTV.getSelectionModel().getSelectedItem();
-    openNewSceneWithCitizen(selectedCitizen, "/dk/easv/gui/teacher/view/copyChooseName.fxml", "Vælg navn til din nye Skabelon");
+    openNewSceneWithCitizen(selectedCitizen, "/dk/easv/gui/teacher/view/CopyChooseName.fxml", "Vælg navn til din nye Skabelon");
     templateTV.setItems(cM.getObservableTemplates());
     }
 

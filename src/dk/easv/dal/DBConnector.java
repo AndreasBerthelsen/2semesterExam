@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DatabaseConnector {
+public class DBConnector {
 
     private static final String PROP_FILE = "src/database.txt";
     private SQLServerDataSource ds;
@@ -20,7 +20,7 @@ public class DatabaseConnector {
      * vores login i et .txt fil
      * @throws IOException
      */
-    public DatabaseConnector() throws IOException
+    public DBConnector() throws IOException
     {
         Properties databaseProperties = new Properties();
         databaseProperties.load(new FileInputStream(PROP_FILE));
@@ -41,7 +41,7 @@ public class DatabaseConnector {
     }
 
     public static void main(String[] args) throws SQLException, IOException {
-        DatabaseConnector databaseConnector = new DatabaseConnector();
+        DBConnector databaseConnector = new DBConnector();
         Connection connection = databaseConnector.getConnection();
 
         System.out.println("Did it open? " + !connection.isClosed());

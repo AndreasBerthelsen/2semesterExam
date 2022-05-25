@@ -6,9 +6,8 @@ import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.gui.admin.Model.AdminModel;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.IController;
 import dk.easv.gui.teacher.model.UserModel;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditTeacherOrStudent extends SuperController implements IController, Initializable {
+public class EditTeacherOrStudentController extends SuperController implements IController, Initializable {
     public TextField usernameTxt;
     @FXML
     private ComboBox<School> schoolCombobox;
@@ -42,7 +41,7 @@ public class EditTeacherOrStudent extends SuperController implements IController
 
     User user;
 
-    public EditTeacherOrStudent() throws SQLServerException {
+    public EditTeacherOrStudentController() throws SQLServerException {
         adminModel = new AdminModel();
         userModel = new UserModel();
     }

@@ -5,16 +5,12 @@ import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.IController;
 import dk.easv.gui.teacher.model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class EditStudentController extends SuperController implements IController {
     @FXML

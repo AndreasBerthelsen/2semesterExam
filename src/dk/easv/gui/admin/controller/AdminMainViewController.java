@@ -5,7 +5,7 @@ import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.gui.admin.Model.AdminModel;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.IController;
 import dk.easv.gui.teacher.model.UserModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,12 +13,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Struct;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminMainViewController extends SuperController implements Initializable, IController {

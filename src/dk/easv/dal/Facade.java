@@ -3,7 +3,6 @@ package dk.easv.dal;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.*;
 import dk.easv.dal.interfaces.*;
-import javafx.scene.control.TextArea;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -16,22 +15,22 @@ public class Facade {
     private ICitizienDAO iCitizienDAO;
     private IHealthDAO iHealthDAO;
     private IGenInfoDAO iGenInfoDAO;
-    private IFunktionsDAO iFunktionsDAO;
+    private IFuncDAO iFunktionsDAO;
     private ITemplateDAO iTemplateDAO;
 
-    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
+    private Facade(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFuncDAO iFuncDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
         this.iLoginDAO = iLoginDAO;
         this.iUserDAO = iUserDAO;
         this.iCitizienDAO = iCitizienDAO;
         this.iGenInfoDAO = iGenInfoDAO;
-        this.iFunktionsDAO = iFunktionsDAO;
+        this.iFunktionsDAO = iFuncDAO;
         this.iHealthDAO = iHealthDAO;
         this.iTemplateDAO = itemplateDAO;
     }
 
-    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFunktionsDAO iFunktionsDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
+    public static void createInstance(ILoginDAO iLoginDAO, ICitizienDAO iCitizienDAO, IUserDAO iUserDAO, IGenInfoDAO iGenInfoDAO, IFuncDAO iFuncDAO, IHealthDAO iHealthDAO, ITemplateDAO itemplateDAO) {
         if (instance == null) {
-            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO, itemplateDAO);
+            instance = new Facade(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFuncDAO, iHealthDAO, itemplateDAO);
         }
     }
 
@@ -44,14 +43,6 @@ public class Facade {
     }
 
 
-    public List<Category> getAllTitles() throws SQLServerException {
-        return iHealthDAO.getAllTitle();
-    }
-
-    public List<String> getAllSubTitles(Category category) throws SQLServerException {
-        return iHealthDAO.getSubTitles(category);
-
-    }
 
     public User loginUser(String username, String password) throws SQLException {
         return iLoginDAO.loginUser(username, password);
@@ -84,10 +75,6 @@ public class Facade {
 
     public List<Citizen> getAllCitiziensFromUser(User user) {
         return iCitizienDAO.getAllCitizensFromUser(user);
-    }
-
-
-    public void addUserToCitizen(Citizen citizen, User user) {
     }
 
     public void createCitizen(String fname, String lname, Date birthDay) {

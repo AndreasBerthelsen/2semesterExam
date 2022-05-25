@@ -2,7 +2,7 @@ package dk.easv.gui.teacher.controller;
 
 import dk.easv.be.User;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.IController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class TeacherViewMainController extends SuperController implements IController {
     public BorderPane borderpane;

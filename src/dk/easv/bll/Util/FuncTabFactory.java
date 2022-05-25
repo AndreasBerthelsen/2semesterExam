@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FunktionTabFactory {
+public class FuncTabFactory {
     private static List<Image> imgList = createImages();
     public static Tab buildFunkTab(Section section, Map<Integer, FunkNodeContainer> answerMap) {
         //tab for hver afdeling

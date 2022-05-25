@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1300.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.CitizenTeacherViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1300.0" stylesheets="@../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.teacher.controller.CitizenTeacherViewController">
    <center>
       <HBox alignment="CENTER" prefHeight="543.0" prefWidth="1470.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>

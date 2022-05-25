@@ -11,10 +11,10 @@ import java.sql.*;
 import java.util.*;
 
 public class TemplateDAO implements ITemplateDAO {
-    DatabaseConnector dc;
+    DBConnector dc;
 
     public TemplateDAO() throws IOException {
-        dc = new DatabaseConnector();
+        dc = new DBConnector();
     }
 
 

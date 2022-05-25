@@ -1,11 +1,11 @@
 package dk.easv.gui.teacher.controller;
 
 import dk.easv.be.*;
-import dk.easv.bll.Util.FunktionTabFactory;
+import dk.easv.bll.Util.FuncTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
-import dk.easv.gui.supercontroller.saveCitizenController;
-import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
+import dk.easv.gui.supercontroller.SaveCitizenController;
+import dk.easv.gui.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EditSkabelonViewController extends saveCitizenController implements Initializable, ICitizenSelector {
+public class EditSkabelonViewController extends SaveCitizenController implements Initializable, ICitizenSelector {
     public TextField fNameInput;
     public DatePicker dateInput;
     public TextField lNameInput;
@@ -81,7 +81,7 @@ public class EditSkabelonViewController extends saveCitizenController implements
             List<Section> sectionList = cM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
             for (Section section : sectionList) {
-                tabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo,false));
+                tabList.add(FuncTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo,false));
             }
             Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });

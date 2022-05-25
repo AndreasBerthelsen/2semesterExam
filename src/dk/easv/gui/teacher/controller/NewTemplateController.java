@@ -3,10 +3,10 @@ package dk.easv.gui.teacher.controller;
 import dk.easv.be.FunkNodeContainer;
 import dk.easv.be.HealthNodeContainer;
 import dk.easv.be.Section;
-import dk.easv.bll.Util.FunktionTabFactory;
+import dk.easv.bll.Util.FuncTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
-import dk.easv.gui.supercontroller.saveCitizenController;
+import dk.easv.gui.supercontroller.SaveCitizenController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class NySkabelonMainController extends saveCitizenController implements Initializable {
+public class NewTemplateController extends SaveCitizenController implements Initializable {
     public TextField fNameInput;
     public DatePicker dateInput;
     public TextField lNameInput;
@@ -46,7 +46,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
     public TabPane helbredsInnerTabPane;
     private final Map<Integer, HealthNodeContainer> healthNodeMap = new LinkedHashMap<>();
 
-    public NySkabelonMainController() throws IOException {
+    public NewTemplateController() throws IOException {
     }
 
 
@@ -72,7 +72,7 @@ public class NySkabelonMainController extends saveCitizenController implements I
             List<Section> funkSectionList = sM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
             for (Section section : funkSectionList) {
-                tabList.add(FunktionTabFactory.buildFunkTab(section, funkNodeMap));
+                tabList.add(FuncTabFactory.buildFunkTab(section, funkNodeMap));
             }
             Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });

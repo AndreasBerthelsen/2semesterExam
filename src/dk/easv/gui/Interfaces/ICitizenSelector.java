@@ -1,4 +1,4 @@
-package dk.easv.gui.teacher.Interfaces;
+package dk.easv.gui.Interfaces;
 
 import dk.easv.be.Citizen;
 

@@ -1,7 +1,7 @@
 package dk.easv.dal;
 
 import dk.easv.be.Section;
-import dk.easv.dal.interfaces.IHealthDAO;
+import dk.easv.dal.interfaces.IFuncDAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,22 +12,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HealthDAO implements IHealthDAO {
-
+public class FunctionDAO implements IFuncDAO {
     DBConnector dc;
-    public HealthDAO() throws IOException {
+
+    public FunctionDAO() throws IOException {
         dc = new DBConnector();
     }
 
     @Override
-    public List<Section> getHealthSections() {
+    public List<Section> getFunkSections() {
         List<Section> sectionList = new ArrayList<>();
 
         try (Connection connection = dc.getConnection()) {
-            String sql = "SELECT problemid, HelbredsVanskligheder.tilstandsID, guititel, titel\n" +
-                    "from HelbredsVanskligheder\n" +
-                    "INNER join HelbredsTilstande on HelbredsVanskligheder.tilstandsID = HelbredsTilstande.tilstandsId\n" +
-                    "ORDER by tilstandsID asc";
+            String sql = "SELECT problemid, fTilstandsID, guititel, titel\n" +
+                    "            from FunktionsVanskligheder\n" +
+                    "            INNER join FunktionsTilstande on fTilstandsID = funkid\n" +
+                    "            ORDER by fTilstandsID asc";
+
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
@@ -37,7 +38,7 @@ public class HealthDAO implements IHealthDAO {
             while (resultSet.next()) {
                 int problemId = resultSet.getInt("problemid");
                 String guiTitel = resultSet.getString("guititel");
-                int ownerID = resultSet.getInt("tilstandsID");
+                int ownerID = resultSet.getInt("fTilstandsID");
                 if (currentSection != ownerID) {
                     if (!idTitelMap.isEmpty()) {
                         sectionList.add(new Section(currentSection,sectionTitle,idTitelMap));
@@ -56,4 +57,5 @@ public class HealthDAO implements IHealthDAO {
         }
         return sectionList;
     }
+
 }

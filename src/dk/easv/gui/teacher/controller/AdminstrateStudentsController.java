@@ -3,7 +3,7 @@ package dk.easv.gui.teacher.controller;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.User;
 import dk.easv.gui.supercontroller.SuperController;
-import dk.easv.gui.teacher.Interfaces.IController;
+import dk.easv.gui.Interfaces.IController;
 import dk.easv.gui.teacher.model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

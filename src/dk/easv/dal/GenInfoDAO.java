@@ -1,6 +1,5 @@
 package dk.easv.dal;
 
-import dk.easv.dal.DatabaseConnector;
 import dk.easv.dal.interfaces.IGenInfoDAO;
 
 import java.io.IOException;
@@ -11,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GenInfoDAO implements IGenInfoDAO {
-    DatabaseConnector dc;
+    DBConnector dc;
 
     public GenInfoDAO() throws IOException {
-        this.dc = new DatabaseConnector();
+        this.dc = new DBConnector();
     }
 
     public ArrayList<String> getGeneralinfoFields() {

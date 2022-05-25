@@ -19,10 +19,10 @@ import java.util.*;
 
 
 public class CitizienDAO implements ICitizienDAO {
-    private DatabaseConnector dc;
+    private DBConnector dc;
 
     public CitizienDAO() throws IOException {
-        dc = new DatabaseConnector();
+        dc = new DBConnector();
     }
 
     /**

@@ -1,11 +1,11 @@
 package dk.easv.gui.student.controller;
 
 import dk.easv.be.*;
-import dk.easv.bll.Util.FunktionTabFactory;
+import dk.easv.bll.Util.FuncTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
-import dk.easv.gui.supercontroller.saveCitizenController;
-import dk.easv.gui.teacher.Interfaces.ICitizenSelector;
+import dk.easv.gui.supercontroller.SaveCitizenController;
+import dk.easv.gui.Interfaces.ICitizenSelector;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class StudentEditCitizenController extends saveCitizenController implements Initializable, ICitizenSelector {
+public class StudentEditCitizenController extends SaveCitizenController implements Initializable, ICitizenSelector {
     public TabPane funktionInnerTabPane;
     public TabPane helbredsInnerTabPane;
     public DatePicker dateInput;
@@ -84,7 +84,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
             List<Section> funkSectionList = cM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
             for (Section section : funkSectionList) {
-                tabList.add(FunktionTabFactory.buildFunkTab(section, funkNodeMap));
+                tabList.add(FuncTabFactory.buildFunkTab(section, funkNodeMap));
             }
             Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });
@@ -123,7 +123,7 @@ public class StudentEditCitizenController extends saveCitizenController implemen
                 Map<Integer, FunkResult> funkInfo = cM.loadFunkInfoFromDate(citizen.getId(), date);
                 List<Tab> fTabList = new ArrayList<>();
                 for (Section section : fSections) {
-                    fTabList.add(FunktionTabFactory.buildFunkTabWithInfo(section, funkDummy, funkInfo, true));
+                    fTabList.add(FuncTabFactory.buildFunkTabWithInfo(section, funkDummy, funkInfo, true));
                     updateProgress(hTabList.size() + fTabList.size(),fSections.size()+hSectionList.size());
                 }
 

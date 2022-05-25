@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" stylesheets="@../../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.StudentEditCitizenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" stylesheets="@../../CSS/FS3CSS.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.student.controller.StudentEditCitizenController">
 
    <center>
       <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
@@ -31,7 +31,7 @@
               <tabs>
                 <Tab id="genTab" text="General Information">
                   <content>
-                        <VBox id="VBOX" fx:id="genInfoVBox" stylesheets="@../../teacher/view/InnerTabPane.css">
+                        <VBox id="VBOX" fx:id="genInfoVBox" stylesheets="@../../CSS/InnerTabPane.css">
                            <children>
                               <HBox id="VBOX" alignment="CENTER">
                                  <children>
@@ -71,12 +71,12 @@
                 </Tab>
                 <Tab id="funkTab" text="Funktionsevnetilstande">
                   <content>
-                        <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
+                        <TabPane id="innerTabPane" fx:id="funktionInnerTabPane" side="LEFT" stylesheets="@../../CSS/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                   </content>
                 </Tab>
                   <Tab id="healthTab" text="Helbredstilstande">
                     <content>
-                        <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
+                        <TabPane id="innerTabPane" fx:id="helbredsInnerTabPane" side="LEFT" stylesheets="@../../CSS/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                     </content>
                   </Tab>
                   <Tab text="Logbogen">
@@ -97,12 +97,12 @@
                                 <tabs>
                                   <Tab text="Gammel Funktionsevnetilstande">
                                        <content>
-                                          <TabPane id="innerTabPane" fx:id="logFunkTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
+                                          <TabPane id="innerTabPane" fx:id="logFunkTabPane" side="LEFT" stylesheets="@../../CSS/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                                        </content>
                                   </Tab>
                                   <Tab text="Gammel HelbredsTilstande">
                                        <content>
-                                          <TabPane id="innerTabPane" fx:id="logHealthTabPane" side="LEFT" stylesheets="@../../teacher/view/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
+                                          <TabPane id="innerTabPane" fx:id="logHealthTabPane" side="LEFT" stylesheets="@../../CSS/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                                        </content>
                                   </Tab>
                                 </tabs>

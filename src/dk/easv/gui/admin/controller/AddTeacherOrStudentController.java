@@ -19,7 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddTeacherOrStudent extends SuperController implements Initializable {
+public class AddTeacherOrStudentController extends SuperController implements Initializable {
     @FXML
     private ComboBox<School> schoolCombobox;
     @FXML
@@ -40,7 +40,7 @@ public class AddTeacherOrStudent extends SuperController implements Initializabl
     private AdminModel aM;
     private UserModel uM;
 
-    public AddTeacherOrStudent() throws SQLServerException {
+    public AddTeacherOrStudentController() throws SQLServerException {
         aM = new AdminModel();
         uM = new UserModel();
     }

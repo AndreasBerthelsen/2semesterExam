@@ -2,7 +2,6 @@ package dk.easv.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
-import dk.easv.be.Citizen;
 import dk.easv.be.School;
 
 import dk.easv.be.User;
@@ -18,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements IUserDAO {
-    private DatabaseConnector dc;
+    private DBConnector dc;
 
 
     public UserDAO() throws IOException {
-        dc = new DatabaseConnector();
+        dc = new DBConnector();
     }
 
     /**
