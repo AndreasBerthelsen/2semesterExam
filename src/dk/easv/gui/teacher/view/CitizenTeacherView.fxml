@@ -103,7 +103,7 @@
    <top>
       <HBox id="Vbox" alignment="CENTER" minHeight="210.0" prefHeight="215.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
          <children>
-            <Label id="TeacherLbl" text="Borger" />
+            <Label id="TeacherLbl" text="Borgere" />
          </children>
       </HBox>
    </top>
