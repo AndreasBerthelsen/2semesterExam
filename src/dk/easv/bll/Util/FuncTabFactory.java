@@ -28,7 +28,7 @@ public class FuncTabFactory {
         contentVBox.setAlignment(Pos.TOP_CENTER);
         contentVBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
-        contentVBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        contentVBox.getStylesheets().add("dk/easv/gui/CSS/Skabelon.css");
         contentVBox.setPadding(new Insets(80, 80, 80, 80));
         contentVBox.setId("VBOX");
 

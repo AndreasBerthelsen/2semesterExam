@@ -31,7 +31,7 @@ public class GenInfoTabFactory {
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
         contentBox.setPadding(new Insets(40, 80, 80, 80));
         contentBox.setId("VBOX");
-        contentBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        contentBox.getStylesheets().add("dk/easv/gui/CSS/Skabelon.css");
         for (String fieldName : fieldList) {
             createChunk(fieldName,answerMap,contentBox,null);
         }

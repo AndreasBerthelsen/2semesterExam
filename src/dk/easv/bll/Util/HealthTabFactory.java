@@ -26,7 +26,7 @@ public class HealthTabFactory {
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
-        contentBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        contentBox.getStylesheets().add("dk/easv/gui/CSS/Skabelon.css");
         contentBox.setPadding(new Insets(80, 80, 80, 80));
         contentBox.setId("VBOX");
 
