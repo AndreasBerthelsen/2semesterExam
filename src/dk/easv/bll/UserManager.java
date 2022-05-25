@@ -1,11 +1,10 @@
 package dk.easv.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import com.sun.source.tree.BreakTree;
 import dk.easv.be.School;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
-import dk.easv.dal.BCrypt;
+import dk.easv.bll.Util.BCrypt;
 import dk.easv.dal.Facade;
 
 import java.sql.SQLException;

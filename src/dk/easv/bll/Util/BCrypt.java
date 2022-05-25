@@ -1,4 +1,4 @@
-package dk.easv.dal;
+package dk.easv.bll.Util;
 
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //

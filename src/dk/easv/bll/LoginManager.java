@@ -1,8 +1,6 @@
 package dk.easv.bll;
 
 import dk.easv.be.User;
-import dk.easv.be.UserType;
-import dk.easv.dal.BCrypt;
 import dk.easv.dal.Facade;
 
 import java.sql.SQLException;

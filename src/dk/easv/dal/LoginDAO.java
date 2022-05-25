@@ -1,11 +1,10 @@
 package dk.easv.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.User;
 import dk.easv.be.UserType;
+import dk.easv.bll.Util.BCrypt;
 import dk.easv.dal.interfaces.ILoginDAO;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
