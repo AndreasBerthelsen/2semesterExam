@@ -22,14 +22,11 @@ public class FunctionDAO implements IFuncDAO {
     @Override
     public List<Section> getFunkSections() {
         List<Section> sectionList = new ArrayList<>();
-
         try (Connection connection = dc.getConnection()) {
             String sql = "SELECT problemid, fTilstandsID, guititel, titel\n" +
                     "            from FunktionsVanskligheder\n" +
                     "            INNER join FunktionsTilstande on fTilstandsID = funkid\n" +
                     "            ORDER by fTilstandsID asc";
-
-
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
             HashMap<Integer, String> idTitelMap = new HashMap<>();

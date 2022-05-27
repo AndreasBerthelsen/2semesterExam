@@ -19,35 +19,34 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class GenInfoTabFactory {
-    private static Queue<String> infoStrings = getInfoStrings();
+    private static int contentBoxSpacing = 60;
+    private static Insets padding = new Insets(40, 80, 80, 80);
+    private static Queue<String> infoStrings = new LinkedBlockingQueue<>();
 
-    public GenInfoTabFactory() {
-        infoStrings = getInfoStrings();
-    }
 
-    public static ScrollPane createGenInfoContent(List<String> fieldList, Map<String,TextArea> answerMap) {
-        VBox contentBox = new VBox(60);
+    public static ScrollPane createGenInfoContent(List<String> fieldList, Map<String,TextArea> nodeMap) {
+        VBox contentBox = new VBox(contentBoxSpacing);
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        contentBox.setPadding(new Insets(40, 80, 80, 80));
+        contentBox.setPadding(padding);
         contentBox.setId("VBOX");
-        contentBox.getStylesheets().add("dk/easv/gui/CSS/Skabelon.css");
+        contentBox.getStylesheets().add("/dk/easv/gui/CSS/Skabelon.css");
+        infoStrings.addAll(getInfoStrings());
         for (String fieldName : fieldList) {
-            createChunk(fieldName,answerMap,contentBox,null);
+            createChunk(fieldName,nodeMap,contentBox,null);
         }
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
         return scrollPane;
     }
 
-    private static VBox createChunk(String fieldName, Map<String,TextArea> answerMap,VBox contentBox,String startingText){
+    private static void createChunk(String fieldName, Map<String,TextArea> nodeMap,VBox contentBox,String startingText){
         VBox chunk = new VBox();
         chunk.setAlignment(Pos.TOP_CENTER);
         TextArea textArea = createTextArea(startingText);
         chunk.getChildren().addAll(createHeaderHBox(fieldName), textArea);
-        contentBox.getChildren().addAll(chunk);
-        answerMap.put(fieldName,textArea);
-        return chunk;
+        contentBox.getChildren().add(chunk);
+        nodeMap.put(fieldName,textArea);
     }
 
     private static HBox createHeaderHBox(String headerString) {
@@ -91,6 +90,7 @@ public class GenInfoTabFactory {
     }
 
     private static Queue<String> getInfoStrings() {
+        System.out.println("info");
         Queue<String> q = new LinkedBlockingQueue<>();
         q.add("""
                 Borgerens bevidste eller ubevidste
@@ -170,12 +170,13 @@ public class GenInfoTabFactory {
     }
 
     public static ScrollPane createGenInfoContentWithInfo(List<String> fieldList, Map<String,TextArea> answerMap,Map<String,String> infoMap){
-        VBox contentBox = new VBox(60);
+        VBox contentBox = new VBox(contentBoxSpacing);
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        contentBox.setPadding(new Insets(40, 80, 80, 80));
+        contentBox.setPadding(padding);
         contentBox.setId("VBOX");
-        contentBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
+        contentBox.getStylesheets().add("/dk/easv/CSS/Skabelon.css");
+        infoStrings.addAll(getInfoStrings());
         for (String fieldName : fieldList) {
             createChunk(fieldName,answerMap,contentBox,infoMap.get(fieldName));
         }

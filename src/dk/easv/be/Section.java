@@ -7,7 +7,6 @@ public class Section {
     String sectionTitle;
     HashMap<Integer, String> problemidTitleMap;
 
-
     public Section(int id, String sectionTitle, HashMap<Integer, String> problemidTitleMap) {
         this.id = id;
         this.sectionTitle = sectionTitle;

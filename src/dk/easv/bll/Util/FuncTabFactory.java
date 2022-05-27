@@ -21,19 +21,20 @@ import java.util.Map;
 
 public class FuncTabFactory {
     private static List<Image> imgList = createImages();
+    private static int spacing = 100;
+    private static Insets padding = new Insets(80, 80, 80, 80);
     public static Tab buildFunkTab(Section section, Map<Integer, FunkNodeContainer> answerMap) {
         //tab for hver afdeling
         Tab tab = new Tab(section.getSectionTitle());
-        VBox contentVBox = new VBox(100);
+        VBox contentVBox = new VBox(spacing);
         contentVBox.setAlignment(Pos.TOP_CENTER);
         contentVBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
-        contentVBox.getStylesheets().add("dk/easv/gui/CSS/Skabelon.css");
-        contentVBox.setPadding(new Insets(80, 80, 80, 80));
+        contentVBox.getStylesheets().add("/dk/easv/gui/CSS/Skabelon.css");
+        contentVBox.setPadding(padding);
         contentVBox.setId("VBOX");
 
-
-        for (int key : section.getProblemidTitleMap().keySet()) {
+        for (int problemId : section.getProblemidTitleMap().keySet()) {
             FunkNodeContainer container = new FunkNodeContainer(
                     createNiveauComboBox(imgList),
                     createNiveauComboBox(imgList),
@@ -42,7 +43,7 @@ public class FuncTabFactory {
                     createTextArea(),
                     createTextArea(),
                     createTextArea());
-            contentVBox.getChildren().add(buildFunkChunk(key, section, answerMap,container));
+            contentVBox.getChildren().add(buildFunkChunk(problemId, section, answerMap,container));
         }
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(contentVBox);
@@ -51,7 +52,7 @@ public class FuncTabFactory {
         return tab;
     }
 
-    private static VBox buildFunkChunk(int key, Section section, Map<Integer, FunkNodeContainer> answerMap,FunkNodeContainer startingContainer) {
+    private static VBox buildFunkChunk(int problemId, Section section, Map<Integer, FunkNodeContainer> answerMap,FunkNodeContainer startingContainer) {
         int hGap = 50;
         int vGap = 10;
 
@@ -62,7 +63,6 @@ public class FuncTabFactory {
         GridPane gridpane = new GridPane();
         gridpane.setAlignment(Pos.CENTER);
 
-
         gridpane.addRow(0, buildFunkLeftBox(hGap, vGap, startingContainer), buildFunkRightBox(hGap, vGap, startingContainer));
         gridpane.addRow(1, new Label("Fagligt Notat"), new Label("Borgerens Ønsker og mål"));
         gridpane.addRow(2, startingContainer.getFagTextArea(), startingContainer.getCitizenTextArea());
@@ -72,13 +72,13 @@ public class FuncTabFactory {
         gridpane.setHgap(hGap);
         gridpane.setVgap(vGap);
 
-        Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
+        Label headerLabel = new Label(section.getProblemidTitleMap().get(problemId));
         headerLabel.setId("funkHeader");
         Label obsLabel = new Label("Observations Notat");
         TextArea obsTextArea = startingContainer.getObsTextArea();
         chunk.getChildren().addAll(headerLabel, gridpane, obsLabel, obsTextArea);
 
-        answerMap.put(key, startingContainer);
+        answerMap.put(problemId, startingContainer);
         return chunk;
     }
 
@@ -89,7 +89,6 @@ public class FuncTabFactory {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.addRow(1, new Label("Udførelse"), new Label("Betydning af udførelse"));
         gridPane.addRow(2, chunkAnswer.getUdførelseComboBox(), chunkAnswer.getBetydningComboBox());
-
         return gridPane;
     }
 
@@ -100,13 +99,11 @@ public class FuncTabFactory {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.addRow(1, new Label("Nuværende Niveau"), new Label("Forventet Niveau"));
         gridPane.addRow(2, chunkAnswer.getCurrentComboBox(), chunkAnswer.getTargetComboBox());
-
         return gridPane;
     }
 
     private static ComboBox<String> createUdførelseComboBox() {
         return new ComboBox<>(FXCollections.observableArrayList(
-                //todo træk list fra db
                 "Udføre selv",
                 "Udfører dele af aktiviteten",
                 "Udfører ikke selv aktiviteten",
@@ -117,7 +114,6 @@ public class FuncTabFactory {
 
     private static ComboBox<String> createBetydningComboBox() {
         return new ComboBox<>(FXCollections.observableArrayList(
-                //todo træk list fra db
                 "Oplever ikke begrænsninger",
                 "Oplever begrænsninger"
         ));
@@ -167,13 +163,12 @@ public class FuncTabFactory {
 
     public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo,boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
-        VBox contentVBox = new VBox(100);
+        VBox contentVBox = new VBox(spacing);
         contentVBox.setDisable(isDisabled);
         contentVBox.setAlignment(Pos.TOP_CENTER);
         contentVBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
-
-        contentVBox.getStylesheets().add("dk/easv/CSS/Skabelon.css");
-        contentVBox.setPadding(new Insets(80, 80, 80, 80));
+        contentVBox.getStylesheets().add("/dk/easv/CSS/Skabelon.css");
+        contentVBox.setPadding(padding);
         contentVBox.setId("VBOX");
         for(int key : section.getProblemidTitleMap().keySet()){
             FunkNodeContainer startingContainer = new FunkNodeContainer(

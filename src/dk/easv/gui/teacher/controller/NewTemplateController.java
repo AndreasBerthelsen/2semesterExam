@@ -88,7 +88,6 @@ public class NewTemplateController extends SaveCitizenController implements Init
             }
             Platform.runLater(() -> helbredsInnerTabPane.getTabs().addAll(tabList));
         });
-
     }
 
     public void handleGembtn(ActionEvent actionEvent) {

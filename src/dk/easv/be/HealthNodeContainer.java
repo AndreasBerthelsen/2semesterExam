@@ -37,12 +37,14 @@ public class HealthNodeContainer {
     }
 
     public void disableAllNodes() {
+        getTechnicalTextArea().setDisable(true);
         getCurrentTextarea().setDisable(true);
         getExpectedComboBox().setDisable(true);
         getObservationTextArea().setDisable(true);
     }
 
     public void enableAllNodes() {
+        getTechnicalTextArea().setDisable(false);
         getCurrentTextarea().setDisable(false);
         getExpectedComboBox().setDisable(false);
         getObservationTextArea().setDisable(false);
