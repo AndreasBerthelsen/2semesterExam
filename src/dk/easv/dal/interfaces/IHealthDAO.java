@@ -9,5 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface IHealthDAO {
+    /**
+     * finder alle helbredstilstands sections
+     * @return en liste af sections
+     */
     List<Section> getHealthSections();
 }

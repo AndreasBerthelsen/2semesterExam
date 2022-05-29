@@ -139,7 +139,6 @@ public class TemplateDAO implements ITemplateDAO {
 
     @Override
     public List<Citizen> getAllTemplates() throws SQLException {
-        //TODO WORK IN PROGRESS
         List<Citizen> list = new ArrayList<>();
         try (Connection connection = dc.getConnection()) {
             String sql = "SELECT borgerID, fName, lName, dato, description\n" +

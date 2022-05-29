@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.sql.SQLException;
 
-class LoginModelTest {
+class LoginTest {
     ILoginDAO iLoginDAO = new LoginDAO();
     IUserDAO iUserDAO = new UserDAO();
     ICitizienDAO iCitizienDAO = new CitizienDAO();
@@ -18,7 +18,7 @@ class LoginModelTest {
     IHealthDAO iHealthDAO = new HealthDAO();
     ITemplateDAO iTemplateDAO = new TemplateDAO();
 
-    LoginModelTest() throws IOException {
+    LoginTest() throws IOException {
         Facade.createInstance(iLoginDAO, iCitizienDAO, iUserDAO, iGenInfoDAO, iFunktionsDAO, iHealthDAO, iTemplateDAO);
     }
 

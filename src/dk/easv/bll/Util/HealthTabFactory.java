@@ -137,7 +137,6 @@ public class HealthTabFactory {
     private static ComboBox<String> createExpectedComboBox() {
         int prefWidth = 200;
         ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(
-                //todo træk fra db?
                 "Mindskes",
                 "Forbliver uændret",
                 "forsvinder"

@@ -289,7 +289,6 @@ public class CitizienDAO implements ICitizienDAO {
         preparedStatement.execute();
     }
 
-    //TODO gør så den scaler
     private void createGenInfoCopy(int oldId, Connection connection, int newID) throws SQLException {
         String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, borgerID)\n"+
                 "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, ? \n"
@@ -324,7 +323,7 @@ public class CitizienDAO implements ICitizienDAO {
         preparedStatement.execute();
     }
 
-    //TODO gør så den scaler
+
     private void createGenInfoCopyCase(int oldId, Connection connection, int newID) throws SQLException {
         String sql = "INSERT INTO Generelinfo(Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, borgerID)\n" +
                 "SELECT Mestring, Motivation, Ressourcer, Roller, Vaner, Uddannelse_og_job, Livshistorie, Netværk, Helbredsoplysninger, Hjælpemidler, Boligens_indretning, ? \n"
@@ -336,7 +335,7 @@ public class CitizienDAO implements ICitizienDAO {
         preparedStatement.execute();
     }
 
-    //TODO Test om jeg virker
+
     @Override
     public void saveCitizen(Citizen citizen, java.sql.Date newDate, Map<Integer, FunkResult> funkMap, Map<Integer, HealthResult> healthMap, Map<String, String> genInfoMap) throws SQLException {
         try (Connection connection = dc.getConnection()) {

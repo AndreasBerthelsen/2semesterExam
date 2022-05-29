@@ -32,7 +32,6 @@ public class NewTemplateController extends SaveCitizenController implements Init
     public TextArea descriptionInput;
     public DatePicker obsDatePicker;
     public VBox genInfoVBox;
-    //todo hent alle info fields med ny thread
     CitizenModel sM = new CitizenModel();
     ExecutorService service = Executors.newCachedThreadPool();
     //funktion

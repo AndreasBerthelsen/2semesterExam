@@ -36,6 +36,9 @@ public class HealthNodeContainer {
         return observationTextArea;
     }
 
+    /**
+     * Enabler alle nodes som dette objekt ejer
+     */
     public void disableAllNodes() {
         getTechnicalTextArea().setDisable(true);
         getCurrentTextarea().setDisable(true);
@@ -43,6 +46,9 @@ public class HealthNodeContainer {
         getObservationTextArea().setDisable(true);
     }
 
+    /**
+     * Disabler alle nodes som dette objekt ejer
+     */
     public void enableAllNodes() {
         getTechnicalTextArea().setDisable(false);
         getCurrentTextarea().setDisable(false);
