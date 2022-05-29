@@ -102,16 +102,15 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         });
     }
 
-    private void setupOldInfo(Date date) {
+    private void setupOldInfo(int citizenId, Date date) {
         Map<Integer,FunkNodeContainer> funkDummy = new LinkedHashMap<>();
         Map<Integer,HealthNodeContainer> healthDummy = new LinkedHashMap<>();
-
         Task<Void> loadInfoFromDate = new Task<>() {
             @Override
             protected Void call() throws SQLException {
                 List<Section> fSections = cM.getFunkSections();
-                //helrbeds info
-                Map<Integer, HealthResult> healthInfo = cM.loadHealthInfoFromDate(citizen.getId(), date);
+                //helbreds info
+                Map<Integer, HealthResult> healthInfo = cM.loadHealthInfoFromDate(citizenId, date);
                 List<Section> hSectionList = cM.getHealthSections();
                 List<Tab> hTabList = new ArrayList<>();
                 for (Section section : hSectionList) {
@@ -120,13 +119,13 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
                 }
 
                 //Funk info
-                Map<Integer, FunkResult> funkInfo = cM.loadFunkInfoFromDate(citizen.getId(), date);
+                Map<Integer, FunkResult> funkInfo = cM.loadFunkInfoFromDate(citizenId, date);
                 List<Tab> fTabList = new ArrayList<>();
                 for (Section section : fSections) {
                     fTabList.add(FuncTabFactory.buildFunkTabWithInfo(section, funkDummy, funkInfo, true));
                     updateProgress(hTabList.size() + fTabList.size(),fSections.size()+hSectionList.size());
                 }
-
+                //Alle skabte tabs bliver tilføjet til GUI'en
                 Platform.runLater(() -> {
                     logHealthTabPane.getTabs().setAll(hTabList);
                     logFunkTabPane.getTabs().setAll(fTabList);
@@ -186,7 +185,7 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
 
     public void handleDateCombo(ActionEvent actionEvent) {
         Date date = dateSelectorCombo.getSelectionModel().getSelectedItem();
-        setupOldInfo(date);
+        setupOldInfo(citizen.getId(),date);
     }
 
 

@@ -4,8 +4,8 @@ import dk.easv.be.*;
 import dk.easv.bll.Util.FuncTabFactory;
 import dk.easv.bll.Util.GenInfoTabFactory;
 import dk.easv.bll.Util.HealthTabFactory;
-import dk.easv.gui.supercontroller.SaveCitizenController;
 import dk.easv.gui.Interfaces.ICitizenSelector;
+import dk.easv.gui.supercontroller.SaveCitizenController;
 import dk.easv.gui.teacher.model.CitizenModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -81,7 +81,7 @@ public class EditSkabelonViewController extends SaveCitizenController implements
             List<Section> sectionList = cM.getFunkSections();
             List<Tab> tabList = new ArrayList<>();
             for (Section section : sectionList) {
-                tabList.add(FuncTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo,false));
+                tabList.add(FuncTabFactory.buildFunkTabWithInfo(section, funkNodeMap, funkInfo, false));
             }
             Platform.runLater(() -> funktionInnerTabPane.getTabs().addAll(tabList));
         });
@@ -94,27 +94,31 @@ public class EditSkabelonViewController extends SaveCitizenController implements
 
             List<Tab> tabList = new ArrayList<>();
             for (Section section : sectionList) {
-                tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo,false));
+                tabList.add(HealthTabFactory.buildTabWithInfo(section, healthNodeMap, healthInfo, false));
             }
             Platform.runLater(() -> helbredsInnerTabPane.getTabs().addAll(tabList));
         });
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        try {
-            String fName = fNameInput.getText().trim();
-            String lName = lNameInput.getText().trim();
-            String description = descriptionInput.getText().trim();
-            Date birthDate = Date.valueOf(dateInput.getValue());
-            Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName, birthDate, description);
-            Date obsDate = Date.valueOf(obsDatePicker.getValue());
-            cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
-            Stage stage = (Stage) fNameInput.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            System.out.println("udfyld navne birthdate og desc");
+        String fName = fNameInput.getText().trim();
+        String lName = lNameInput.getText().trim();
+        if (!fName.isEmpty() && !lName.isEmpty() && dateInput.getValue() != null) {
+            try {
+                String description = descriptionInput.getText().trim();
+                Date birthDate = Date.valueOf(dateInput.getValue());
+                Citizen updatedCitizen = new Citizen(citizen.getId(), fName, lName, birthDate, description);
+                Date obsDate = Date.valueOf(obsDatePicker.getValue());
+                cM.updateTemplate(updatedCitizen, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
+                Stage stage = (Stage) fNameInput.getScene().getWindow();
+                stage.close();
+            } catch (Exception ignored) {
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Udfyld fornavn, efternavn og fødselsdato");
+            alert.showAndWait();
         }
-
     }
 
     public void handleAnullerbtn(ActionEvent actionEvent) {

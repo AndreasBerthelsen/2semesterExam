@@ -91,19 +91,27 @@ public class NewTemplateController extends SaveCitizenController implements Init
     }
 
     public void handleGembtn(ActionEvent actionEvent) {
-        try {
-            String fName = fNameInput.getText().trim();
-            String lName = lNameInput.getText().trim();
+        String fName = fNameInput.getText().trim();
+        String lName = lNameInput.getText().trim();
+        if (!fName.isEmpty() && !lName.isEmpty() && dateInput.getValue() != null) {
             java.sql.Date birthDate = Date.valueOf(dateInput.getValue().toString());
-            String description = descriptionInput.getText().trim();
-            java.sql.Date obsDate = Date.valueOf(obsDatePicker.getValue().toString());
+            try {
+                String description = descriptionInput.getText().trim();
+                java.sql.Date obsDate = Date.valueOf(obsDatePicker.getValue().toString());
 
-            sM.saveTemplate(fName, lName, birthDate, description, saveGeninfo(genInfoNodeMap), saveFunk(funkNodeMap), saveHealth(healthNodeMap), obsDate);
-            Stage stage = (Stage) fNameInput.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("error");
+                sM.saveTemplate(fName, lName, birthDate, description,
+                        saveGeninfo(genInfoNodeMap),
+                        saveFunk(funkNodeMap),
+                        saveHealth(healthNodeMap),
+                        obsDate);
+                Stage stage = (Stage) fNameInput.getScene().getWindow();
+                stage.close();
+            } catch (Exception ignored) {
+            }
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Udfyld fornavn, efternavn og fødselsdato");
+            alert.showAndWait();
         }
     }
 

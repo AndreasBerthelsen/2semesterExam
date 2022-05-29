@@ -19,15 +19,17 @@ import java.util.List;
 import java.util.Map;
 
 public class HealthTabFactory {
+    private static int spacing = 100;
+    private static Insets padding = new Insets(80, 80, 80, 80);
 
     public static Tab buildHealthTab(Section section, Map<Integer, HealthNodeContainer> answerMap) {
         Tab tab = new Tab(section.getSectionTitle());
-        VBox contentBox = new VBox(100);
+        VBox contentBox = new VBox(spacing);
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
         contentBox.getStylesheets().add("dk/easv/gui/CSS/Skabelon.css");
-        contentBox.setPadding(new Insets(80, 80, 80, 80));
+        contentBox.setPadding(padding);
         contentBox.setId("VBOX");
 
         for (int key : section.getProblemidTitleMap().keySet()) {
@@ -42,8 +44,11 @@ public class HealthTabFactory {
 
     private static VBox buildHealthChunk(int key, Section section, Map<Integer, HealthNodeContainer> nodeContainerMap, HealthNodeContainer startingContainer) {
         int buttonSpacing = 20;
+        int gridPaneHGap = 40;
+        int gridPaneVGap = 40;
+        int chunkSpacing = 20;
 
-        VBox chunk = new VBox(20);
+        VBox chunk = new VBox(chunkSpacing);
         chunk.setAlignment(Pos.TOP_CENTER);
         Label headerLabel = new Label(section.getProblemidTitleMap().get(key));
         headerLabel.setId("healthHeader");
@@ -53,8 +58,8 @@ public class HealthTabFactory {
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(40);
-        gridPane.setVgap(40);
+        gridPane.setHgap(gridPaneHGap);
+        gridPane.setVgap(gridPaneVGap);
         gridPane.addRow(0, createTechnicalVBox(startingContainer.getTechnicalTextArea()), createCurrentVBox(startingContainer.getCurrentTextarea()));
         gridPane.addRow(1, createExpectedVBox(startingContainer), createObservationVBox(startingContainer.getObservationTextArea()));
 
@@ -143,13 +148,13 @@ public class HealthTabFactory {
 
     public static Tab buildTabWithInfo(Section section, Map<Integer, HealthNodeContainer> healthNodeMap, Map<Integer, HealthResult> healthInfo,boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
-        VBox contentBox = new VBox(100);
+        VBox contentBox = new VBox(spacing);
         contentBox.setDisable(isDisabled);
         contentBox.setAlignment(Pos.TOP_CENTER);
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
         contentBox.getStylesheets().add("/dk/easv/CSS/Skabelon.css");
-        contentBox.setPadding(new Insets(80, 80, 80, 80));
+        contentBox.setPadding(padding);
         contentBox.setId("VBOX");
 
         for (int key : section.getProblemidTitleMap().keySet()) {

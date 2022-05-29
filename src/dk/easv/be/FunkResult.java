@@ -20,7 +20,6 @@ public class FunkResult {
         this.execution =getIndexFromComboBox(funkNodeContainer.getUdførelseComboBox());
         this.target = getIndexFromComboBox(funkNodeContainer.getTargetComboBox());
         this.current = getIndexFromComboBox(funkNodeContainer.getCurrentComboBox());
-
     }
 
     public FunkResult(int importance, String citizenString, String technical, String observation, int execution, int target, int current) {

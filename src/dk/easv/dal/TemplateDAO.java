@@ -19,7 +19,11 @@ public class TemplateDAO implements ITemplateDAO {
 
 
     @Override
-    public void createTemplate(String fName, String lName, Date birthDate, String description, Map<String, String> saveGeninfo, Map<Integer, FunkResult> saveFunk, Map<Integer, HealthResult> saveHealth, Date obsDate) {
+    public void createTemplate(String fName, String lName, Date birthDate, String description,
+                               Map<String, String> saveGeninfo,
+                               Map<Integer, FunkResult> saveFunk,
+                               Map<Integer, HealthResult> saveHealth,
+                               Date obsDate) {
         try (Connection connection = dc.getConnection()) {
             int id = createCitizenTemplate(fName, lName, birthDate, description, connection);
             createFunktionsJournalTemplate(saveFunk, id, obsDate, connection);
@@ -28,7 +32,6 @@ public class TemplateDAO implements ITemplateDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     private void createGenInfoTemplate(Map<String, String> genInfoMap, int id, Connection connection) throws SQLException {
@@ -67,7 +70,8 @@ public class TemplateDAO implements ITemplateDAO {
     }
 
     private void createFunktionsJournalTemplate(Map<Integer, FunkResult> answerMap, int id, Date obsDate, Connection connection) throws SQLException {
-        String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering, technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
+        String sqlF = "insert into FunktionsJournal (borgerid, problemID, nuVurdering, målvurdering," +
+                " technicalNote, execution, importanceOfExecution, goalNote,date,obsNote) " +
                 "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement psF = connection.prepareStatement(sqlF);
         for (int key : answerMap.keySet()) {
