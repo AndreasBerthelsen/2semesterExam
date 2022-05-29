@@ -23,6 +23,14 @@ public class FuncTabFactory {
     private static List<Image> imgList = createImages();
     private static int spacing = 100;
     private static Insets padding = new Insets(80, 80, 80, 80);
+
+    /**
+     * skaber en tom tab for ud fra info i den givne section
+     *
+     * @param section   Det objekt der indeholder infoen om alle overskrifter
+     * @param answerMap map hvori container objekter gemmes
+     * @return en tab
+     */
     public static Tab buildFunkTab(Section section, Map<Integer, FunkNodeContainer> answerMap) {
         //tab for hver afdeling
         Tab tab = new Tab(section.getSectionTitle());
@@ -43,7 +51,7 @@ public class FuncTabFactory {
                     createTextArea(),
                     createTextArea(),
                     createTextArea());
-            contentVBox.getChildren().add(buildFunkChunk(problemId, section, answerMap,container));
+            contentVBox.getChildren().add(buildFunkChunk(problemId, section, answerMap, container));
         }
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(contentVBox);
@@ -52,7 +60,16 @@ public class FuncTabFactory {
         return tab;
     }
 
-    private static VBox buildFunkChunk(int problemId, Section section, Map<Integer, FunkNodeContainer> answerMap,FunkNodeContainer startingContainer) {
+    /**
+     * samler en vbox med alle nødvendige inputs ud fra en overskrift
+     *
+     * @param problemId         idet af den problemstilling som chunken tilhøre
+     * @param section           den section som chunken tilhøre
+     * @param answerMap         mappet hvor container objektet bliver gemt
+     * @param startingContainer den container der tages udgangspunkt i
+     * @return en vbox
+     */
+    private static VBox buildFunkChunk(int problemId, Section section, Map<Integer, FunkNodeContainer> answerMap, FunkNodeContainer startingContainer) {
         int hGap = 50;
         int vGap = 10;
 
@@ -82,6 +99,14 @@ public class FuncTabFactory {
         return chunk;
     }
 
+    /**
+     * bygger den højre del af en chunk
+     *
+     * @param hGap        horizontal spacing
+     * @param vGap        vertical spacing
+     * @param chunkAnswer container objektet som har input felterne
+     * @return et gridPane
+     */
     private static GridPane buildFunkRightBox(int hGap, int vGap, FunkNodeContainer chunkAnswer) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(hGap);
@@ -92,6 +117,14 @@ public class FuncTabFactory {
         return gridPane;
     }
 
+    /**
+     * bygger den venstre del af en chunk
+     *
+     * @param hGap        horizontal spacing
+     * @param vGap        vertical spacing
+     * @param chunkAnswer container objektet som har input felterne
+     * @return et gridPane
+     */
     private static GridPane buildFunkLeftBox(int hGap, int vGap, FunkNodeContainer chunkAnswer) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(hGap);
@@ -161,7 +194,15 @@ public class FuncTabFactory {
         return textArea;
     }
 
-    public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo,boolean isDisabled) {
+    /**
+     * skaber en tab med information i sig
+     * @param section den section tabben tilhøre
+     * @param funkNodeMap map hvori container objekter gemmes
+     * @param funkInfo map der indeholder et funkResult objekt til at udfylde hver container objekt
+     * @param isDisabled true hvis det ikke skal være muligt at redigere
+     * @return en tab
+     */
+    public static Tab buildFunkTabWithInfo(Section section, Map<Integer, FunkNodeContainer> funkNodeMap, Map<Integer, FunkResult> funkInfo, boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentVBox = new VBox(spacing);
         contentVBox.setDisable(isDisabled);
@@ -170,7 +211,7 @@ public class FuncTabFactory {
         contentVBox.getStylesheets().add("/dk/easv/CSS/Skabelon.css");
         contentVBox.setPadding(padding);
         contentVBox.setId("VBOX");
-        for(int key : section.getProblemidTitleMap().keySet()){
+        for (int key : section.getProblemidTitleMap().keySet()) {
             FunkNodeContainer startingContainer = new FunkNodeContainer(
                     createNiveauComboBox(imgList),
                     createNiveauComboBox(imgList),
@@ -179,7 +220,7 @@ public class FuncTabFactory {
                     createTextArea(),
                     createTextArea(),
                     createTextArea());
-            FunkResult info  = funkInfo.get(key);
+            FunkResult info = funkInfo.get(key);
             startingContainer.setCitizenString(info.getCitizenString());
             startingContainer.setTechnicalString(info.getTechnical());
             startingContainer.setObsString(info.getObservation());
@@ -187,7 +228,7 @@ public class FuncTabFactory {
             startingContainer.setExecutionIndex(info.getCurrent());
             startingContainer.setImportanceIndex(info.getImportance());
             startingContainer.setTargetIndex(info.getTarget());
-            contentVBox.getChildren().addAll(buildFunkChunk(key,section,funkNodeMap,startingContainer));
+            contentVBox.getChildren().addAll(buildFunkChunk(key, section, funkNodeMap, startingContainer));
         }
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(contentVBox);

@@ -23,7 +23,12 @@ public class GenInfoTabFactory {
     private static Insets padding = new Insets(40, 80, 80, 80);
     private static Queue<String> infoStrings = new LinkedBlockingQueue<>();
 
-
+    /**
+     * skaber et skrollPane med tomme inputs til alt generel info
+     * @param fieldList listen af generel info overskrifter
+     * @param nodeMap map hvori de skabte textAreas bliver gemt
+     * @return scrollpane
+     */
     public static ScrollPane createGenInfoContent(List<String> fieldList, Map<String,TextArea> nodeMap) {
         VBox contentBox = new VBox(contentBoxSpacing);
         contentBox.setAlignment(Pos.TOP_CENTER);
@@ -40,6 +45,13 @@ public class GenInfoTabFactory {
         return scrollPane;
     }
 
+    /**
+     * skaber en afdeling med en overskrift, info icon og inputfelt
+     * @param fieldName overskrift
+     * @param nodeMap mappet hvori textfeltet gemmes
+     * @param contentBox den vbox som denne chunk skal være en del af
+     * @param startingText
+     */
     private static void createChunk(String fieldName, Map<String,TextArea> nodeMap,VBox contentBox,String startingText){
         VBox chunk = new VBox();
         chunk.setAlignment(Pos.TOP_CENTER);
@@ -169,6 +181,13 @@ public class GenInfoTabFactory {
         return q;
     }
 
+    /**
+     * skaber et scrollpane med
+     * @param fieldList liste af overskrifter
+     * @param answerMap map hvori alle skabte textareas bliver gemt
+     * @param infoMap map hvori gammel info kan findes til at udfylde de skabte textareas
+     * @return et scrollpane
+     */
     public static ScrollPane createGenInfoContentWithInfo(List<String> fieldList, Map<String,TextArea> answerMap,Map<String,String> infoMap){
         VBox contentBox = new VBox(contentBoxSpacing);
         contentBox.setAlignment(Pos.TOP_CENTER);

@@ -22,6 +22,12 @@ public class HealthTabFactory {
     private static int spacing = 100;
     private static Insets padding = new Insets(80, 80, 80, 80);
 
+    /**
+     * skaber en tom tab for ud fra info i den givne section
+     * @param section det objekt der indeholder infoen om alle overskrifter
+     * @param answerMap map hvori container objekter gemmes
+     * @return en tab
+     */
     public static Tab buildHealthTab(Section section, Map<Integer, HealthNodeContainer> answerMap) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentBox = new VBox(spacing);
@@ -42,6 +48,14 @@ public class HealthTabFactory {
         return tab;
     }
 
+    /**
+     * samler en vbox med alle nødvendige inputs ud fra en overskrift
+     * @param key det problemId som chunken tilhøre
+     * @param section den section som chunken er en del af
+     * @param nodeContainerMap mappet hvori container objektet for chunken gemmes
+     * @param startingContainer containeren der indeholder alle nodes til chunken
+     * @return vbox
+     */
     private static VBox buildHealthChunk(int key, Section section, Map<Integer, HealthNodeContainer> nodeContainerMap, HealthNodeContainer startingContainer) {
         int buttonSpacing = 20;
         int gridPaneHGap = 40;
@@ -145,6 +159,15 @@ public class HealthTabFactory {
         return comboBox;
     }
 
+    /**
+     * skaber en tab med information i sig
+     * @param section det objekt der indeholder infoen om alle overskrifter
+     * @param healthNodeMap map til at gemme container objekter i
+     * @param healthInfo map med result objekter der har
+     *                  den info der skal indsættes i chunken
+     * @param isDisabled true hvis tabben ikke må redigeres
+     * @return en tab
+     */
     public static Tab buildTabWithInfo(Section section, Map<Integer, HealthNodeContainer> healthNodeMap, Map<Integer, HealthResult> healthInfo,boolean isDisabled) {
         Tab tab = new Tab(section.getSectionTitle());
         VBox contentBox = new VBox(spacing);
