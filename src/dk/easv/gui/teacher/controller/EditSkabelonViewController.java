@@ -55,6 +55,11 @@ public class EditSkabelonViewController extends SaveCitizenController implements
         obsDatePicker.setValue(LocalDate.now());
     }
 
+    /**
+     * Sætter hvilken borger der er logget ind, efterfulgt af
+     * gui elementer der er afhængige useren
+     * @param citizen
+     */
     @Override
     public void setCitizen(Citizen citizen) {
         this.citizen = citizen;
@@ -64,6 +69,9 @@ public class EditSkabelonViewController extends SaveCitizenController implements
         setupHelbredTab();
     }
 
+    /**
+     * Samler genneral info tabben ud fra hvilken citizen der er valgt.
+     */
     private void setupGeneralInfo() {
         fNameInput.setText(citizen.getFirstname());
         lNameInput.setText(citizen.getLastname());
@@ -75,6 +83,9 @@ public class EditSkabelonViewController extends SaveCitizenController implements
         genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContentWithInfo(fieldList, genInfoNodeMap, genInfo));
     }
 
+    /**
+     * Samler funktionsevnetilstande tabben ud fra citizen
+     */
     private void setupFunkTab() {
         service.submit(() -> {
             Map<Integer, FunkResult> funkInfo = cM.loadFunkInfo(citizen.getId());
@@ -87,6 +98,9 @@ public class EditSkabelonViewController extends SaveCitizenController implements
         });
     }
 
+    /**
+     * Samler helbredstilstands tabben ud fra citizen
+     */
     private void setupHelbredTab() {
         service.submit(() -> {
             Map<Integer, HealthResult> healthInfo = cM.loadHealthInfo(citizen.getId());
@@ -100,6 +114,12 @@ public class EditSkabelonViewController extends SaveCitizenController implements
         });
     }
 
+    /**
+     * gemmer alle bruger inputs i databasen ved at overskrive de gamle
+     * hvis der er angivet navne og fødselsdato.
+     * hvis der ikke er nogen navne eller dato, vil der blive skabt en alert
+     * @param actionEvent
+     */
     public void handleGembtn(ActionEvent actionEvent) {
         String fName = fNameInput.getText().trim();
         String lName = lNameInput.getText().trim();
@@ -121,6 +141,10 @@ public class EditSkabelonViewController extends SaveCitizenController implements
         }
     }
 
+    /**
+     * lukker vinduet
+     * @param actionEvent
+     */
     public void handleAnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
         stage.close();
