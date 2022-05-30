@@ -107,7 +107,7 @@ public class CitizienDAO implements ICitizienDAO {
      * @param citizen - Borgeren der får tilføjet en student
      */
     @Override
-    public void addUserToCitizen(User user, int citizen) {
+    public void addCitizenToUser(User user, int citizen) {
         try (Connection connection = dc.getConnection()) {
             String sql = "INSERT INTO CitUser (citFK, userFK) VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

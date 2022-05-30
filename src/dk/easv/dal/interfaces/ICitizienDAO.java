@@ -45,7 +45,7 @@ public interface ICitizienDAO {
      * @param user den elever der skal have adgang til borgeren
      * @param citizen borgeren der skal gives til en elev
      */
-    void addUserToCitizen(User user, int citizen);
+    void addCitizenToUser(User user, int citizen);
 
     /**
      *Sletter forbindelsen imellem en elev og en borger

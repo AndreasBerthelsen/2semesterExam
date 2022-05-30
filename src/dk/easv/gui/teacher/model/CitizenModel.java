@@ -59,8 +59,8 @@ public class CitizenModel {
 
     }
 
-    public void addUserToCitizen(int citizen, User user) {
-        cM.addUserToCitizen(citizen, user);
+    public void addCitizenToUser(int citizen, User user) {
+        cM.addCitizenToUser(citizen, user);
     }
 
     public List<Section> getFunkSections() {

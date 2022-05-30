@@ -81,9 +81,9 @@ public class Facade {
         iCitizienDAO.createCitizen(fname, lname, birthDay);
     }
 
-    public void addUserToCitizen(int citizen, User user) {
+    public void addCitizenToUser(int citizen, User user) {
 
-        iCitizienDAO.addUserToCitizen(user, citizen);
+        iCitizienDAO.addCitizenToUser(user, citizen);
     }
 
     public List<Section> getFunkSections() {

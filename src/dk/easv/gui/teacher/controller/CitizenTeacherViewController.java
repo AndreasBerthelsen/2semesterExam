@@ -148,7 +148,7 @@ public class CitizenTeacherViewController extends SuperController implements Ini
     }
 
 
-    public void handleAddOneCitizenToAllStudents(ActionEvent actionEvent) throws SQLServerException {
+    public void handleAddOneCitizenToAllStudents() throws SQLServerException {
         Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
         if (selectedTemplate != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -160,7 +160,7 @@ public class CitizenTeacherViewController extends SuperController implements Ini
                 ObservableList<User> studentList = studentTableView.getItems();
                 for (User u : studentList) {
                     int newCitizenID = citizenModel.createCopyCitizen(selectedTemplate);
-                    citizenModel.addUserToCitizen(newCitizenID, u);
+                    citizenModel.addCitizenToUser(newCitizenID, u);
                 }
             }
         } else {
@@ -168,7 +168,7 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         }
     }
 
-    public void handleAddCitizenToStudent(ActionEvent actionEvent) {
+    public void handleAddCitizenToStudent() {
         Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
         ObservableList<User> selectedStudents = studentTableView.getSelectionModel().getSelectedItems();
         if (selectedTemplate != null && !selectedStudents.isEmpty()) {
@@ -180,7 +180,7 @@ public class CitizenTeacherViewController extends SuperController implements Ini
             if (result.get() == ButtonType.OK) {
                 int newCitizenID = citizenModel.createCopyCitizen(selectedTemplate);
                 for (User u : selectedStudents) {
-                    citizenModel.addUserToCitizen(newCitizenID, u);
+                    citizenModel.addCitizenToUser(newCitizenID, u);
                 }
                 displayCitizensFromStudent(studentTableView.getSelectionModel().getSelectedItem());
             }

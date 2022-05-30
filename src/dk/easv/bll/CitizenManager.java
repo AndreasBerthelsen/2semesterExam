@@ -32,8 +32,8 @@ public class CitizenManager {
         return facade.getAllCitiziensFromUser(user);
     }
 
-    public void addUserToCitizen(int citizen, User user) {
-        facade.addUserToCitizen(citizen, user);
+    public void addCitizenToUser(int citizen, User user) {
+        facade.addCitizenToUser(citizen, user);
     }
 
     public List<Section> getFunkSections() {
