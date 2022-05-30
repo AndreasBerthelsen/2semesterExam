@@ -42,6 +42,11 @@ public class StudentController extends SuperController implements IController, I
         studentModel = new StudentModel();
     }
 
+    /**
+     * Sætter studenten info, og sætter alle de citiziens som tilhører studenten ved anvendelse af metoden
+     * getAllCitizenFromUser().
+     * @param user
+     */
     @Override
     public void setUserInfo(User user) {
         this.student = user;
@@ -49,6 +54,12 @@ public class StudentController extends SuperController implements IController, I
         tableView.setItems(cM.getAllCitizenFromUserObservable(user));
     }
 
+    /**
+     * Initistaliserer de forskellige informationer fra de citizens som studenten er tilknyttet til. Dette er
+     * fornavnet, efternavnet og hvornår borgeeren sidst blev ændret.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         firstNameTC.setCellValueFactory(new PropertyValueFactory<>("firstname"));
@@ -56,6 +67,13 @@ public class StudentController extends SuperController implements IController, I
         lastChangedCol.setCellValueFactory(new PropertyValueFactory<>("lastChanged"));
     }
 
+    /**
+     * Denne metode gør således, at når en student vælger en citizen, kommer de ind til scenen hvori at de kan redigere
+     * en citizens informationer
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void handleInspect(ActionEvent actionEvent) throws IOException, SQLException {
         Citizen citizen = tableView.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/dk/easv/gui/student/view/StudentEditCitizenView.fxml")));
@@ -70,6 +88,12 @@ public class StudentController extends SuperController implements IController, I
         stage.showAndWait();
     }
 
+    /**
+     * Denne knap håndterer exit knappen i vores program, således at man kommer tilbage til loginvinduet hvis man vælger at logge
+     * ud som en student
+     * @param actionEvent
+     * @throws IOException
+     */
     public void handleExit(ActionEvent actionEvent) throws IOException {
         closeWindow(exitBtn);
         openScene("/dk/easv/gui/login/view/loginview.fxml", false, "log ind som lærer eller elev", false);

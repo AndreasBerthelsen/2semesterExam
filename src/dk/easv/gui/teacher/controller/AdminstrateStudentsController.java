@@ -37,11 +37,22 @@ public class AdminstrateStudentsController extends SuperController implements In
 
     }
 
+    /**
+     * Denne metode sender useren hen til vinduet, hvori at de kan tilføje en student
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLServerException
+     */
     public void handleAddStudentBtn(ActionEvent actionEvent) throws IOException, SQLServerException {
         openNewSceneAsUser2(user,"/dk/easv/gui/teacher/view/AddStudentView.fxml","Tilføj en elev");
         studentTable.setItems(uM.getAllStudentList(user.getSchoolID()));
     }
 
+    /**
+     * Denne metode sender sletter en student fra student tablet viewet.
+     * Hvis der ikke er valgt en user, popper der en fejlbesked op
+     * @param actionEvent
+     */
     public void handleDeleteStudentBtn(ActionEvent actionEvent) {
         if (studentTable.getSelectionModel().getSelectedItem() == null) {
             errorMessage("Vælg den elev, som du vil slette");
@@ -53,7 +64,12 @@ public class AdminstrateStudentsController extends SuperController implements In
             }
         }
     }
-
+    /**
+     * Denne metode sender useren hen til vinduet, hvori at de kan redigere en student
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLServerException
+     */
     public void handleUpdateStudentBtn(ActionEvent actionEvent) throws SQLServerException, IOException {
         User student = studentTable.getSelectionModel().getSelectedItem();
         if (student != null) {
@@ -64,6 +80,10 @@ public class AdminstrateStudentsController extends SuperController implements In
         }
     }
 
+    /**
+     * Sætter useren informationer
+     * @param user - Useren der bliver sat
+     */
     @Override
     public void setUserInfo(User user) {
         this.user = user;

@@ -46,6 +46,12 @@ public class EditTeacherOrStudentController extends SuperController implements I
         userModel = new UserModel();
     }
 
+    /**
+     * Denne metode gemmer enten en lærer eller elev i system, hvori at vi gemmer dem med alle dens redigerede attributter
+     * ved anvendelse af metoden updateAdminUser()
+     * @param actionEvent
+     * @throws SQLServerException
+     */
     public void handleSaveBtn(ActionEvent actionEvent) throws SQLServerException {
         String firstname = getFirstName(firstnameTxtField);
         String lastname = getLastName(lastnameTxtField);
@@ -67,11 +73,18 @@ public class EditTeacherOrStudentController extends SuperController implements I
         }
     }
 
-
+    /**
+     * Denne metode gør således, at den lukkre vinduet, når cancel knappen bliver trykket
+     * @param actionEvent
+     */
     public void handleCancelBtn(ActionEvent actionEvent) {
         closeWindow(cancelBtn);
     }
 
+    /**
+     * Denne metode sætter de forskellige info som useren har med fra AdminMainWindow controlleren
+     * @param user
+     */
     @Override
     public void setUserInfo(User user) {
         this.user = user;
@@ -81,6 +94,11 @@ public class EditTeacherOrStudentController extends SuperController implements I
         setCombobox(user);
     }
 
+    /**
+     * Denne metode kører igennem et forloop af alle objekterne i skolecomboboxen, og sætter brugerens id til at være den skole
+     * som de er på
+     * @param user
+     */
     private void setCombobox(User user){
         for (School school : schoolCombobox.getItems()) {
             if (user.getSchoolID() == school.getId()){
@@ -90,6 +108,11 @@ public class EditTeacherOrStudentController extends SuperController implements I
         }
     }
 
+    /**
+     * Initaliserer vores skole combobox, og sætter herefter items.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {

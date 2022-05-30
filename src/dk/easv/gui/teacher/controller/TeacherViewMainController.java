@@ -20,18 +20,37 @@ public class TeacherViewMainController extends SuperController implements IContr
     private Button exitBtn;
     private User teacher;
 
+    /**
+     * Denne metode åbner TeacherSkabelon view vinduet med en lærer
+     * @param actionEvent
+     * @throws IOException
+     */
     public void handleSkabelonerbtn(ActionEvent actionEvent) throws IOException {
         setBorderpaneContent("/dk/easv/gui/teacher/view/TeacherSkabelonerView.fxml",teacher);
     }
-
+    /**
+     * Denne metode åbner CitizenTeacher view vinduet med en lærer
+     * @param actionEvent
+     * @throws IOException
+     */
     public void handleBorgererbtn(ActionEvent actionEvent) throws IOException {
         setBorderpaneContent("/dk/easv/gui/teacher/view/CitizenTeacherView.fxml",teacher);
     }
-
+    /**
+     * Denne metode åbner AdminstrateStudents view vinduet med en lærer
+     * @param actionEvent
+     * @throws IOException
+     */
     public void handleEleverbtn(ActionEvent actionEvent) throws IOException {
         setBorderpaneContent("/dk/easv/gui/teacher/view/AdminstrateStudents.fxml",teacher);
     }
 
+    /**
+     * Denne metode sætter alt content der er inde i de respektive panes.
+     * @param fxml - FXML'en der bliver anvendt
+     * @param user - Useren der bliver logget ind
+     * @throws IOException
+     */
     private void setBorderpaneContent(String fxml, User user) throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource(fxml));
         Pane pane = root.load();
@@ -40,12 +59,21 @@ public class TeacherViewMainController extends SuperController implements IContr
         borderpane.setCenter(pane);
     }
 
+    /**
+     * Denne metode sætter læreren informationer
+     * @param user
+     */
     @Override
     public void setUserInfo(User user) {
         this.teacher = user;
         velkommenLabel.setText("Velkommen, " + user.getFirstname()+" "+user.getLastname());
     }
 
+    /**
+     * Den metode logger ud, og går tilbage til login vinduet
+     * @param actionEvent
+     * @throws IOException
+     */
     public void handleSignOut(ActionEvent actionEvent) throws IOException {
         closeWindow(exitBtn);
         openScene("/dk/easv/gui/login/view/loginview.fxml",false, "Log ind som lærer eller elev", false);

@@ -45,6 +45,12 @@ public class AddTeacherOrStudentController extends SuperController implements In
         uM = new UserModel();
     }
 
+    /**
+     * Denne metode gemmer enten en lærer eller elev i system, hvori at vi gemmer dem med alle dens attributter
+     * ved anvendelse af metoden createUser()
+     * Vi tjekker også i denne metode hvorvidt at brugernavnet allerede eksisterer i vores database ved checkUserName() metoden
+     * @throws SQLException
+     */
     public void handleSaveBtn(ActionEvent actionEvent) throws SQLException {
         String firstname = getFirstName(firstnameTxtField);
         String lastname = getLastName(lastnameTxtField);
@@ -61,10 +67,18 @@ public class AddTeacherOrStudentController extends SuperController implements In
         }
     }
 
+    /**
+     * Lukker vinduet når der bliver trykket på cancel knappen
+     */
     public void handleCancelBtn(ActionEvent actionEvent) {
         closeWindow(cancelBtn);
     }
 
+    /**
+     * Initaliserer vores comboboxe med deres respektive observaable lister
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         usertypeCombobox.setItems(FXCollections.observableArrayList(UserType.STUDENT, UserType.TEACHER));

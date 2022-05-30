@@ -33,7 +33,11 @@ public class AddStudentController extends SuperController implements IController
     public AddStudentController() throws SQLServerException {
         userModel = new UserModel();
     }
-
+    /**
+     * Denne metode gemmer en elev i system, hvori at vi gemmer dem med alle dens attributter ved anvendelse af metoden createStudent()
+     * Vi tjekker også i denne metode hvorvidt at brugernavnet allerede eksisterer i vores database ved checkUserName() metoden
+     * @throws SQLException
+     */
     public void handleSaveBtn(ActionEvent actionEvent) throws SQLException {
         String firstname = getFirstName(fNameTxtfield);
         String lastname = getLastName(lNameTxtField);
@@ -48,11 +52,17 @@ public class AddStudentController extends SuperController implements IController
             errorMessage("Check venligst om alle felterne er udfyldt eller om der allerede eksisterer en bruger med samme brugernavn i programmet");
         }
     }
-
+    /**
+     * Lukker vinduet når der bliver trykket på cancel knappen
+     */
     public void handleCancelBtn(ActionEvent actionEvent) {
         closeWindow(cancelBtn);
     }
 
+    /**
+     * Sætter userens info, som er logget ind.
+     * @param user - useren der er logget ind
+     */
     @Override
     public void setUserInfo(User user) {
         this.user = user;

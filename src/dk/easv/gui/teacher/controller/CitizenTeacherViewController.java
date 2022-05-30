@@ -63,6 +63,11 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         citizenModel = new CitizenModel();
     }
 
+    /**
+     * Initistaliserer alle vores columns i de forskellige tableviews vi anvender i denne klasse
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //sets the list with names of the templates/copies
@@ -81,6 +86,10 @@ public class CitizenTeacherViewController extends SuperController implements Ini
 
     }
 
+    /**
+     * Her sættes en tooltip, som husker brugeren på at man skal trykke på control for at vælge
+     * flere users.
+     */
     private void setToolTip() {
         Tooltip tooltip = new Tooltip();
         tooltip.setText("Hold ''Ctrl'' knappen inde på dit tastatur, mens du klikker, for at vælge mere end en elev ad gangen");
@@ -90,7 +99,11 @@ public class CitizenTeacherViewController extends SuperController implements Ini
     }
 
 
-
+    /**
+     * Denne metode fjerner en citizen fra en student.
+     * Hvis der ikke er valgt både en elev og en citizen, popper der en fejlbesked op
+     * @param actionEvent
+     */
     public void handleRemoveCitizenFromStudentBtn(ActionEvent actionEvent) {
         try {
             User user = studentTableView.getSelectionModel().getSelectedItem();
@@ -104,7 +117,7 @@ public class CitizenTeacherViewController extends SuperController implements Ini
     }
 
     /**
-     * Error message
+     * Fejl besked
      *
      * @param text
      */
@@ -113,11 +126,23 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         alert.showAndWait();
     }
 
+    /**
+     * Fremviser alle citizens som er tilknyttet den valgte student. Denne metode anvendes i en mouseclicked metode
+     * da dette er en metode som er lavet for at undgå redudant kode
+     * og sætter en tekst med user fornavnet og efternavnet
+     * @param user
+     */
     private void displayCitizensFromStudent(User user) {
         displayStudentNameCol.setText("Borgere tilknyttet: " + user.getFirstname() + " " + user.getLastname());
         displayTableView.setItems(citizenModel.getAllCitizenFromUserObservable(user));
     }
 
+    /**
+     * Sætter beskrivelsen på hver citizen
+     * Reverter tilbage til et tomt String, hvis der ikke er valgt en citizen
+     * @param citizen - Citizen der er valgt
+     * @throws SQLException
+     */
     public void setDescription(Citizen citizen) throws SQLException {
         if (citizen.getDescription() != null){
         descriptionTextArea.setText(citizen.getDescription());
@@ -127,6 +152,10 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         }
     }
 
+    /**
+     * Viser alle citizen tilknyttet til en student.
+     * @param mouseEvent
+     */
     public void handleStudentTableCLicked(MouseEvent mouseEvent) {
         User selectedUser = studentTableView.getSelectionModel().getSelectedItem();
         if (selectedUser != null){
@@ -134,10 +163,23 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         }
     }
 
+    /**
+     * Mouseevent, der anvender setDescription metode til at sætte beskrivelsen på hver citizen
+     * når disse bliver trykket på
+     * @param mouseEvent
+     * @throws SQLException
+     */
     public void handleSetDescription(MouseEvent mouseEvent) throws SQLException {
         setDescription(tempTableView.getSelectionModel().getSelectedItem());
     }
 
+    /**
+     * Sætter user infoet for læreren der er logget ind, og alle de forskellige
+     * Properties for studenterne
+     * Samtidig er studentTableView sat til at kunnne vælge flere, ved anvendelse af
+     * SelectionMode.MULTIPLE
+     * @param user
+     */
     @Override
     public void setUserInfo(User user) {
         this.user = user;
@@ -147,7 +189,14 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         studentTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-
+    /**
+     * Denne metode gør således, at en citizen kan blive tildelt til alle studenter.
+     * Dette gøres ved at vi henter vores fulde studentliste, og herefter kører et forloop igennem
+     * der for hver student i listen bliver tildelt en individuel kopieret skabelon
+     * Metoden createCopyCitizen() bliver anvendt til at lave en kopi af denne borger, og addCitizenToUser()
+     * anvendes til adde en citizene til useren
+     * @throws SQLServerException
+     */
     public void handleAddOneCitizenToAllStudents() throws SQLServerException {
         Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
         if (selectedTemplate != null) {
@@ -168,6 +217,14 @@ public class CitizenTeacherViewController extends SuperController implements Ini
         }
     }
 
+    /**
+     * Denne metode gør således, at vi kan vælge en vis mængde af users som får den samme kopieret citizen.
+     * Dette gør således, at de forskellige users kan arbejde i gruppe om den samme bruger.
+     * Gøres på samme måde med at køre listen igennem af de obserable users, men i stedet for
+     * at den kører igennem alle users, kører den igennem de valgte.
+     * Metoden createCopyCitizen() bliver anvendt til at lave en kopi af denne borger, og addCitizenToUser()
+     * anvendes til adde en citizene til useren
+     */
     public void handleAddCitizenToStudent() {
         Citizen selectedTemplate = tempTableView.getSelectionModel().getSelectedItem();
         ObservableList<User> selectedStudents = studentTableView.getSelectionModel().getSelectedItems();

@@ -17,6 +17,18 @@ public class UserManager {
         facade = Facade.getInstance();
     }
 
+    /**
+     * Denne metode opretter en user, hvori at alle dens attributer er med.
+     * I denne metode krypterer vi også vores password ved anvendelse af BCrypt klassen, hvor vi anvender
+     * genstalt() metoden til at genere et salt og derefter hasher password ved anvendelse af hashpw() metoden
+     * @param firstName - Foravnet for useren
+     * @param lastName - Efternavnet for useren
+     * @param username - Userens brugernavn
+     * @param password - Userens password
+     * @param userType - Userens brugertype
+     * @param schoolID - ID'et for den skole useren er tilknyttet til
+     * @throws SQLException
+     */
     public void createUser(String firstName, String lastName, String username, String password, UserType userType, int schoolID) throws SQLException {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(password, salt);
@@ -37,6 +49,14 @@ public class UserManager {
 
     public void updateAdminUser(User user) {facade.updateAdminUser(user);}
 
+    /**
+     * Heri har vi en metode, der kan opdatere et password. Som i vores createUser() metode
+     * genererer vi et salt ved anvendelse af metoden gensalt(), og herefter hasher vi passwordet
+     * ved anvendelse af hashPW() metoden.
+     * @param user
+     * @param hashPassword
+     * @throws SQLServerException
+     */
     public void updatePassword(User user, String hashPassword) throws SQLServerException {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(hashPassword, salt);

@@ -37,6 +37,10 @@ public class EditStudentController extends SuperController implements IControlle
         userModel = new UserModel();
     }
 
+    /**
+     * Sætter userens informationer
+     * @param user
+     */
     @Override
     public void setUserInfo(User user) {
         this.user = user;
@@ -45,6 +49,12 @@ public class EditStudentController extends SuperController implements IControlle
         usernameTxtField.setText(user.getUsername());
     }
 
+    /**
+     * Denne metode gemmer enten en lev i system, hvori at vi gemmer dem med alle dens redigerede attributter
+     * ved anvendelse metoden updateUser()
+     * @param actionEvent
+     * @throws SQLServerException
+     */
     public void handleSaveBtn(ActionEvent actionEvent) throws SQLServerException {
         String firstname = getFirstName(firstnameTxtField);
         String lastname = getLastName(lastnameTxtField);
@@ -65,11 +75,11 @@ public class EditStudentController extends SuperController implements IControlle
         }
     }
 
+    /**
+     * Denne metode lukker vinduet
+     * @param actionEvent
+     */
     public void handleCancelBtn(ActionEvent actionEvent) {
         closeWindow(cancelBtn);
-    }
-
-
-    public void handleUpdatePassword(ActionEvent actionEvent) {
     }
 }
