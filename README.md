@@ -1,6 +1,6 @@
 # 2semesterExam 
 
-##**Login informationer til programmet:
+ **## Login informationer til programmet:
 **
 
 Admin:
@@ -20,6 +20,3 @@ Elev:
 Brugernavn: FlemmingL
 
 Password: 123456
-
-**Libaries anvendt til programmet, som skal at starte programmet:
-**
