@@ -102,7 +102,6 @@ public class GenInfoTabFactory {
     }
 
     private static Queue<String> getInfoStrings() {
-        System.out.println("info");
         Queue<String> q = new LinkedBlockingQueue<>();
         q.add("""
                 Borgerens bevidste eller ubevidste
@@ -194,7 +193,7 @@ public class GenInfoTabFactory {
         contentBox.setPrefWidth(Region.USE_COMPUTED_SIZE);
         contentBox.setPadding(padding);
         contentBox.setId("VBOX");
-        contentBox.getStylesheets().add("/dk/easv/CSS/Skabelon.css");
+        contentBox.getStylesheets().add("/dk/easv/gui/CSS/Skabelon.css");
         infoStrings.addAll(getInfoStrings());
         for (String fieldName : fieldList) {
             createChunk(fieldName,answerMap,contentBox,infoMap.get(fieldName));

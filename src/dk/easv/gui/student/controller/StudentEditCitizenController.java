@@ -55,6 +55,11 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         newDate.setValue(LocalDate.now());
     }
 
+    /**
+     * sætter den valgte citizen efterfulgt af gui elementer der er
+     * afhængig af hvilken den citizen
+     * @param citizen
+     */
     @Override
     public void setCitizen(Citizen citizen) {
         this.citizen = citizen;
@@ -68,10 +73,16 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         setupHelbredTab();
     }
 
+    /**
+     * Fylder log date comboxen med datoer fra hvert indslag
+     */
     private void fillDateSelector() {
         dateSelectorCombo.setItems(cM.getObservableLogDates(id));
     }
 
+    /**
+     * bygger generalinfo tabben med info fra citizen
+     */
     private void setupGeneralInfo() {
         List<String> fieldList = cM.getGeneralinfoFields();
         Map<String, String> genInfo = cM.loadGenInfo(id, fieldList);
@@ -79,6 +90,9 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
 
     }
 
+    /**
+     * Samler funktionsevnetilstande tabben
+     */
     private void setupFunkTab() {
         service.submit(() -> {
             List<Section> funkSectionList = cM.getFunkSections();
@@ -90,6 +104,9 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         });
     }
 
+    /**
+     * samler helbredstilstande tabben
+     */
     private void setupHelbredTab() {
         service.submit(() -> {
             List<Section> healthSections = cM.getHealthSections();
@@ -102,6 +119,12 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         });
     }
 
+    /**
+     * Skaber en task der bygger en funktionsevnetilsands tab og helbredstilstands tab
+     * med data fra den valgte dato
+     * @param citizenId
+     * @param date
+     */
     private void setupOldInfo(int citizenId, Date date) {
         Map<Integer,FunkNodeContainer> funkDummy = new LinkedHashMap<>();
         Map<Integer,HealthNodeContainer> healthDummy = new LinkedHashMap<>();
@@ -139,8 +162,13 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         progressBar.progressProperty().bind(loadInfoFromDate.progressProperty());
     }
 
+    /**
+     * Gemmer alle info fra container objekter i result objekter
+     * hvis et der ikke taget stilling til et punkt, vil der komme
+     * en alert.
+     * @param actionEvent
+     */
     public void handleGembtn(ActionEvent actionEvent) {
-
         Map<Integer,FunkResult> funkResultMap = saveFunk(funkNodeMap);
         Map<Integer,HealthResult> healthResultMap = saveHealth(healthNodeMap);
 
@@ -177,12 +205,20 @@ public class StudentEditCitizenController extends SaveCitizenController implemen
         }
     }
 
-
+    /**
+     * Håndtere annuller knappen
+     * lukker vinduet uden at gemme
+     * @param actionEvent
+     */
     public void handleAnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Håndtere on action for log combobox
+     * @param actionEvent
+     */
     public void handleDateCombo(ActionEvent actionEvent) {
         Date date = dateSelectorCombo.getSelectionModel().getSelectedItem();
         setupOldInfo(citizen.getId(),date);

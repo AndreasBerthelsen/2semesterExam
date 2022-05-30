@@ -61,11 +61,21 @@ public class NewTemplateController extends SaveCitizenController implements Init
         }
     }
 
+    /**
+     * samler gui elementer til generel info
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     private void setupGenInfoTab() throws ExecutionException, InterruptedException {
         List<String> fieldList = service.submit((Callable<List<String>>) () -> sM.getGeneralinfoFields()).get();
         genInfoVBox.getChildren().add(GenInfoTabFactory.createGenInfoContent(fieldList, genInfoNodeMap));
     }
 
+    /**
+     * samler gui elementer for funktionsevnetilstande tabben
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     private void setupFunkTab() throws ExecutionException, InterruptedException {
         service.submit(() -> {
             List<Section> funkSectionList = sM.getFunkSections();
@@ -77,6 +87,11 @@ public class NewTemplateController extends SaveCitizenController implements Init
         });
     }
 
+    /**
+     * samler gui elementer for helbredstilstande
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     private void setupHelbredTab() throws ExecutionException, InterruptedException {
         service.submit(() -> {
             List<Section> healthSections = sM.getHealthSections();
@@ -89,6 +104,12 @@ public class NewTemplateController extends SaveCitizenController implements Init
         });
     }
 
+    /**
+     * håndtere gem knappen
+     * Hvis navn og fødselsdato er angivet, vil skabelonen blive gemt
+     * og vinduet lukker ellers en advarsel
+     * @param actionEvent
+     */
     public void handleGembtn(ActionEvent actionEvent) {
         String fName = fNameInput.getText().trim();
         String lName = lNameInput.getText().trim();
@@ -114,6 +135,11 @@ public class NewTemplateController extends SaveCitizenController implements Init
         }
     }
 
+    /**
+     * håndtere annuller knap
+     * lukker vinduet
+     * @param actionEvent
+     */
     public void handleAnullerbtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fNameInput.getScene().getWindow();
         stage.close();

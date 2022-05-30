@@ -95,12 +95,12 @@
                               </HBox>
                               <TabPane fx:id="logBookTabPane" tabClosingPolicy="UNAVAILABLE">
                                 <tabs>
-                                  <Tab text="Gammel Funktionsevnetilstande">
+                                  <Tab text="Gamle Funktionsevnetilstande">
                                        <content>
                                           <TabPane id="innerTabPane" fx:id="logFunkTabPane" side="LEFT" stylesheets="@../../CSS/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                                        </content>
                                   </Tab>
-                                  <Tab text="Gammel HelbredsTilstande">
+                                  <Tab text="Gamle Helbredstilstande">
                                        <content>
                                           <TabPane id="innerTabPane" fx:id="logHealthTabPane" side="LEFT" stylesheets="@../../CSS/InnerTabPane.css" tabClosingPolicy="UNAVAILABLE" />
                                        </content>
