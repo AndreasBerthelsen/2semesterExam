@@ -63,4 +63,8 @@ mssql-jdbc-8.2.0.jre13.jar
 
 opentest4j-1.2.0.jar
 
+## SDK og JDK settings
+
+SDK'en der skal anvendes er SDK default 17 (17 - Sealed types, always strict floating point-semantics), hvori at liberica-17 BellSoft JDK Version 17 også bliver anvendt
+
 For at køre programmet, skal programmet indstilles til at køre fra Main klassen.
